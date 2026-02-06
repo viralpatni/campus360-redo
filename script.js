@@ -19,18 +19,40 @@ document.addEventListener("DOMContentLoaded", () => {
     "Welcome " + name + " | Visits: " + visits;
 });
 
-// IMAGE LOOP USING FOREACH
+// HERO BACKGROUND IMAGE SLIDESHOW - INFINITE LOOP
 let images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"];
-let container = document.getElementById("imageLoop");
+let currentIndex = 0;
 
-images.forEach((img) => {
-  let tag = document.createElement("img");
-  tag.src = img;
-  tag.style.width = "200px";
-  tag.style.margin = "10px";
-  tag.style.borderRadius = "10px";
-  container.appendChild(tag);
+document.addEventListener("DOMContentLoaded", () => {
+  const slideshow = document.getElementById("heroBgSlideshow");
+
+  // Create background image slides
+  images.forEach((img, index) => {
+    const slide = document.createElement("div");
+    slide.className = `hero-bg-slide ${index === 0 ? "active" : ""}`;
+    slide.style.backgroundImage = `url('${img}')`;
+    slideshow.appendChild(slide);
+  });
+
+  // Auto-advance slideshow every 4 seconds
+  setInterval(nextSlide, 4000);
 });
+
+function updateSlideshow() {
+  const slides = document.querySelectorAll(".hero-bg-slide");
+
+  slides.forEach((slide, index) => {
+    slide.classList.remove("active");
+    if (index === currentIndex) {
+      slide.classList.add("active");
+    }
+  });
+}
+
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateSlideshow();
+}
 
 /* ============================ */
 

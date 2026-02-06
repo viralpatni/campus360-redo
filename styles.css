@@ -84,17 +84,61 @@ nav a:hover {
 
 /* --- 3. Hero Section --- */
 .hero {
-  background: linear-gradient(120deg, #6a82fb 60%, #fc5c7d 100%);
   color: #fff;
   padding: 3.5rem 0 2.5rem 0;
   text-align: center;
   position: relative;
   box-shadow: 0 2px 16px rgba(106, 130, 251, 0.1);
+  min-height: 400px;
+  overflow: hidden;
+}
+
+/* Hero Background Slideshow */
+.hero-bg-slideshow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-bg-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.hero-bg-slide.active {
+  opacity: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(106, 130, 251, 0.7) 40%,
+    rgba(252, 92, 125, 0.7) 100%
+  );
+  z-index: 1;
 }
 
 .hero-content {
   max-width: 700px;
   margin: 0 auto 1.5em auto;
+  position: relative;
+  z-index: 2;
 }
 
 .hero h1 {
@@ -102,12 +146,27 @@ nav a:hover {
   margin-bottom: 0.2em;
   letter-spacing: 1px;
   color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero-tagline {
   font-size: 1.25em;
   margin-bottom: 1.2em;
   color: #fbeff2;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero nav {
+  position: relative;
+  z-index: 2;
+}
+
+.hero #darkModeToggle {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: auto;
+  z-index: 10;
 }
 
 .cta-btn {
