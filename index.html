@@ -3,20 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Campus360 — Your all-in-one student portal for campus life, academics, and opportunities at VIT." />
     <title id="title">Campus360</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
   <body>
-    <header class="hero">
-      <div class="hero-bg-slideshow" id="heroBgSlideshow">
-        <!-- Background images will be inserted here by JavaScript -->
-      </div>
-      <div class="hero-overlay"></div>
+    <button id="darkModeToggle" aria-label="Toggle dark mode">
+      <span id="darkModeIcon"> </span>
+    </button>
 
-      <button id="darkModeToggle" aria-label="Toggle dark mode">
-        <span id="darkModeIcon"> </span>
-      </button>
+    <header class="hero">
+      <div class="hero-overlay"></div>
 
       <div class="hero-content">
         <h1>Campus360</h1>
@@ -29,18 +30,18 @@
       <nav>
         <ul>
           <li><a href="#home">Home</a></li>
+          <li><a href="forum.html">Forum</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li id="navAuthItem"><a href="login.html" id="navAuthLink">Login / Sign Up</a></li>
         </ul>
       </nav>
     </header>
 
-    <p id="userGreeting"></p>
-
-    <section id="home" class="home-card">
+    <section id="home" class="home-card scroll-reveal">
       <div class="home-welcome">
-        <h2>Welcome, Vitian!</h2>
+        <h2 id="welcomeHeading">Welcome, Vitian!</h2>
         <p>
           Campus360 is your personalized gateway to everything happening on
           campus. Discover events, track your academics, connect with peers, and
@@ -69,7 +70,7 @@
       </div>
     </section>
 
-    <section id="features">
+    <section id="features" class="scroll-reveal">
       <h2>Campus360 Features</h2>
       <div class="features-list">
         <div class="feature-item">
@@ -159,7 +160,7 @@
       </div>
     </section>
 
-    <section id="testimonials">
+    <section id="testimonials" class="scroll-reveal">
       <h2>Testimonials (Click to learn more)</h2>
       <div class="testimonial-list">
         <blockquote>
@@ -180,38 +181,38 @@
       </div>
     </section>
 
-    <section id="faq">
+    <section id="faq" class="scroll-reveal">
       <h2>Frequently Asked Questions</h2>
       <div class="faq-list">
-        <div class="faq-item">
-          <strong>How do I join the forum?</strong>
+        <details class="faq-item">
+          <summary>How do I join the forum?</summary>
           <p>
             Simply sign up with your campus email and start participating in
             discussions.
           </p>
-        </div>
-        <div class="faq-item">
-          <strong>Is Campus360 free to use?</strong>
+        </details>
+        <details class="faq-item">
+          <summary>Is Campus360 free to use?</summary>
           <p>Yes, all features are free for students and staff.</p>
-        </div>
-        <div class="faq-item">
-          <strong>How can I report a lost item?</strong>
+        </details>
+        <details class="faq-item">
+          <summary>How can I report a lost item?</summary>
           <p>
             Go to the Lost and Found Corner and fill out the report form with
             details of your lost item.
           </p>
-        </div>
-        <div class="faq-item">
-          <strong>How are study resources recommended?</strong>
+        </details>
+        <details class="faq-item">
+          <summary>How are study resources recommended?</summary>
           <p>
             Our system analyzes your preferences and previous selections to
             suggest the best free resources online.
           </p>
-        </div>
+        </details>
       </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="scroll-reveal">
       <h2>About Us</h2>
       <p>
         Campus360 is dedicated to enhancing the student experience through
@@ -219,16 +220,16 @@
       </p>
     </section>
 
-    <section id="services">
+    <section id="services" class="scroll-reveal">
       <h2>Our Services</h2>
-      <ul>
-        <li>Events and Club activities</li>
-        <li>Lost & Found Corner</li>
-        <li>Student Forum</li>
-        <li>FAQs</li>
-        <li>Internship tracker</li>
-        <li>VTOP</li>
-      </ul>
+      <div class="services-grid">
+        <div class="service-card"><span class="service-icon">🎉</span> Events &amp; Club Activities</div>
+        <div class="service-card"><span class="service-icon">🔍</span> Lost &amp; Found Corner</div>
+        <div class="service-card"><span class="service-icon">💬</span> Student Forum</div>
+        <div class="service-card"><span class="service-icon">❓</span> FAQs</div>
+        <div class="service-card"><span class="service-icon">🌐</span> Internship Tracker</div>
+        <div class="service-card"><span class="service-icon">🔗</span> VTOP</div>
+      </div>
     </section>
 
     <footer id="contact">
@@ -252,7 +253,39 @@
     </footer>
 
     <script>
-      // Use an IIFE (Immediately Invoked Function Expression) to avoid scope conflicts
+      // === AUTH GATE ===
+      (async function() {
+        try {
+          const res = await fetch('php/auth.php?action=check');
+          const data = await res.json();
+          if (!data.loggedIn) {
+            window.location.href = 'login.html';
+            return;
+          }
+          // Personalize greeting
+          const heading = document.getElementById('welcomeHeading');
+          if (heading && data.user?.name) {
+            heading.textContent = 'Welcome, ' + data.user.name + '!';
+          }
+          // Show logout link instead of login
+          const authLink = document.getElementById('navAuthLink');
+          const authItem = document.getElementById('navAuthItem');
+          if (authLink) {
+            authLink.textContent = 'Logout';
+            authLink.href = '#';
+            authLink.addEventListener('click', async (e) => {
+              e.preventDefault();
+              await fetch('php/auth.php?action=logout');
+              window.location.href = 'login.html';
+            });
+          }
+        } catch (e) {
+          // If PHP not reachable (opened as file://), skip auth gate
+          console.warn('Auth check failed — WAMP may not be running.');
+        }
+      })();
+
+      // === DARK MODE TOGGLE ===
       (function () {
         const toggle = document.getElementById("darkModeToggle");
         const icon = document.getElementById("darkModeIcon");
@@ -260,14 +293,12 @@
         function setIcon() {
           const isDark = document.body.classList.contains("dark-mode");
           if (isDark) {
-            // Sun Icon (Switch to Light)
             icon.innerHTML =
               '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
             toggle.setAttribute("aria-label", "Switch to light mode");
           } else {
-            // Moon Icon (Switch to Dark)
             icon.innerHTML =
-              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6a82fb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path></svg>';
+              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path></svg>';
             toggle.setAttribute("aria-label", "Switch to dark mode");
           }
         }

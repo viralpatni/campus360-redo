@@ -1,60 +1,26 @@
-/* ===== REQUIRED BY MAAM ===== */
-
-// USER NAME + VISIT COUNTER
-let name = localStorage.getItem("name");
-let visits = localStorage.getItem("visits");
-
-if (!name) {
-  name = prompt("Enter your name:");
-  localStorage.setItem("name", name);
-  visits = 1;
-} else {
-  visits = Number(visits) + 1;
-}
-
-localStorage.setItem("visits", visits);
-
+// --- Scroll Reveal Animations ---
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("userGreeting").innerText =
-    "Welcome " + name + " | Visits: " + visits;
+  const revealElements = document.querySelectorAll(".scroll-reveal");
+
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    revealElements.forEach((el) => revealObserver.observe(el));
+  } else {
+    // Fallback: reveal everything immediately
+    revealElements.forEach((el) => el.classList.add("revealed"));
+  }
 });
-
-// HERO BACKGROUND IMAGE SLIDESHOW - INFINITE LOOP
-let images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"];
-let currentIndex = 0;
-
-document.addEventListener("DOMContentLoaded", () => {
-  const slideshow = document.getElementById("heroBgSlideshow");
-
-  // Create background image slides
-  images.forEach((img, index) => {
-    const slide = document.createElement("div");
-    slide.className = `hero-bg-slide ${index === 0 ? "active" : ""}`;
-    slide.style.backgroundImage = `url('${img}')`;
-    slideshow.appendChild(slide);
-  });
-
-  // Auto-advance slideshow every 4 seconds
-  setInterval(nextSlide, 4000);
-});
-
-function updateSlideshow() {
-  const slides = document.querySelectorAll(".hero-bg-slide");
-
-  slides.forEach((slide, index) => {
-    slide.classList.remove("active");
-    if (index === currentIndex) {
-      slide.classList.add("active");
-    }
-  });
-}
-
-function nextSlide() {
-  currentIndex = (currentIndex + 1) % images.length;
-  updateSlideshow();
-}
-
-/* ============================ */
 
 const externalLinks = {
   vtop: "https://vtopcc.vit.ac.in",
