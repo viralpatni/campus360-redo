@@ -594,11 +594,16 @@
       /* ===== RESPONSIVE ===== */
       @media (max-width: 1024px) {
         .forum-right { display: none; }
+        .mobile-search-card { display: block !important; }
       }
 
       @media (max-width: 768px) {
         .forum-left { display: none; }
         .forum-layout { padding: 0.8rem; }
+      }
+
+      .mobile-search-card {
+        display: none;
       }
 
       /* File input hidden */
@@ -656,6 +661,15 @@
 
       <!-- CENTER FEED -->
       <main class="forum-center">
+        <!-- Mobile/Tablet Search (visible when right sidebar is hidden) -->
+        <div class="card mobile-search-card">
+          <div class="card-title">🔍 Find People</div>
+          <input type="text" class="search-input" id="userSearchMobile" placeholder="Search by name or username..." />
+          <div id="searchResultsMobile">
+            <div class="empty-state" style="padding:0.5rem;">Type to search</div>
+          </div>
+        </div>
+
         <!-- Composer -->
         <div class="card composer" id="composer">
           <div class="composer-top">

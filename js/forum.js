@@ -411,15 +411,28 @@ async function respondFollow(followId, response) {
 
 // ===== SEARCH USERS =====
 let searchTimeout = null;
-document.getElementById('userSearch').addEventListener('input', (e) => {
+
+function handleSearchInput(e, resultsId) {
   clearTimeout(searchTimeout);
   const q = e.target.value.trim();
   if (q.length < 2) {
-    document.getElementById('searchResults').innerHTML = '<div class="empty-state" style="padding:0.5rem;">Type to search</div>';
+    document.getElementById(resultsId).innerHTML = '<div class="empty-state" style="padding:0.5rem;">Type to search</div>';
     return;
   }
   searchTimeout = setTimeout(() => searchUsers(q), 300);
+}
+
+document.getElementById('userSearch').addEventListener('input', (e) => {
+  handleSearchInput(e, 'searchResults');
 });
+
+// Mobile search (may not exist on page — use optional chaining)
+const mobileSearchEl = document.getElementById('userSearchMobile');
+if (mobileSearchEl) {
+  mobileSearchEl.addEventListener('input', (e) => {
+    handleSearchInput(e, 'searchResultsMobile');
+  });
+}
 
 async function searchUsers(query) {
   try {
@@ -427,39 +440,46 @@ async function searchUsers(query) {
     const data = await res.json();
     if (!data.success) return;
 
-    const container = document.getElementById('searchResults');
-    if (data.users.length === 0) {
-      container.innerHTML = '<div class="empty-state" style="padding:0.5rem;">No users found</div>';
-      return;
+    const resultsHtml = buildSearchResultsHtml(data.users);
+
+    // Update both containers (desktop and mobile)
+    document.getElementById('searchResults').innerHTML = resultsHtml;
+    const mobileResults = document.getElementById('searchResultsMobile');
+    if (mobileResults) mobileResults.innerHTML = resultsHtml;
+  } catch (e) {}
+}
+
+function buildSearchResultsHtml(users) {
+  if (users.length === 0) {
+    return '<div class="empty-state" style="padding:0.5rem;">No users found</div>';
+  }
+
+  return users.map(u => {
+    let btnClass = 'follow';
+    let btnText = 'Follow';
+    let btnAction = `sendFollow(${u.id}, this)`;
+
+    if (u.follow_status === 'accepted') {
+      btnClass = 'following';
+      btnText = 'Unfollow';
+      btnAction = `unfollowUser(${u.id}, this)`;
+    } else if (u.follow_status === 'pending') {
+      btnClass = 'pending';
+      btnText = 'Pending';
+      btnAction = '';
     }
 
-    container.innerHTML = data.users.map(u => {
-      let btnClass = 'follow';
-      let btnText = 'Follow';
-      let btnAction = `sendFollow(${u.id}, this)`;
-
-      if (u.follow_status === 'accepted') {
-        btnClass = 'following';
-        btnText = 'Unfollow';
-        btnAction = `unfollowUser(${u.id}, this)`;
-      } else if (u.follow_status === 'pending') {
-        btnClass = 'pending';
-        btnText = 'Pending';
-        btnAction = '';
-      }
-
-      return `
-        <div class="search-result-item">
-          <div class="follow-req-avatar">${u.name.charAt(0).toUpperCase()}</div>
-          <div class="follow-req-info">
-            <div class="follow-req-name">${escHtml(u.name)}</div>
-            <div class="follow-req-sub">@${escHtml(u.username)} · ${escHtml(u.regno)}</div>
-          </div>
-          <button class="follow-btn ${btnClass}" onclick="${btnAction}">${btnText}</button>
+    return `
+      <div class="search-result-item">
+        <div class="follow-req-avatar">${u.name.charAt(0).toUpperCase()}</div>
+        <div class="follow-req-info">
+          <div class="follow-req-name">${escHtml(u.name)}</div>
+          <div class="follow-req-sub">@${escHtml(u.username)} · ${escHtml(u.regno)}</div>
         </div>
-      `;
-    }).join('');
-  } catch (e) {}
+        <button class="follow-btn ${btnClass}" onclick="${btnAction}">${btnText}</button>
+      </div>
+    `;
+  }).join('');
 }
 
 async function sendFollow(userId, btn) {

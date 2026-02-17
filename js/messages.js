@@ -11,6 +11,7 @@ let activeConversationId = null;
 let lastMessageTime = null;
 let pollInterval = null;
 let conversations = [];
+let renderedMsgIds = new Set(); // track rendered message IDs to prevent duplicates
 
 // WebSocket
 const WS_URL = 'ws://localhost:8082';
@@ -237,6 +238,7 @@ async function sendInvite(userId) {
 async function openConversation(convId) {
   activeConversationId = convId;
   lastMessageTime = null;
+  renderedMsgIds.clear(); // reset deduplication on conversation switch
 
   // Update sidebar active state
   document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
@@ -305,9 +307,17 @@ function renderMessages(messages, append = false) {
 
   if (!append) {
     container.innerHTML = '';
+    renderedMsgIds.clear();
   }
 
   messages.forEach(msg => {
+    // Skip if we already rendered this message (prevents duplicates)
+    if (msg.id) {
+      const msgIdStr = String(msg.id);
+      if (renderedMsgIds.has(msgIdStr)) return;
+      renderedMsgIds.add(msgIdStr);
+    }
+
     const isSent = msg.sender_id == currentUser.id;
     const div = document.createElement('div');
     div.className = 'message ' + (isSent ? 'sent' : 'received');
@@ -326,7 +336,7 @@ function renderMessages(messages, append = false) {
     const contentHtml = msg.content ? `<div>${escHtml(msg.content)}</div>` : '';
 
     div.innerHTML = `
-      <div class="message-sender">${escHtml(msg.sender_name)}</div>
+      ${!isSent ? `<div class="message-sender">${escHtml(msg.sender_name)}</div>` : ''}
       <div class="message-bubble">
         ${contentHtml}
         ${mediaHtml}
@@ -368,6 +378,7 @@ async function sendTextMessage() {
     const data = await res.json();
     if (data.success) {
       // Immediately show the message
+      const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
       const localMsg = {
         id: data.message_id,
         sender_id: currentUser.id,
@@ -375,8 +386,9 @@ async function sendTextMessage() {
         message_type: 'text',
         content: content,
         file_path: null,
-        created_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
+        created_at: now
       };
+
       renderMessages([localMsg], true);
 
       // Broadcast via WebSocket for instant delivery
@@ -387,6 +399,9 @@ async function sendTextMessage() {
           message: localMsg,
         }));
       }
+
+      // Refresh conversation list preview
+      loadConversations();
     }
   } catch (e) { /* silent */ }
 }
@@ -431,14 +446,17 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
     const msgResult = await msgRes.json();
 
     if (msgResult.success) {
+      const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
       renderMessages([{
+        id: msgResult.message_id,
         sender_id: currentUser.id,
         sender_name: currentUser.name,
         message_type: type,
         content: '',
         file_path: uploadResult.file_path,
-        created_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
+        created_at: now
       }], true);
+      loadConversations();
     }
   } catch (e) {
     alert('Upload failed. Please try again.');
@@ -571,6 +589,7 @@ function connectWebSocket() {
 
       case 'new_message':
         // If we're viewing this conversation, append the message
+        // (renderMessages handles deduplication via renderedMsgIds)
         if (String(msg.conversationId) === String(activeConversationId)) {
           renderMessages([msg.message], true);
         }
