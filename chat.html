@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus360 - Chat</title>
+<meta name="description" content="Campus360 university social platform - messaging and chat">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#4f46e5;--primary-light:#818cf8;--primary-dark:#3730a3;
+  --bg:#f1f5f9;--surface:#fff;--surface-alt:#f8fafc;
+  --text:#0f172a;--text-secondary:#64748b;--text-muted:#94a3b8;
+  --border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 12px rgba(0,0,0,.1);--radius:12px;
+  --sent:#4f46e5;--received:#f1f5f9;--online:#22c55e;--offline:#94a3b8;
+  --unread:#ef4444;--green:#22c55e;--red:#ef4444;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
+.app{display:flex;height:100vh;width:100%}
+
+/* LEFT SIDEBAR */
+.sidebar{width:300px;min-width:300px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:10}
+.sidebar-header{padding:16px;border-bottom:1px solid var(--border)}
+.sidebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.logo{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px}
+.logout-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;padding:6px;border-radius:6px;transition:.15s}
+.logout-btn:hover{background:var(--surface-alt);color:var(--red)}
+.search-box{position:relative}
+.search-box input{width:100%;padding:10px 12px 10px 36px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--surface-alt);outline:none;transition:.2s}
+.search-box input:focus{border-color:var(--primary-light);box-shadow:0 0 0 3px rgba(79,70,229,.1)}
+.search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-muted);width:16px;height:16px}
+
+/* SIDEBAR TABS */
+.sidebar-tabs{display:flex;border-bottom:1px solid var(--border)}
+.sidebar-tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;border:none;background:none;transition:.15s;position:relative;font-family:inherit}
+.sidebar-tab.active{color:var(--primary);box-shadow:inset 0 -2px 0 var(--primary)}
+.sidebar-tab:hover{background:var(--surface-alt)}
+.tab-badge{position:absolute;top:6px;right:calc(50% - 30px);background:var(--unread);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 4px}
+.tab-badge.show{display:flex}
+.new-chat-btn{margin:10px 14px;padding:10px;border:none;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.2s}
+.new-chat-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+
+/* CONVERSATION LIST */
+.tab-content{display:none;flex:1;overflow-y:auto;flex-direction:column}
+.tab-content.active{display:flex}
+.tab-content::-webkit-scrollbar{width:4px}
+.tab-content::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.conv-item{display:flex;align-items:center;padding:10px 14px;cursor:pointer;transition:.15s;gap:10px;border-bottom:1px solid var(--border)}
+.conv-item:hover{background:var(--surface-alt)}
+.conv-item.active{background:rgba(79,70,229,.08)}
+.conv-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--primary-light),var(--primary));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0}
+.conv-info{flex:1;min-width:0}
+.conv-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.conv-preview{font-size:12px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.conv-time{font-size:11px;color:var(--text-muted)}
+.empty-list{padding:40px 20px;text-align:center;color:var(--text-muted);font-size:13px;line-height:1.6}
+
+/* NOTIFICATION ITEMS */
+.notif-item{padding:14px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.notif-top{display:flex;align-items:center;gap:10px}
+.notif-info{flex:1}
+.notif-name{font-size:14px;font-weight:600}
+.notif-sub{font-size:12px;color:var(--text-secondary)}
+.notif-time{font-size:11px;color:var(--text-muted)}
+.notif-actions{display:flex;gap:6px;padding-left:52px}
+.notif-actions button{padding:6px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:.15s;font-family:inherit}
+.accept-btn{background:var(--green);color:#fff}
+.accept-btn:hover{opacity:.85}
+.reject-btn{background:var(--surface-alt);color:var(--text-secondary);border:1px solid var(--border)!important}
+.reject-btn:hover{border-color:var(--red)!important;color:var(--red)}
+
+/* CENTER PANEL */
+.chat-panel{flex:1;display:flex;flex-direction:column;background:var(--bg);min-width:0}
+.chat-header{background:var(--surface);padding:12px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+.back-btn{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text)}
+.chat-header-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--primary-light),var(--primary));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0}
+.chat-header-info{flex:1}
+.chat-header-name{font-size:15px;font-weight:600}
+.chat-header-status{font-size:12px;color:var(--text-muted)}
+.chat-header-actions{display:flex;gap:4px}
+.chat-header-actions button{width:36px;height:36px;border:none;background:none;border-radius:8px;cursor:pointer;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:.15s}
+.chat-header-actions button:hover{background:var(--surface-alt);color:var(--primary)}
+
+/* MESSAGES */
+.messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:4px}
+.messages::-webkit-scrollbar{width:6px}
+.messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.msg{max-width:65%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;word-wrap:break-word}
+.msg.sent{align-self:flex-end;background:var(--sent);color:#fff;border-bottom-right-radius:4px}
+.msg.received{align-self:flex-start;background:var(--surface);border-bottom-left-radius:4px;box-shadow:var(--shadow)}
+.msg-sender{font-size:11px;font-weight:600;color:var(--primary);margin-bottom:2px}
+.msg-time{font-size:10px;color:var(--text-muted);margin-top:2px;padding:0 4px}
+.msg-time.sent-time{align-self:flex-end;text-align:right}
+.msg-time.received-time{align-self:flex-start}
+.msg-img{max-width:240px;border-radius:12px;cursor:pointer;display:block;margin-bottom:4px}
+.date-divider{text-align:center;margin:16px 0 8px;font-size:11px;color:var(--text-muted)}
+.date-divider span{background:var(--bg);padding:4px 12px;border-radius:12px;border:1px solid var(--border)}
+
+/* EMPTY STATE */
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-muted);gap:12px}
+.empty-state svg{width:80px;height:80px;opacity:.3}
+.empty-state p{font-size:15px}
+
+/* INPUT BAR */
+.input-bar{background:var(--surface);padding:12px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.input-bar button{width:36px;height:36px;border:none;background:none;border-radius:8px;cursor:pointer;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
+.input-bar button:hover{background:var(--surface-alt);color:var(--primary)}
+#msgInput{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:20px;font-size:14px;outline:none;background:var(--surface-alt);transition:.2s;font-family:inherit}
+#msgInput:focus{border-color:var(--primary-light);box-shadow:0 0 0 3px rgba(79,70,229,.08)}
+.send-btn{background:linear-gradient(135deg,var(--primary),var(--primary-light))!important;color:#fff!important;border-radius:50%!important;transition:.2s!important}
+.send-btn:hover{transform:scale(1.08)!important;box-shadow:var(--shadow-md)!important}
+
+/* RIGHT SIDEBAR */
+.info-panel{width:280px;min-width:280px;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:32px 20px;gap:16px;overflow-y:auto}
+.info-panel.hidden{display:none}
+.info-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary-light),var(--primary));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:28px;border:3px solid var(--primary-light);box-shadow:var(--shadow-md)}
+.info-name{font-size:18px;font-weight:700;margin-top:4px}
+.info-status{font-size:13px;color:var(--text-secondary)}
+.info-bio{font-size:13px;color:var(--text-secondary);text-align:center;line-height:1.5;padding:0 8px}
+.info-actions{display:flex;flex-direction:column;gap:8px;width:100%;margin-top:8px}
+.info-actions button{padding:10px;border:1px solid var(--border);background:var(--surface);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.info-actions button:hover{border-color:var(--primary);color:var(--primary);background:rgba(79,70,229,.04)}
+
+/* SEARCH MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border-radius:16px;width:100%;max-width:440px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-size:16px;font-weight:700}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);padding:4px 8px;border-radius:6px}
+.modal-close:hover{background:var(--surface-alt)}
+.modal-body{padding:16px 20px;overflow-y:auto;flex:1}
+.modal-search{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;outline:none;background:var(--surface-alt);font-family:inherit;margin-bottom:12px}
+.modal-search:focus{border-color:var(--primary-light);box-shadow:0 0 0 3px rgba(79,70,229,.1)}
+.search-result{display:flex;align-items:center;padding:10px;border-radius:8px;cursor:pointer;gap:10px;transition:.15s}
+.search-result:hover{background:var(--surface-alt)}
+.search-result-info{flex:1}
+.search-result-name{font-size:14px;font-weight:600}
+.search-result-detail{font-size:12px;color:var(--text-secondary)}
+.invite-btn{padding:6px 14px;background:var(--primary);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:.15s;flex-shrink:0}
+.invite-btn:hover{opacity:.85}
+.invite-btn:disabled{opacity:.5;cursor:not-allowed}
+.search-empty{text-align:center;padding:20px;color:var(--text-muted);font-size:13px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--text);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:200;opacity:0;transition:.3s;pointer-events:none;box-shadow:var(--shadow-md)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* MOBILE */
+@media(max-width:900px){.info-panel{display:none!important}}
+@media(max-width:640px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:20;width:100%;transition:transform .25s}
+  .sidebar.hidden-mobile{transform:translateX(-100%)}
+  .back-btn{display:flex}
+  .msg{max-width:80%}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-top">
+        <div class="logo">Campus360</div>
+        <button class="logout-btn" onclick="logout()" title="Logout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search conversations...">
+      </div>
+    </div>
+    <div class="sidebar-tabs">
+      <button class="sidebar-tab active" data-tab="chats" onclick="switchTab('chats')">💬 Chats</button>
+      <button class="sidebar-tab" data-tab="notifications" onclick="switchTab('notifications')">
+        🔔 Notifications
+        <span class="tab-badge" id="notifBadge">0</span>
+      </button>
+    </div>
+    <button class="new-chat-btn" onclick="openSearchModal()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Chat
+    </button>
+    <!-- CHATS TAB -->
+    <div class="tab-content active" id="tabChats">
+      <div id="convList"></div>
+    </div>
+    <!-- NOTIFICATIONS TAB -->
+    <div class="tab-content" id="tabNotifications">
+      <div id="notifList"></div>
+    </div>
+  </aside>
+
+  <!-- CENTER PANEL -->
+  <main class="chat-panel" id="chatPanel">
+    <div class="empty-state" id="emptyState">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <p>Select a conversation to start chatting</p>
+    </div>
+    <div id="chatView" style="display:none;flex-direction:column;flex:1;min-height:0">
+      <div class="chat-header">
+        <button class="back-btn" onclick="showSidebar()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="chat-header-avatar" id="chatAvatar"></div>
+        <div class="chat-header-info">
+          <div class="chat-header-name" id="chatName"></div>
+          <div class="chat-header-status" id="chatStatus">Direct message</div>
+        </div>
+        <div class="chat-header-actions">
+          <button title="Voice Call"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></button>
+          <button title="Video Call"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+          <button title="Info" onclick="toggleInfoPanel()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+        </div>
+      </div>
+      <div class="messages" id="messages"></div>
+      <div class="input-bar">
+        <button title="Emoji" onclick="insertEmoji()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></button>
+        <button title="Attach"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg></button>
+        <input type="text" id="msgInput" placeholder="Type a message..." autocomplete="off">
+        <button class="send-btn" title="Send" onclick="sendMessage()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="info-panel hidden" id="infoPanel">
+    <div class="info-avatar" id="infoAvatar"></div>
+    <div class="info-name" id="infoName"></div>
+    <div class="info-status" id="infoStatus"></div>
+    <div class="info-bio" id="infoBio"></div>
+    <div class="info-actions">
+      <button>View Profile</button>
+      <button>Start Group Chat</button>
+    </div>
+  </aside>
+</div>
+
+<!-- SEARCH MODAL -->
+<div class="modal-overlay" id="searchModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Find Users</h3>
+      <button class="modal-close" onclick="closeSearchModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="text" class="modal-search" id="userSearchInput" placeholder="Search by name, username, or reg no..." autocomplete="off">
+      <div id="searchResults"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="js/chat.js"></script>
+</body>
+</html>

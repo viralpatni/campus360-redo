@@ -2,60 +2,43 @@
 // Campus360 — Forum JS (forum.html)
 // ============================================
 
-const AUTH_API = 'php/auth.php';
-const CHAT_API = 'php/chat.php';
+const AUTH_API  = 'php/auth.php';
+const FORUM_API = 'php/forum_api.php';
 const UPLOAD_API = 'php/upload.php';
 
 let currentUser = null;
-let activeConversationId = null;
-let lastMessageTime = null;
-let pollInterval = null;
-let conversations = [];
+let currentPage = 1;
+let postVisibility = 'public';
+let selectedImage = null;
 
-// ===== INITIALIZATION =====
+// ===== INIT =====
 (async function init() {
-  // Check auth
   try {
     const res = await fetch(AUTH_API + '?action=check');
     const data = await res.json();
-    if (!data.loggedIn) {
-      window.location.href = 'login.html';
-      return;
-    }
+    if (!data.loggedIn) { window.location.href = 'login.html'; return; }
     currentUser = data.user;
-    document.getElementById('currentUserName').textContent = currentUser.name;
+    document.getElementById('userName').textContent = currentUser.name;
+
+    // Set profile
+    const initial = currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('myAvatar').textContent = initial;
+    document.getElementById('composerAvatar').textContent = initial;
+    document.getElementById('myName').textContent = currentUser.name;
+    document.getElementById('myUsername').textContent = '@' + currentUser.username;
+
+    loadProfile();
+    loadFeed();
+    loadFollowRequests();
+
+    // Poll for new stuff every 5s
+    setInterval(() => {
+      loadFollowRequests();
+    }, 10000);
   } catch (e) {
     window.location.href = 'login.html';
-    return;
   }
-
-  // Load data
-  loadConversations();
-  loadInvites();
-
-  // Poll for new messages every 2s
-  pollInterval = setInterval(() => {
-    if (activeConversationId) {
-      loadMessages(activeConversationId, true);
-    }
-    loadInvites();
-  }, 2000);
 })();
-
-// ===== SIDEBAR TABS =====
-document.querySelectorAll('.sidebar-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
-  });
-});
-
-// ===== MOBILE SIDEBAR TOGGLE =====
-document.getElementById('toggleSidebar')?.addEventListener('click', () => {
-  document.getElementById('sidebar').classList.toggle('hidden');
-});
 
 // ===== LOGOUT =====
 document.getElementById('logoutBtn').addEventListener('click', async () => {
@@ -63,122 +46,376 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   window.location.href = 'login.html';
 });
 
-// ===== LOAD CONVERSATIONS =====
-async function loadConversations() {
+// ===== PROFILE =====
+async function loadProfile() {
   try {
-    const res = await fetch(CHAT_API + '?action=get_conversations');
+    const res = await fetch(FORUM_API + '?action=get_profile');
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('myPosts').textContent = data.user.post_count;
+      document.getElementById('myFollowers').textContent = data.user.follower_count;
+      document.getElementById('myFollowing').textContent = data.user.following_count;
+    }
+  } catch (e) {}
+}
+
+// ===== FEED =====
+async function loadFeed(page = 1) {
+  try {
+    const res = await fetch(FORUM_API + '?action=get_feed&page=' + page);
     const data = await res.json();
     if (!data.success) return;
 
-    conversations = data.conversations;
-    renderConversations(conversations);
-  } catch (e) { /* silent */ }
-}
+    const container = document.getElementById('feedContainer');
+    if (page === 1) container.innerHTML = '';
 
-function renderConversations(convos) {
-  const list = document.getElementById('conversationList');
-  if (!convos.length) {
-    list.innerHTML = '<div class="sidebar-empty">No conversations yet.<br>Search for users to start chatting!</div>';
-    return;
-  }
-
-  list.innerHTML = convos.map(c => {
-    const isGroup = c.type === 'group';
-    const name = isGroup ? c.group_name : (c.other_user?.name || 'Unknown');
-    const sub = isGroup ? 'Group' : (c.other_user?.username || '');
-    const initial = name.charAt(0).toUpperCase();
-    const preview = c.last_message ? truncate(c.last_message, 35) : 'No messages yet';
-    const time = c.last_message_time ? formatTime(c.last_message_time) : '';
-    const activeClass = c.id == activeConversationId ? ' active' : '';
-
-    return `
-      <div class="sidebar-item${activeClass}" data-conv-id="${c.id}" onclick="openConversation(${c.id})">
-        <div class="sidebar-avatar${isGroup ? ' group' : ''}">${initial}</div>
-        <div class="sidebar-item-info">
-          <div class="sidebar-item-name">${escHtml(name)}</div>
-          <div class="sidebar-item-preview">${escHtml(preview)}</div>
-        </div>
-        <div class="sidebar-item-meta">${time}</div>
-      </div>
-    `;
-  }).join('');
-}
-
-// Filter conversations
-document.getElementById('filterConversations').addEventListener('input', (e) => {
-  const q = e.target.value.toLowerCase();
-  const filtered = conversations.filter(c => {
-    const name = c.type === 'group' ? c.group_name : (c.other_user?.name || '');
-    return name.toLowerCase().includes(q);
-  });
-  renderConversations(filtered);
-});
-
-// ===== LOAD INVITES =====
-async function loadInvites() {
-  try {
-    const res = await fetch(CHAT_API + '?action=get_invites&type=received');
-    const data = await res.json();
-    if (!data.success) return;
-
-    const badge = document.getElementById('inviteBadge');
-    if (data.invites.length > 0) {
-      badge.textContent = data.invites.length;
-      badge.style.display = 'inline';
-    } else {
-      badge.style.display = 'none';
+    if (data.posts.length === 0 && page === 1) {
+      container.innerHTML = `
+        <div class="card">
+          <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <p>No posts yet. Be the first to share something!</p>
+          </div>
+        </div>`;
+      document.getElementById('loadMoreBtn').style.display = 'none';
+      return;
     }
 
-    renderInvites(data.invites);
-  } catch (e) { /* silent */ }
+    data.posts.forEach(post => {
+      container.appendChild(createPostElement(post));
+    });
+
+    document.getElementById('loadMoreBtn').style.display =
+      data.posts.length >= 20 ? 'block' : 'none';
+
+    currentPage = page;
+  } catch (e) { console.error('Feed error:', e); }
 }
 
-function renderInvites(invites) {
-  const list = document.getElementById('inviteList');
-  if (!invites.length) {
-    list.innerHTML = '<div class="sidebar-empty">No pending invites</div>';
-    return;
+function loadMorePosts() {
+  loadFeed(currentPage + 1);
+}
+
+function createPostElement(post) {
+  const card = document.createElement('div');
+  card.className = 'card post-card';
+  card.id = 'post-' + post.id;
+
+  const isMine = String(post.user_id) === String(currentUser.id);
+  const liked = parseInt(post.liked_by_me) > 0;
+  const initial = (post.author_name || '?').charAt(0).toUpperCase();
+  const time = formatTime(post.created_at);
+
+  let imageHtml = '';
+  if (post.image_path) {
+    imageHtml = `<img class="post-image" src="${escHtml(post.image_path)}" alt="Post image" onclick="window.open('${escHtml(post.image_path)}','_blank')" />`;
   }
 
-  list.innerHTML = invites.map(inv => `
-    <div class="sidebar-item">
-      <div class="sidebar-avatar">${inv.name.charAt(0).toUpperCase()}</div>
-      <div class="sidebar-item-info">
-        <div class="sidebar-item-name">${escHtml(inv.name)}</div>
-        <div class="sidebar-item-preview">@${escHtml(inv.username)} · ${escHtml(inv.regno)}</div>
-        <div class="invite-actions">
-          <button class="invite-btn accept" onclick="respondInvite(${inv.id}, 'accepted')">✓ Accept</button>
-          <button class="invite-btn reject" onclick="respondInvite(${inv.id}, 'rejected')">✕ Reject</button>
+  card.innerHTML = `
+    <div class="post-header">
+      <div class="post-avatar">${initial}</div>
+      <div>
+        <div class="post-author-name">${escHtml(post.author_name)}</div>
+        <div class="post-meta">
+          @${escHtml(post.author_username)} · ${time}
+          <span class="post-badge ${post.visibility}">${post.visibility === 'public' ? '🌍 Public' : '🔒 Private'}</span>
         </div>
+      </div>
+      ${isMine ? `<button class="post-delete" onclick="deletePost(${post.id})" title="Delete post">🗑</button>` : ''}
+    </div>
+    ${post.content ? `<div class="post-content">${escHtml(post.content)}</div>` : ''}
+    ${imageHtml}
+    <div class="post-actions">
+      <button class="post-action-btn ${liked ? 'liked' : ''}" onclick="toggleLike(${post.id}, this)">
+        <span class="icon">${liked ? '❤️' : '🤍'}</span>
+        <span class="like-count">${post.like_count}</span>
+      </button>
+      <button class="post-action-btn" onclick="toggleComments(${post.id})">
+        <span class="icon">💬</span>
+        <span>${post.comment_count} Comments</span>
+      </button>
+    </div>
+    <div class="comments-section" id="comments-${post.id}">
+      <div class="comments-list" id="comments-list-${post.id}"></div>
+      <div class="comment-input-row">
+        <input type="text" placeholder="Write a comment..." id="comment-input-${post.id}" onkeydown="if(event.key==='Enter')addComment(${post.id})" />
+        <button class="comment-submit" onclick="addComment(${post.id})">Send</button>
       </div>
     </div>
-  `).join('');
+  `;
+
+  return card;
 }
 
-async function respondInvite(inviteId, response) {
-  const formData = new FormData();
-  formData.append('action', 'respond_invite');
-  formData.append('invite_id', inviteId);
-  formData.append('response', response);
+// ===== CREATE POST =====
+async function createPost() {
+  const textarea = document.getElementById('postContent');
+  const content = textarea.value.trim();
+  const btn = document.getElementById('postBtn');
 
-  const res = await fetch(CHAT_API, { method: 'POST', body: formData });
-  const data = await res.json();
-
-  if (data.success) {
-    loadInvites();
-    if (response === 'accepted') {
-      loadConversations();
-    }
+  if (!content && !selectedImage) {
+    showToast('Please write something or attach an image');
+    return;
   }
+
+  btn.disabled = true;
+  btn.textContent = 'Posting...';
+
+  try {
+    let imagePath = null;
+
+    // Upload image if selected
+    if (selectedImage) {
+      const uploadData = new FormData();
+      uploadData.append('file', selectedImage);
+      uploadData.append('type', 'image');
+      const uploadRes = await fetch(UPLOAD_API, { method: 'POST', body: uploadData });
+      const uploadResult = await uploadRes.json();
+      if (uploadResult.success) {
+        imagePath = uploadResult.file_path;
+      } else {
+        showToast(uploadResult.error || 'Image upload failed');
+        btn.disabled = false;
+        btn.textContent = 'Post';
+        return;
+      }
+    }
+
+    const formData = new FormData();
+    formData.append('action', 'create_post');
+    formData.append('content', content);
+    formData.append('visibility', postVisibility);
+    if (imagePath) formData.append('image_path', imagePath);
+
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      textarea.value = '';
+      selectedImage = null;
+      document.getElementById('imagePreviewName').textContent = '';
+      document.getElementById('postImageInput').value = '';
+      showToast('Post published! 🎉');
+      loadFeed(1);
+      loadProfile();
+    } else {
+      showToast(data.error || 'Failed to create post');
+    }
+  } catch (e) {
+    showToast('Network error');
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Post';
+}
+
+// ===== VISIBILITY TOGGLE =====
+function toggleVisibility() {
+  const btn = document.getElementById('visToggle');
+  if (postVisibility === 'public') {
+    postVisibility = 'private';
+    btn.innerHTML = '🔒 Private';
+    btn.classList.add('private');
+  } else {
+    postVisibility = 'public';
+    btn.innerHTML = '🌍 Public';
+    btn.classList.remove('private');
+  }
+}
+
+// ===== IMAGE ATTACH =====
+document.getElementById('imageAttachBtn').addEventListener('click', () => {
+  document.getElementById('postImageInput').click();
+});
+
+document.getElementById('postImageInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    selectedImage = file;
+    document.getElementById('imagePreviewName').textContent = file.name;
+  }
+});
+
+// ===== LIKE / UNLIKE =====
+async function toggleLike(postId, btn) {
+  try {
+    const formData = new FormData();
+    formData.append('action', 'like_post');
+    formData.append('post_id', postId);
+
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      const icon = btn.querySelector('.icon');
+      const count = btn.querySelector('.like-count');
+      const current = parseInt(count.textContent);
+
+      if (data.action === 'liked') {
+        btn.classList.add('liked');
+        icon.textContent = '❤️';
+        count.textContent = current + 1;
+      } else {
+        btn.classList.remove('liked');
+        icon.textContent = '🤍';
+        count.textContent = Math.max(0, current - 1);
+      }
+    }
+  } catch (e) {}
+}
+
+// ===== COMMENTS =====
+async function toggleComments(postId) {
+  const section = document.getElementById('comments-' + postId);
+  if (section.classList.contains('open')) {
+    section.classList.remove('open');
+    return;
+  }
+
+  section.classList.add('open');
+  await loadComments(postId);
+}
+
+async function loadComments(postId) {
+  try {
+    const res = await fetch(FORUM_API + '?action=get_comments&post_id=' + postId);
+    const data = await res.json();
+    if (!data.success) return;
+
+    const list = document.getElementById('comments-list-' + postId);
+    if (data.comments.length === 0) {
+      list.innerHTML = '<div style="font-size:0.78rem; color:rgba(255,255,255,0.3); padding:0.3rem 0;">No comments yet</div>';
+      return;
+    }
+
+    list.innerHTML = data.comments.map(c => `
+      <div class="comment-item">
+        <div class="comment-avatar">${(c.author_name || '?').charAt(0).toUpperCase()}</div>
+        <div class="comment-body">
+          <div class="comment-author">${escHtml(c.author_name)}</div>
+          <div class="comment-text">${escHtml(c.content)}</div>
+          <div class="comment-time">${formatTime(c.created_at)}</div>
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+async function addComment(postId) {
+  const input = document.getElementById('comment-input-' + postId);
+  const content = input.value.trim();
+  if (!content) return;
+
+  input.value = '';
+
+  try {
+    const formData = new FormData();
+    formData.append('action', 'add_comment');
+    formData.append('post_id', postId);
+    formData.append('content', content);
+
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      await loadComments(postId);
+      // Update comment count in the post
+      const postEl = document.getElementById('post-' + postId);
+      if (postEl) {
+        const commentBtn = postEl.querySelectorAll('.post-action-btn')[1];
+        if (commentBtn) {
+          const span = commentBtn.querySelector('span:last-child');
+          const match = span.textContent.match(/(\d+)/);
+          if (match) {
+            span.textContent = (parseInt(match[1]) + 1) + ' Comments';
+          }
+        }
+      }
+    }
+  } catch (e) {}
+}
+
+// ===== DELETE POST =====
+async function deletePost(postId) {
+  if (!confirm('Delete this post?')) return;
+
+  try {
+    const formData = new FormData();
+    formData.append('action', 'delete_post');
+    formData.append('post_id', postId);
+
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      const el = document.getElementById('post-' + postId);
+      if (el) el.remove();
+      showToast('Post deleted');
+      loadProfile();
+    }
+  } catch (e) {}
+}
+
+// ===== FOLLOW REQUESTS =====
+async function loadFollowRequests() {
+  try {
+    const res = await fetch(FORUM_API + '?action=get_follow_requests');
+    const data = await res.json();
+    if (!data.success) return;
+
+    const badge = document.getElementById('reqBadge');
+    badge.textContent = data.requests.length > 0 ? `(${data.requests.length})` : '';
+
+    const list = document.getElementById('followReqList');
+    if (data.requests.length === 0) {
+      list.innerHTML = '<div class="empty-state" style="padding:0.5rem;">No pending requests</div>';
+      return;
+    }
+
+    list.innerHTML = data.requests.map(r => `
+      <div class="follow-req-item" id="freq-${r.id}">
+        <div class="follow-req-avatar">${r.name.charAt(0).toUpperCase()}</div>
+        <div class="follow-req-info">
+          <div class="follow-req-name">${escHtml(r.name)}</div>
+          <div class="follow-req-sub">@${escHtml(r.username)}</div>
+        </div>
+        <div class="follow-req-actions">
+          <button class="follow-req-btn accept" onclick="respondFollow(${r.id}, 'accepted')">✓</button>
+          <button class="follow-req-btn reject" onclick="respondFollow(${r.id}, 'rejected')">✕</button>
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+async function respondFollow(followId, response) {
+  try {
+    const formData = new FormData();
+    formData.append('action', 'respond_follow');
+    formData.append('follow_id', followId);
+    formData.append('response', response);
+
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      const el = document.getElementById('freq-' + followId);
+      if (el) el.remove();
+      showToast(response === 'accepted' ? 'Follow request accepted!' : 'Follow request rejected');
+      loadFollowRequests();
+      loadProfile();
+      if (response === 'accepted') loadFeed(1);
+    }
+  } catch (e) {}
 }
 
 // ===== SEARCH USERS =====
 let searchTimeout = null;
-document.getElementById('userSearchInput').addEventListener('input', (e) => {
+document.getElementById('userSearch').addEventListener('input', (e) => {
   clearTimeout(searchTimeout);
   const q = e.target.value.trim();
   if (q.length < 2) {
-    document.getElementById('searchResults').innerHTML = '<div class="sidebar-empty">Type at least 2 characters to search</div>';
+    document.getElementById('searchResults').innerHTML = '<div class="empty-state" style="padding:0.5rem;">Type to search</div>';
     return;
   }
   searchTimeout = setTimeout(() => searchUsers(q), 300);
@@ -186,347 +423,83 @@ document.getElementById('userSearchInput').addEventListener('input', (e) => {
 
 async function searchUsers(query) {
   try {
-    const res = await fetch(CHAT_API + '?action=search_users&q=' + encodeURIComponent(query));
+    const res = await fetch(FORUM_API + '?action=search_users&q=' + encodeURIComponent(query));
     const data = await res.json();
     if (!data.success) return;
 
-    const list = document.getElementById('searchResults');
-    if (!data.users.length) {
-      list.innerHTML = '<div class="sidebar-empty">No users found</div>';
+    const container = document.getElementById('searchResults');
+    if (data.users.length === 0) {
+      container.innerHTML = '<div class="empty-state" style="padding:0.5rem;">No users found</div>';
       return;
     }
 
-    list.innerHTML = data.users.map(u => `
-      <div class="sidebar-item">
-        <div class="sidebar-avatar">${u.name.charAt(0).toUpperCase()}</div>
-        <div class="sidebar-item-info">
-          <div class="sidebar-item-name">${escHtml(u.name)}</div>
-          <div class="sidebar-item-preview">@${escHtml(u.username)} · ${escHtml(u.regno)}</div>
-        </div>
-        <button class="invite-btn accept" onclick="sendInvite(${u.id})" style="flex-shrink:0">Invite</button>
-      </div>
-    `).join('');
-  } catch (e) { /* silent */ }
-}
+    container.innerHTML = data.users.map(u => {
+      let btnClass = 'follow';
+      let btnText = 'Follow';
+      let btnAction = `sendFollow(${u.id}, this)`;
 
-async function sendInvite(userId) {
-  const formData = new FormData();
-  formData.append('action', 'send_invite');
-  formData.append('to_user', userId);
-
-  const res = await fetch(CHAT_API, { method: 'POST', body: formData });
-  const data = await res.json();
-
-  if (data.success) {
-    alert(data.message || 'Invite sent!');
-  } else {
-    alert(data.error || 'Could not send invite');
-  }
-}
-
-// ===== OPEN CONVERSATION =====
-async function openConversation(convId) {
-  activeConversationId = convId;
-  lastMessageTime = null;
-
-  // Update sidebar active state
-  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-  const activeEl = document.querySelector(`[data-conv-id="${convId}"]`);
-  if (activeEl) activeEl.classList.add('active');
-
-  // Find conversation info
-  const conv = conversations.find(c => c.id == convId);
-
-  // Show chat area
-  document.getElementById('chatEmpty').style.display = 'none';
-  const activeChat = document.getElementById('activeChat');
-  activeChat.style.display = 'flex';
-
-  // Set header
-  const isGroup = conv?.type === 'group';
-  const name = isGroup ? conv.group_name : (conv?.other_user?.name || 'Chat');
-  const sub = isGroup
-    ? 'Group Chat'
-    : (conv?.other_user ? `@${conv.other_user.username} · ${conv.other_user.regno}` : '');
-
-  document.getElementById('chatName').textContent = name;
-  document.getElementById('chatSub').textContent = sub;
-  document.getElementById('chatAvatar').textContent = name.charAt(0).toUpperCase();
-  document.getElementById('chatAvatar').className = 'sidebar-avatar' + (isGroup ? ' group' : '');
-  document.getElementById('viewMembersBtn').style.display = isGroup ? 'inline-block' : 'none';
-
-  // Load messages
-  await loadMessages(convId, false);
-
-  // Hide sidebar on mobile
-  if (window.innerWidth <= 768) {
-    document.getElementById('sidebar').classList.add('hidden');
-  }
-}
-
-// ===== LOAD MESSAGES =====
-async function loadMessages(convId, polling = false) {
-  let url = CHAT_API + '?action=get_messages&conversation_id=' + convId;
-  if (polling && lastMessageTime) {
-    url += '&after=' + encodeURIComponent(lastMessageTime);
-  }
-
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (!data.success || convId != activeConversationId) return;
-
-    if (!polling) {
-      // Full load
-      renderMessages(data.messages, false);
-    } else if (data.messages.length > 0) {
-      // Append new messages
-      renderMessages(data.messages, true);
-    }
-
-    // Track last message time
-    if (data.messages.length > 0) {
-      lastMessageTime = data.messages[data.messages.length - 1].created_at;
-    }
-  } catch (e) { /* silent */ }
-}
-
-function renderMessages(messages, append = false) {
-  const container = document.getElementById('chatMessages');
-
-  if (!append) {
-    container.innerHTML = '';
-  }
-
-  messages.forEach(msg => {
-    const isSent = msg.sender_id == currentUser.id;
-    const div = document.createElement('div');
-    div.className = 'message ' + (isSent ? 'sent' : 'received');
-
-    let mediaHtml = '';
-    if (msg.file_path) {
-      if (msg.message_type === 'image') {
-        mediaHtml = `<div class="message-media"><img src="${escHtml(msg.file_path)}" alt="Image" onclick="window.open('${escHtml(msg.file_path)}','_blank')" /></div>`;
-      } else if (msg.message_type === 'video') {
-        mediaHtml = `<div class="message-media"><video src="${escHtml(msg.file_path)}" controls></video></div>`;
-      } else if (msg.message_type === 'audio') {
-        mediaHtml = `<div class="message-media"><audio src="${escHtml(msg.file_path)}" controls></audio></div>`;
+      if (u.follow_status === 'accepted') {
+        btnClass = 'following';
+        btnText = 'Unfollow';
+        btnAction = `unfollowUser(${u.id}, this)`;
+      } else if (u.follow_status === 'pending') {
+        btnClass = 'pending';
+        btnText = 'Pending';
+        btnAction = '';
       }
-    }
 
-    const contentHtml = msg.content ? `<div>${escHtml(msg.content)}</div>` : '';
-
-    div.innerHTML = `
-      <div class="message-sender">${escHtml(msg.sender_name)}</div>
-      <div class="message-bubble">
-        ${contentHtml}
-        ${mediaHtml}
-      </div>
-      <div class="message-time">${formatTime(msg.created_at)}</div>
-    `;
-
-    container.appendChild(div);
-  });
-
-  // Scroll to bottom
-  container.scrollTop = container.scrollHeight;
-}
-
-// ===== SEND MESSAGE =====
-document.getElementById('sendBtn').addEventListener('click', sendTextMessage);
-document.getElementById('messageInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendTextMessage();
-  }
-});
-
-async function sendTextMessage() {
-  const input = document.getElementById('messageInput');
-  const content = input.value.trim();
-  if (!content || !activeConversationId) return;
-
-  input.value = '';
-
-  const formData = new FormData();
-  formData.append('action', 'send_message');
-  formData.append('conversation_id', activeConversationId);
-  formData.append('message_type', 'text');
-  formData.append('content', content);
-
-  try {
-    const res = await fetch(CHAT_API, { method: 'POST', body: formData });
-    const data = await res.json();
-    if (data.success) {
-      // Immediately show the message
-      renderMessages([{
-        sender_id: currentUser.id,
-        sender_name: currentUser.name,
-        message_type: 'text',
-        content: content,
-        file_path: null,
-        created_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
-      }], true);
-    }
-  } catch (e) { /* silent */ }
-}
-
-// ===== FILE UPLOAD =====
-document.getElementById('attachBtn').addEventListener('click', () => {
-  document.getElementById('fileInput').click();
-});
-
-document.getElementById('fileInput').addEventListener('change', async (e) => {
-  const file = e.target.files[0];
-  if (!file || !activeConversationId) return;
-
-  // Determine type
-  let type = 'image';
-  if (file.type.startsWith('video/')) type = 'video';
-  else if (file.type.startsWith('audio/')) type = 'audio';
-
-  // Upload file
-  const uploadData = new FormData();
-  uploadData.append('file', file);
-  uploadData.append('type', type);
-
-  try {
-    const uploadRes = await fetch(UPLOAD_API, { method: 'POST', body: uploadData });
-    const uploadResult = await uploadRes.json();
-
-    if (!uploadResult.success) {
-      alert(uploadResult.error || 'Upload failed');
-      return;
-    }
-
-    // Send message with file
-    const msgData = new FormData();
-    msgData.append('action', 'send_message');
-    msgData.append('conversation_id', activeConversationId);
-    msgData.append('message_type', type);
-    msgData.append('content', '');
-    msgData.append('file_path', uploadResult.file_path);
-
-    const msgRes = await fetch(CHAT_API, { method: 'POST', body: msgData });
-    const msgResult = await msgRes.json();
-
-    if (msgResult.success) {
-      renderMessages([{
-        sender_id: currentUser.id,
-        sender_name: currentUser.name,
-        message_type: type,
-        content: '',
-        file_path: uploadResult.file_path,
-        created_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
-      }], true);
-    }
-  } catch (e) {
-    alert('Upload failed. Please try again.');
-  }
-
-  e.target.value = '';
-});
-
-// ===== CREATE GROUP =====
-document.getElementById('createGroupBtn').addEventListener('click', async () => {
-  document.getElementById('groupModal').classList.add('active');
-  document.getElementById('groupNameInput').value = '';
-  document.getElementById('selectedMembers').innerHTML = '';
-
-  // Load connected users (from accepted direct conversations)
-  const list = document.getElementById('groupMemberList');
-  list.innerHTML = '<div class="sidebar-empty">Loading...</div>';
-
-  try {
-    const res = await fetch(CHAT_API + '?action=get_conversations');
-    const data = await res.json();
-    if (!data.success) return;
-
-    const directUsers = data.conversations
-      .filter(c => c.type === 'direct' && c.other_user)
-      .map(c => c.other_user);
-
-    if (!directUsers.length) {
-      list.innerHTML = '<div class="sidebar-empty">No connected users yet. Accept invites first.</div>';
-      return;
-    }
-
-    list.innerHTML = directUsers.map(u => `
-      <label class="member-select-item">
-        <input type="checkbox" value="${u.id}" data-name="${escHtml(u.name)}" />
-        <span>${escHtml(u.name)} (@${escHtml(u.username)})</span>
-      </label>
-    `).join('');
-  } catch (e) {
-    list.innerHTML = '<div class="sidebar-empty">Error loading users</div>';
-  }
-});
-
-document.getElementById('cancelGroupBtn').addEventListener('click', () => {
-  document.getElementById('groupModal').classList.remove('active');
-});
-
-document.getElementById('confirmGroupBtn').addEventListener('click', async () => {
-  const name = document.getElementById('groupNameInput').value.trim();
-  if (!name) { alert('Please enter a group name'); return; }
-
-  const checkboxes = document.querySelectorAll('#groupMemberList input[type="checkbox"]:checked');
-  const memberIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
-
-  if (memberIds.length === 0) { alert('Please select at least one member'); return; }
-
-  const formData = new FormData();
-  formData.append('action', 'create_group');
-  formData.append('name', name);
-  formData.append('members', JSON.stringify(memberIds));
-
-  try {
-    const res = await fetch(CHAT_API, { method: 'POST', body: formData });
-    const data = await res.json();
-
-    if (data.success) {
-      document.getElementById('groupModal').classList.remove('active');
-      await loadConversations();
-      openConversation(data.conversation_id);
-    } else {
-      alert(data.error || 'Failed to create group');
-    }
-  } catch (e) {
-    alert('Network error');
-  }
-});
-
-// ===== VIEW GROUP MEMBERS =====
-document.getElementById('viewMembersBtn').addEventListener('click', async () => {
-  if (!activeConversationId) return;
-  document.getElementById('membersModal').classList.add('active');
-
-  const list = document.getElementById('membersList');
-  list.innerHTML = '<div class="sidebar-empty">Loading...</div>';
-
-  try {
-    const res = await fetch(CHAT_API + '?action=get_members&conversation_id=' + activeConversationId);
-    const data = await res.json();
-
-    if (data.success) {
-      list.innerHTML = data.members.map(m => `
-        <div class="sidebar-item">
-          <div class="sidebar-avatar">${m.name.charAt(0).toUpperCase()}</div>
-          <div class="sidebar-item-info">
-            <div class="sidebar-item-name">${escHtml(m.name)}</div>
-            <div class="sidebar-item-preview">@${escHtml(m.username)} · ${escHtml(m.regno)}</div>
+      return `
+        <div class="search-result-item">
+          <div class="follow-req-avatar">${u.name.charAt(0).toUpperCase()}</div>
+          <div class="follow-req-info">
+            <div class="follow-req-name">${escHtml(u.name)}</div>
+            <div class="follow-req-sub">@${escHtml(u.username)} · ${escHtml(u.regno)}</div>
           </div>
+          <button class="follow-btn ${btnClass}" onclick="${btnAction}">${btnText}</button>
         </div>
-      `).join('');
-    }
-  } catch (e) {
-    list.innerHTML = '<div class="sidebar-empty">Error loading members</div>';
-  }
-});
+      `;
+    }).join('');
+  } catch (e) {}
+}
 
-document.getElementById('closeMembersBtn').addEventListener('click', () => {
-  document.getElementById('membersModal').classList.remove('active');
-});
+async function sendFollow(userId, btn) {
+  try {
+    const formData = new FormData();
+    formData.append('action', 'send_follow');
+    formData.append('user_id', userId);
+
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      btn.className = 'follow-btn pending';
+      btn.textContent = 'Pending';
+      btn.onclick = null;
+      showToast('Follow request sent!');
+    } else {
+      showToast(data.error || 'Could not send request');
+    }
+  } catch (e) { showToast('Network error'); }
+}
+
+async function unfollowUser(userId, btn) {
+  try {
+    const formData = new FormData();
+    formData.append('action', 'unfollow');
+    formData.append('user_id', userId);
+
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+      btn.className = 'follow-btn follow';
+      btn.textContent = 'Follow';
+      btn.setAttribute('onclick', `sendFollow(${userId}, this)`);
+      showToast('Unfollowed');
+      loadProfile();
+    }
+  } catch (e) {}
+}
 
 // ===== UTILITIES =====
 function escHtml(str) {
@@ -536,25 +509,23 @@ function escHtml(str) {
   return div.innerHTML;
 }
 
-function truncate(str, len) {
-  return str.length > len ? str.substring(0, len) + '…' : str;
-}
-
 function formatTime(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr);
   const now = new Date();
-  const isToday = d.toDateString() === now.toDateString();
+  const diff = (now - d) / 1000;
 
-  if (isToday) {
-    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }
-
-  const yesterday = new Date(now);
-  yesterday.setDate(yesterday.getDate() - 1);
-  if (d.toDateString() === yesterday.toDateString()) {
-    return 'Yesterday';
-  }
+  if (diff < 60) return 'Just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
 
   return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+}
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
 }
