@@ -1,438 +1,315 @@
-# Campus360 — Setup & Requirements Guide
+# Campus360 — How to Set Up & Run This Project
 
-> Complete guide to run the Campus360 web application locally on Windows.
-
----
-
-## Table of Contents
-
-- [Prerequisites](#prerequisites)
-- [Technology Stack](#technology-stack)
-- [Architecture Overview](#architecture-overview)
-- [Step 1: Install WAMP Server](#step-1-install-wamp-server)
-- [Step 2: Configure WAMP Settings](#step-2-configure-wamp-settings)
-- [Step 3: Set Up the Project Files](#step-3-set-up-the-project-files)
-- [Step 4: Set Up the Database](#step-4-set-up-the-database)
-- [Step 5: Install Node.js & Dependencies](#step-5-install-nodejs--dependencies)
-- [Step 6: Start the Application](#step-6-start-the-application)
-- [Project Structure](#project-structure)
-- [API Endpoints Reference](#api-endpoints-reference)
-- [Communication Patterns](#communication-patterns)
-- [Troubleshooting](#troubleshooting)
+> **What is this?** Campus360 is a university social platform with real-time chat and a forum. This guide walks you through setting it up on your Windows computer, step by step. No prior experience needed!
 
 ---
 
-## Prerequisites
+## What You Need to Install (Before Anything Else)
 
-| Software       | Version         | Download Link                                      |
-| -------------- | --------------- | -------------------------------------------------- |
-| **WampServer** | 3.3.0+          | https://www.wampserver.com/en/                     |
-| **PHP**        | 8.3+            | *(included with WAMP)*                             |
-| **MySQL**      | 8.0+ / MariaDB  | *(included with WAMP)*                             |
-| **Apache**     | 2.4+            | *(included with WAMP)*                             |
-| **Node.js**    | 18.x LTS or 20+ | https://nodejs.org/                                |
-| **npm**        | 9+              | *(included with Node.js)*                          |
-| **Web Browser**| Chrome / Edge   | Any modern browser supporting WebSocket API        |
+You need **two things** installed on your computer:
 
----
+### 1. WampServer (gives you Apache + PHP + MySQL)
 
-## Technology Stack
+**What is it?** WAMP bundles three tools together so you don't have to install them separately:
+- **Apache** = a web server that serves your HTML/CSS/JS files (like a local version of the internet)
+- **PHP** = the language our backend code is written in (handles login, chat, forum logic)
+- **MySQL** = a database that stores users, messages, posts, etc.
 
-| Layer           | Technology                                 |
-| --------------- | ------------------------------------------ |
-| **Frontend**    | HTML5, CSS3, Vanilla JavaScript (ES6+)     |
-| **Backend API** | PHP 8.3 (PDO for MySQL)                    |
-| **Database**    | MySQL 8.0 / MariaDB (InnoDB, utf8mb4)      |
-| **Web Server**  | Apache 2.4 (via WAMP)                      |
-| **Real-Time**   | Node.js WebSocket server (`ws` library)    |
-| **Sessions**    | PHP native sessions (`session_start()`)    |
-| **Passwords**   | `password_hash()` / `password_verify()` (bcrypt) |
+📥 **Download:** https://www.wampserver.com/en/
+- Run the installer, click **Next** on everything (default settings are fine)
+- When it's done, launch WampServer from the Start Menu
+- Look at the **bottom-right tray** (near the clock) — you'll see a small icon
+- Wait until the icon turns **GREEN** ✅ (green = everything is running)
+- If it's **orange** 🟠 or **red** 🔴, something went wrong — see [Troubleshooting](#common-problems--how-to-fix-them)
 
----
+**Quick test:** Open your browser and go to `http://localhost/` — if you see the WAMP welcome page, you're good!
 
-## Architecture Overview
+### 2. Node.js (needed for real-time chat)
 
+**What is it?** Node.js lets us run JavaScript on the server (not just in the browser). We use it for the WebSocket server that makes chat messages appear instantly without refreshing the page.
+
+📥 **Download:** https://nodejs.org/ (pick the **LTS** version — it's the stable one)
+- Run the installer, click **Next** on everything
+- It also installs **npm** (a tool to install JavaScript packages) automatically
+
+**Quick test:** Open PowerShell or Command Prompt and type:
 ```
-┌────────────────────────────────────────────────────┐
-│                     BROWSER                        │
-│                                                    │
-│  login.html ─── index.html ─── forum.html          │
-│                  chat.html ─── messages.html        │
-│                                                    │
-│  JS: auth.js, chat.js, messages.js, forum.js       │
-└──────────┬──────────────────────┬──────────────────┘
-           │ HTTP (AJAX/Fetch)    │ WebSocket (ws://)
-           ▼                     ▼
-┌──────────────────┐   ┌─────────────────────┐
-│   Apache + PHP   │   │  Node.js WS Server  │
-│   (WAMP)         │   │  Port 8082          │
-│   Port 80        │   │  ws-server.js       │
-│                  │   │                     │
-│  php/auth.php    │   │  Real-time:         │
-│  php/chat.php    │   │  - Message delivery │
-│  php/forum_api.php│  │  - Typing indicator │
-│  php/upload.php  │   │  - Invite alerts    │
-│  php/config.php  │   │                     │
-└────────┬─────────┘   └──────────┬──────────┘
-         │                        │
-         ▼                        ▼
-┌─────────────────────────────────────────────┐
-│              MySQL Database                 │
-│              "campus360"                    │
-│                                             │
-│  Tables: users, chat_invites, conversations,│
-│  conversation_members, messages, follows,   │
-│  posts, post_likes, post_comments           │
-└─────────────────────────────────────────────┘
+node --version
 ```
+If you see a version number like `v20.11.0`, you're good!
 
 ---
 
-## Step 1: Install WAMP Server
+## Step 1: Put the Project in the Right Place
 
-1. Download WampServer from https://www.wampserver.com/en/
-2. Run the installer and follow the default prompts
-3. Launch WampServer — the **tray icon should turn green** (green = all services running)
-4. Verify by opening `http://localhost/` in your browser — the WAMP homepage should load
+WAMP only serves files from its `www` folder. Your project needs to be accessible there.
 
----
+### Option A: Create a Shortcut (Recommended — keeps your files where they are)
 
-## Step 2: Configure WAMP Settings
-
-### Required PHP Extensions
-
-Open WAMP tray → **PHP** → **PHP extensions** and ensure these are **enabled** (checked):
-
-| Extension          | Purpose                          |
-| ------------------ | -------------------------------- |
-| `php_pdo_mysql`    | Database connection via PDO      |
-| `php_mysqli`       | Alternative MySQL support        |
-| `php_mbstring`     | String encoding (utf8mb4)        |
-| `php_fileinfo`     | MIME type detection for uploads  |
-| `php_openssl`      | Secure hashing & sessions        |
-| `php_gd`           | Image handling (if needed)       |
-
-### Recommended PHP Settings
-
-Open WAMP tray → **PHP** → **PHP Settings**:
-
-| Setting                  | Recommended Value | Reason                           |
-| ------------------------ | ----------------- | -------------------------------- |
-| `upload_max_filesize`    | `50M`             | Supports media uploads up to 50MB|
-| `post_max_size`          | `52M`             | Must be ≥ upload_max_filesize    |
-| `max_execution_time`     | `120`             | Prevents timeout on large uploads|
-| `session.cookie_httponly` | `On`             | Session security                 |
-
-> **Optional:** Disable `opcache.enable` if your code changes aren't reflecting instantly (WAMP tray → PHP → PHP Settings → uncheck `opcache.enable`).
-
-### Apache Modules
-
-Open WAMP tray → **Apache** → **Apache modules** and ensure these are **enabled**:
-
-| Module           | Purpose                    |
-| ---------------- | -------------------------- |
-| `rewrite_module` | URL rewriting (if needed)  |
-| `headers_module` | CORS and custom headers    |
-
----
-
-## Step 3: Set Up the Project Files
-
-### Option A: Symlink (Recommended)
-
-This keeps your project in its original location while WAMP serves it. Run **PowerShell as Administrator**:
+1. Open **PowerShell as Administrator** (right-click PowerShell → "Run as administrator")
+2. Run this command (change the second path to wherever YOUR project folder is):
 
 ```powershell
-cmd /c mklink /J "C:\wamp64\www\campus360-redo" "D:\path\to\campus360-redo"
+cmd /c mklink /J "C:\wamp64\www\campus360-redo" "D:\Coding files\Extras\campus360-redo"
 ```
 
-Replace `D:\path\to\campus360-redo` with the actual path to this project folder.
+This creates a "shortcut" (called a symlink) so WAMP can find your files.
 
-### Option B: Direct Copy
+### Option B: Just Copy the Folder
 
-Copy the entire project folder into `C:\wamp64\www\`:
-
+Copy your entire `campus360-redo` folder into `C:\wamp64\www\` so it looks like:
 ```
 C:\wamp64\www\campus360-redo\
 ```
 
-### Verify
+### Check if It Worked
 
-Open `http://localhost/campus360-redo/` in your browser — you should see the login page redirect.
+Open your browser and go to: `http://localhost/campus360-redo/`
 
----
-
-## Step 4: Set Up the Database
-
-### 4.1 — Create the Database & Core Tables
-
-1. Open **phpMyAdmin** at `http://localhost/phpmyadmin/`
-2. Login with username `root` and **no password** (default WAMP credentials)
-3. Go to the **SQL** tab and run the contents of `database.sql`:
-
-```sql
--- This creates the 'campus360' database and tables:
--- users, chat_invites, conversations, conversation_members, messages
-SOURCE database.sql;
-```
-
-Or copy-paste the entire contents of `database.sql` and click **Go**.
-
-### 4.2 — Create the Forum Tables
-
-After the core tables are created, run `database_forum.sql`:
-
-```sql
--- This adds forum tables:
--- follows, posts, post_likes, post_comments
-SOURCE database_forum.sql;
-```
-
-> **Important:** Run `database.sql` FIRST, then `database_forum.sql` — the forum tables have foreign key dependencies on the `users` table.
-
-### 4.3 — Verify Database
-
-After running both scripts, the `campus360` database should contain **9 tables**:
-
-| Table                    | Purpose                      |
-| ------------------------ | ---------------------------- |
-| `users`                  | User accounts                |
-| `chat_invites`           | Chat invite requests         |
-| `conversations`          | Direct & group conversations |
-| `conversation_members`   | Members in each conversation |
-| `messages`               | Chat messages                |
-| `follows`                | Follow/unfollow system       |
-| `posts`                  | Forum posts (public/private) |
-| `post_likes`             | User likes on posts          |
-| `post_comments`          | Comments on posts            |
-
-### Database Credentials
-
-The app uses these defaults (configured in `php/config.php` and `ws-server.js`):
-
-| Key        | Value       |
-| ---------- | ----------- |
-| Host       | `localhost` |
-| Database   | `campus360` |
-| Username   | `root`      |
-| Password   | *(empty)*   |
-
-If your MySQL has a different password, update both `php/config.php` (line 12) and `ws-server.js` (line 15).
+You should see the login page. If you see a "404 Not Found" error, the folder isn't in the right place.
 
 ---
 
-## Step 5: Install Node.js & Dependencies
+## Step 2: Create the Database
 
-The WebSocket server requires Node.js. In a terminal, navigate to the project folder and install dependencies:
+The app stores all its data (users, messages, posts) in a MySQL database. You need to create it.
 
-```bash
-cd /path/to/campus360-redo
+### How to Do It:
+
+1. Open your browser and go to: `http://localhost/phpmyadmin/`
+2. **Username:** `root`
+3. **Password:** *(leave it blank — just click "Go")*
+
+Now you need to run **two** SQL files, **in this order**:
+
+### File 1: `database.sql` (creates the main tables)
+
+1. Click the **SQL** tab at the top of phpMyAdmin
+2. Open the file `database.sql` from your project folder in a text editor (like Notepad)
+3. **Select all** the text (Ctrl+A), **copy it** (Ctrl+C)
+4. **Paste it** (Ctrl+V) into the SQL text box in phpMyAdmin
+5. Click the **Go** button
+
+This creates the database called `campus360` with tables for users, chat messages, etc.
+
+### File 2: `database_forum.sql` (creates the forum tables)
+
+1. Do the same thing BUT with the file `database_forum.sql`
+2. Click the **SQL** tab, paste the contents, click **Go**
+
+> ⚠️ **You MUST run `database.sql` first, then `database_forum.sql` second.** The forum tables depend on the user table created by the first file.
+
+### Check if It Worked
+
+In phpMyAdmin, click on the `campus360` database on the left sidebar. You should see **9 tables**:
+
+| Table | What It Stores |
+|-------|---------------|
+| `users` | User accounts (name, email, password) |
+| `chat_invites` | When someone sends you a chat request |
+| `conversations` | Each chat conversation (1-on-1 or group) |
+| `conversation_members` | Who is in each conversation |
+| `messages` | All chat messages |
+| `follows` | Who follows whom on the forum |
+| `posts` | Forum posts |
+| `post_likes` | Likes on forum posts |
+| `post_comments` | Comments on forum posts |
+
+If you see all 9, the database is ready! ✅
+
+---
+
+## Step 3: Install Chat Dependencies
+
+The real-time chat uses two small JavaScript packages. You need to install them.
+
+1. Open **PowerShell** or **Command Prompt**
+2. Navigate to your project folder:
+```
+cd "D:\Coding files\Extras\campus360-redo"
+```
+(change the path to wherever your project folder is)
+
+3. Run:
+```
 npm install
 ```
 
-This installs the following packages (defined in `package.json`):
+This reads the `package.json` file and installs:
+- **`ws`** — makes the WebSocket server work (real-time messaging)
+- **`mysql2`** — lets the WebSocket server talk to the database
 
-| Package   | Version  | Purpose                                     |
-| --------- | -------- | ------------------------------------------- |
-| `ws`      | ^8.16.0  | WebSocket server library for real-time chat |
-| `mysql2`  | ^3.9.0   | MySQL client for Node.js (async/await)      |
+You'll see a `node_modules` folder appear — that's normal, don't delete it!
 
 ---
 
-## Step 6: Start the Application
+## Step 4: Start Everything
 
-You need **two services running simultaneously**:
+You need **TWO things running at the same time** for the app to fully work:
 
-### 1. Start WAMP Server
+### Thing 1: WAMP Server
 
-- Launch WampServer from the Start Menu
-- Wait for the tray icon to turn **green**
-- This starts Apache (port 80) and MySQL (port 3306)
+1. Launch WampServer from the Start Menu (if it's not already running)
+2. Wait for the tray icon to turn **green** ✅
 
-### 2. Start the WebSocket Server
+This gives you:
+- Apache on **port 80** (serves your web pages)
+- MySQL on **port 3306** (stores your data)
 
-Open a terminal in the project folder and run:
+### Thing 2: The WebSocket Server
 
-```bash
+1. Open **PowerShell** or **Command Prompt**
+2. Navigate to your project folder:
+```
+cd "D:\Coding files\Extras\campus360-redo"
+```
+3. Run:
+```
 npm start
 ```
 
-Or equivalently:
-
-```bash
-node ws-server.js
-```
-
 You should see:
-
 ```
 [DB] Connected to MySQL
 [WS] WebSocket server running on ws://localhost:8082
 ```
 
-### 3. Access the Application
+**Keep this window open!** If you close it, real-time chat stops working (messages will still save, but they won't appear instantly — you'd have to refresh the page).
 
-Open your browser and navigate to:
+### Open the App
 
-```
-http://localhost/campus360-redo/
-```
+Go to: **http://localhost/campus360-redo/**
 
-You'll be redirected to `login.html` if not logged in.
+That's it! You should see the login page. Create an account and start using it! 🎉
 
 ---
 
-## Project Structure
+## What Each File Does (Project Structure)
 
 ```
 campus360-redo/
-├── index.html              # Landing / home page
-├── login.html              # Login & signup page
-├── chat.html               # Chat invite management
-├── messages.html           # Real-time messaging interface
-├── forum.html              # Social forum feed
-├── styles.css              # Global stylesheet
-├── script.js               # Shared utility scripts
 │
-├── js/
-│   ├── auth.js             # Authentication logic & session guard
-│   ├── chat.js             # Chat invites & conversation logic
-│   ├── messages.js         # Real-time messaging (WebSocket client)
-│   └── forum.js            # Forum posts, likes, comments, follows
+├── 📄 index.html           ← Home / landing page
+├── 📄 login.html           ← Login & signup page
+├── 📄 messages.html        ← Chat interface (send/receive messages)
+├── 📄 chat.html            ← Chat invites & conversation management
+├── 📄 forum.html           ← Social forum (posts, likes, comments, follow)
+├── 📄 styles.css            ← Global styles
+├── 📄 script.js             ← Shared utility scripts
 │
-├── php/
-│   ├── config.php          # DB connection, session, helper functions
-│   ├── auth.php            # Auth API (signup, login, logout, check)
-│   ├── chat.php            # Chat API (invites, conversations, messages)
-│   ├── forum_api.php       # Forum API (posts, likes, comments, follows)
-│   └── upload.php          # File upload API (images, videos, audio)
+├── 📁 js/                   ← JavaScript files (client-side logic)
+│   ├── auth.js              ← Handles login/signup/session checks
+│   ├── chat.js              ← Chat invite & conversation logic
+│   ├── messages.js          ← Real-time messaging (connects to WebSocket)
+│   └── forum.js             ← Forum posts, likes, comments, follows
 │
-├── ws-server.js            # Node.js WebSocket server
-├── package.json            # Node.js dependencies
+├── 📁 php/                  ← PHP files (server-side logic / APIs)
+│   ├── config.php           ← Database connection settings
+│   ├── auth.php             ← Login, signup, logout, session check
+│   ├── chat.php             ← Send/receive messages, manage conversations
+│   ├── forum_api.php        ← Create posts, like, comment, follow
+│   └── upload.php           ← Handle file uploads (images, videos, audio)
 │
-├── database.sql            # Core DB schema (run first)
-├── database_forum.sql      # Forum DB schema (run second)
+├── 📄 ws-server.js          ← WebSocket server (real-time chat delivery)
+├── 📄 package.json          ← Lists the Node.js packages needed
 │
-├── uploads/                # User-uploaded media (auto-created)
-│   ├── image/
-│   ├── video/
-│   └── audio/
+├── 📄 database.sql          ← SQL to create main database tables (run FIRST)
+├── 📄 database_forum.sql    ← SQL to create forum tables (run SECOND)
 │
-└── img1.jpg ... img4.jpg   # Static assets
+└── 📁 uploads/              ← Where uploaded images/videos/audio go
+    ├── image/
+    ├── video/
+    └── audio/
 ```
 
 ---
 
-## API Endpoints Reference
+## How the App Works (Simple Explanation)
 
-### Authentication — `php/auth.php`
+```
+  YOU (Browser)
+      │
+      ├──── HTTP requests ────→  Apache + PHP (WAMP)  ←──→  MySQL Database
+      │     (login, send msg,       (port 80)                (port 3306)
+      │      create post, etc.)
+      │
+      └──── WebSocket ────→  Node.js Server
+            (instant chat)      (port 8082)
+```
 
-| Action      | Method | Params                                         |
-| ----------- | ------ | ---------------------------------------------- |
-| `signup`    | POST   | name, username, regno, email, password         |
-| `login`     | POST   | identifier (username/email), password          |
-| `logout`    | POST   | *(none, uses session)*                         |
-| `check`     | GET    | *(none, checks session)*                       |
-| `get_user`  | GET    | id                                             |
-
-### Chat — `php/chat.php`
-
-| Action                | Method | Params                             |
-| --------------------- | ------ | ---------------------------------- |
-| `search_users`        | GET    | q (query string, min 2 chars)      |
-| `send_invite`         | POST   | to_user (user ID)                  |
-| `respond_invite`      | POST   | invite_id, response (accepted/rejected) |
-| `get_invites`         | GET    | type (received/sent)               |
-| `get_conversations`   | GET    | *(none)*                           |
-| `get_messages`        | GET    | conversation_id, after (timestamp) |
-| `send_message`        | POST   | conversation_id, content, message_type |
-| `create_group`        | POST   | name, members (JSON array)         |
-| `add_member`          | POST   | conversation_id, user_id           |
-| `get_members`         | GET    | conversation_id                    |
-
-### Forum — `php/forum_api.php`
-
-| Action              | Method | Params                               |
-| ------------------- | ------ | ------------------------------------ |
-| `get_feed`          | GET    | page                                 |
-| `create_post`       | POST   | content, visibility (public/private), image_path |
-| `delete_post`       | POST   | post_id                              |
-| `like_post`         | POST   | post_id                              |
-| `get_comments`      | GET    | post_id                              |
-| `add_comment`       | POST   | post_id, content                     |
-| `send_follow`       | POST   | user_id                              |
-| `respond_follow`    | POST   | follow_id, response (accepted/rejected) |
-| `get_follow_requests` | GET  | *(none)*                             |
-| `get_followers`     | GET    | user_id                              |
-| `search_users`      | GET    | q (query string)                     |
-| `get_profile`       | GET    | user_id                              |
-
-### File Upload — `php/upload.php`
-
-| Method | Content-Type        | Params                            |
-| ------ | ------------------- | --------------------------------- |
-| POST   | multipart/form-data | file (binary), type (image/video/audio) |
-
-Max file size: **50 MB**
+**In plain English:**
+1. When you log in, sign up, send a message, or create a post → your browser sends a request to **PHP** (through Apache), which saves it to the **MySQL database**
+2. When you send a chat message → after saving it, your browser ALSO tells the **WebSocket server** → which instantly sends it to the other person's browser (no refresh needed!)
+3. The WebSocket server is just for **speed** — if it's not running, the app still works, but you'd have to refresh to see new messages
 
 ---
 
-## Communication Patterns
+## WAMP Settings You Might Need to Change
 
-### 1. AJAX / Fetch (HTTP)
+Most of the time, the defaults work fine. But if you run into issues:
 
-All PHP API calls use the browser's **Fetch API** (or XMLHttpRequest). These handle:
-- User authentication (login, signup, session checks)
-- Sending & loading chat messages (persisted to database)
-- Forum posts, likes, comments, follow requests
-- File uploads
-- User search
+### PHP Extensions (make sure these are ON)
 
-**Pattern:** Client → HTTP Request → Apache → PHP → MySQL → PHP → HTTP Response → Client
+Right-click the WAMP tray icon → **PHP** → **PHP extensions** → make sure these are checked:
 
-### 2. WebSocket (Real-Time)
+| Extension | Why You Need It |
+|-----------|----------------|
+| `php_pdo_mysql` | Connects PHP to MySQL (required!) |
+| `php_mysqli` | Backup way to connect to MySQL |
+| `php_mbstring` | Handles special characters properly |
+| `php_fileinfo` | Detects file types during upload |
+| `php_openssl` | Security stuff for sessions |
 
-The Node.js WebSocket server (`ws-server.js`) on **port 8082** handles instant delivery of:
+### PHP Settings (for file uploads)
 
-| Event Type     | Description                                           |
-| -------------- | ----------------------------------------------------- |
-| `auth`         | Client authenticates its WebSocket connection          |
-| `new_message`  | Broadcasts a new chat message to conversation members  |
-| `typing`       | Shows typing indicators to other conversation members  |
-| `new_invite`   | Notifies a user when they receive a chat invite        |
+Right-click the WAMP tray icon → **PHP** → **PHP Settings**:
 
-**Pattern:** Client A → WebSocket → Node.js Server → WebSocket → Client B (instant, no page refresh)
-
-**How it works together:**
-1. Messages are **saved to MySQL via PHP** (HTTP POST to `chat.php?action=send_message`)
-2. After saving, the sender **broadcasts via WebSocket** to notify other members instantly
-3. Recipients receive the message in real-time without polling
+| Setting | Change To | Why |
+|---------|-----------|-----|
+| `upload_max_filesize` | `50M` | Allows uploading files up to 50MB |
+| `post_max_size` | `52M` | Must be slightly bigger than upload size |
 
 ---
 
-## Troubleshooting
+## Common Problems & How to Fix Them
 
-| Problem                           | Solution                                                      |
-| --------------------------------- | ------------------------------------------------------------- |
-| WAMP icon is orange/red           | A service failed — check Apache/MySQL error logs via tray     |
-| Port 80 already in use            | Skype or IIS may be using port 80 — close them or change Apache port |
-| PHP changes not reflecting        | Hard refresh (`Ctrl+Shift+R`), disable OPcache, restart WAMP |
-| "Database connection failed"      | Ensure MySQL is running, credentials match `config.php`       |
-| WebSocket won't connect           | Ensure `node ws-server.js` is running in a terminal           |
-| Messages don't appear instantly   | WebSocket server must be running alongside WAMP               |
-| File upload fails                 | Check `upload_max_filesize` in PHP settings (must be ≥ 50M)   |
-| "Not authenticated" errors        | Clear cookies, re-login — sessions may have expired           |
-| Can't access `localhost/campus360-redo/` | Ensure project is in `C:\wamp64\www\` or symlinked there |
+| Problem | What to Do |
+|---------|------------|
+| **WAMP icon is orange or red** | Something crashed. Right-click the icon → check Apache and MySQL error logs |
+| **"Port 80 already in use"** | Another app (like Skype or IIS) is using port 80. Close it, or change Apache's port |
+| **Can't open `localhost/campus360-redo/`** | Your project folder isn't in `C:\wamp64\www\`. Re-do Step 1 |
+| **"Database connection failed"** | Make sure MySQL is running (WAMP icon is green). Check that `php/config.php` has the right password (default is blank) |
+| **Login/signup doesn't work** | You probably didn't create the database yet. Go back to Step 2 |
+| **Forum shows no posts / search doesn't work** | You forgot to run `database_forum.sql`. Go back to Step 2, File 2 |
+| **Chat messages don't appear instantly** | The WebSocket server isn't running. Go back to Step 4, Thing 2 |
+| **File upload fails** | Change `upload_max_filesize` to `50M` in PHP settings (see above) |
+| **Changes to code aren't showing up** | Hard refresh your browser with `Ctrl + Shift + R`. If that doesn't work, disable OPcache in WAMP |
+| **"Not authenticated" errors pop up** | Your session expired. Clear cookies and log in again |
+| **`npm install` fails** | Make sure Node.js is installed. Try running PowerShell as Administrator |
+| **`npm start` says "port 8082 in use"** | You already have the WebSocket server running in another terminal. Close it first |
 
 ---
 
-## Ports Summary
+## Quick Reference: Ports Used
 
-| Service          | Port  | Protocol |
-| ---------------- | ----- | -------- |
-| Apache (WAMP)    | 80    | HTTP     |
-| MySQL (WAMP)     | 3306  | TCP      |
-| WebSocket Server | 8082  | WS       |
+| What | Port | When It's Running |
+|------|------|------------------|
+| Apache (web pages) | 80 | When WAMP is green |
+| MySQL (database) | 3306 | When WAMP is green |
+| WebSocket (instant chat) | 8082 | When you run `npm start` |
+
+---
+
+## Quick Reference: Database Credentials
+
+These are the default WAMP settings. If you changed your MySQL password, update these files:
+
+| Setting | Value | Where to Change |
+|---------|-------|----------------|
+| Host | `localhost` | `php/config.php` (line 9) and `ws-server.js` (line 15) |
+| Database | `campus360` | `php/config.php` (line 10) and `ws-server.js` (line 16) |
+| Username | `root` | `php/config.php` (line 11) and `ws-server.js` (line 17) |
+| Password | *(blank)* | `php/config.php` (line 12) and `ws-server.js` (line 18) |
 
 ---
 
