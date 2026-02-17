@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Campus360 Forum — Chat with fellow students." />
+    <meta
+      name="description"
+      content="Campus360 Forum — Chat with fellow students."
+    />
     <title>Campus360 — Messages</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <style>
       /* --- Forum Page Layout --- */
@@ -50,7 +56,7 @@
 
       .forum-topbar-user {
         font-size: 0.85rem;
-        color: rgba(255,255,255,0.6);
+        color: rgba(255, 255, 255, 0.6);
       }
 
       .forum-topbar-user strong {
@@ -58,8 +64,8 @@
       }
 
       .topbar-btn {
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         color: #fff;
         padding: 0.45rem 1rem;
         border-radius: 8px;
@@ -110,7 +116,7 @@
         text-align: center;
         font-size: 0.8rem;
         font-weight: 600;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255, 255, 255, 0.4);
         cursor: pointer;
         border: none;
         background: transparent;
@@ -124,7 +130,7 @@
       }
 
       .sidebar-tab.active::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         left: 20%;
@@ -166,8 +172,8 @@
 
       .sidebar-search input {
         width: 100%;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         padding: 0.6rem 0.9rem;
         color: #fff;
@@ -183,7 +189,7 @@
       }
 
       .sidebar-search input::placeholder {
-        color: rgba(255,255,255,0.25);
+        color: rgba(255, 255, 255, 0.25);
       }
 
       /* Conversation list / invite list / search results */
@@ -213,7 +219,7 @@
         padding: 0.75rem 1rem;
         cursor: pointer;
         transition: background 0.15s ease;
-        border-bottom: 1px solid rgba(255,255,255,0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       }
 
       .sidebar-item:hover {
@@ -259,7 +265,7 @@
 
       .sidebar-item-preview {
         font-size: 0.78rem;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255, 255, 255, 0.4);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -267,7 +273,7 @@
 
       .sidebar-item-meta {
         font-size: 0.72rem;
-        color: rgba(255,255,255,0.35);
+        color: rgba(255, 255, 255, 0.35);
         white-space: nowrap;
         display: flex;
         flex-direction: column;
@@ -315,7 +321,7 @@
       .sidebar-empty {
         text-align: center;
         padding: 2rem 1rem;
-        color: rgba(255,255,255,0.3);
+        color: rgba(255, 255, 255, 0.3);
         font-size: 0.85rem;
       }
 
@@ -347,7 +353,7 @@
 
       .chat-header-sub {
         font-size: 0.78rem;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255, 255, 255, 0.4);
       }
 
       .chat-header-actions {
@@ -426,7 +432,7 @@
 
       .message-time {
         font-size: 0.68rem;
-        color: rgba(255,255,255,0.3);
+        color: rgba(255, 255, 255, 0.3);
         margin-top: 3px;
         padding: 0 0.3rem;
       }
@@ -468,8 +474,8 @@
 
       .chat-input-bar input[type="text"] {
         flex: 1;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         padding: 0.7rem 1rem;
         color: #fff;
@@ -484,7 +490,7 @@
       }
 
       .chat-input-bar input[type="text"]::placeholder {
-        color: rgba(255,255,255,0.25);
+        color: rgba(255, 255, 255, 0.25);
       }
 
       .chat-attach-btn,
@@ -500,14 +506,14 @@
       }
 
       .chat-attach-btn {
-        background: rgba(255,255,255,0.06);
-        color: rgba(255,255,255,0.5);
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.5);
         width: 42px;
         height: 42px;
       }
 
       .chat-attach-btn:hover {
-        background: rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.1);
         color: #fff;
       }
 
@@ -534,7 +540,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: rgba(255,255,255,0.25);
+        color: rgba(255, 255, 255, 0.25);
         gap: 0.8rem;
       }
 
@@ -551,7 +557,7 @@
       .modal-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.6);
+        background: rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(4px);
         display: none;
         align-items: center;
@@ -570,7 +576,7 @@
         padding: 2rem;
         width: 90%;
         max-width: 440px;
-        box-shadow: 0 16px 50px rgba(0,0,0,0.5);
+        box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5);
       }
 
       .modal h3 {
@@ -587,15 +593,15 @@
       .modal .form-group label {
         font-size: 0.82rem;
         font-weight: 500;
-        color: rgba(255,255,255,0.6);
+        color: rgba(255, 255, 255, 0.6);
         display: block;
         margin-bottom: 0.3rem;
       }
 
       .modal .form-group input {
         width: 100%;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         padding: 0.6rem 0.9rem;
         color: #fff;
@@ -633,15 +639,15 @@
       }
 
       .modal-btn.secondary {
-        background: rgba(255,255,255,0.06);
-        color: rgba(255,255,255,0.7);
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.7);
       }
 
       /* Members list in modal */
       .member-select-list {
         max-height: 200px;
         overflow-y: auto;
-        border: 1px solid rgba(255,255,255,0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 8px;
         margin-top: 0.5rem;
       }
@@ -708,16 +714,35 @@
     </style>
   </head>
   <body class="forum-page">
-
     <!-- TOP BAR -->
     <div class="forum-topbar">
-      <button class="topbar-btn mobile-toggle-sidebar" id="toggleSidebar">☰</button>
+      <button class="topbar-btn mobile-toggle-sidebar" id="toggleSidebar">
+        ☰
+      </button>
       <a href="index.html" class="forum-topbar-brand">Campus360 Messages</a>
       <div class="forum-topbar-actions">
-        <span class="forum-topbar-user">Logged in as <strong id="currentUserName">—</strong></span>
+        <span class="forum-topbar-user"
+          >Logged in as <strong id="currentUserName">—</strong></span
+        >
         <button class="topbar-btn" id="createGroupBtn">+ Group</button>
-        <button class="topbar-btn" onclick="window.location.href='forum.html'">Forum</button>
-        <button class="topbar-btn" onclick="window.location.href='index.html'">Home</button>
+        <button
+          class="topbar-btn"
+          onclick="window.location.href = 'forum.html'"
+        >
+          Forum
+        </button>
+        <button
+          class="topbar-btn"
+          onclick="window.location.href = 'events.html'"
+        >
+          Events
+        </button>
+        <button
+          class="topbar-btn"
+          onclick="window.location.href = 'index.html'"
+        >
+          Home
+        </button>
         <button class="topbar-btn danger" id="logoutBtn">Logout</button>
       </div>
     </div>
@@ -726,18 +751,29 @@
       <!-- SIDEBAR -->
       <div class="forum-sidebar" id="sidebar">
         <div class="sidebar-tabs">
-          <button class="sidebar-tab active" data-panel="chats">💬 Chats</button>
-          <button class="sidebar-tab" data-panel="invites">📩 Invites <span class="badge" id="inviteBadge" style="display:none">0</span></button>
+          <button class="sidebar-tab active" data-panel="chats">
+            💬 Chats
+          </button>
+          <button class="sidebar-tab" data-panel="invites">
+            📩 Invites
+            <span class="badge" id="inviteBadge" style="display: none">0</span>
+          </button>
           <button class="sidebar-tab" data-panel="search">🔍 Find</button>
         </div>
 
         <!-- Chats Panel -->
         <div class="sidebar-panel active" id="panel-chats">
           <div class="sidebar-search">
-            <input type="text" placeholder="Filter conversations..." id="filterConversations" />
+            <input
+              type="text"
+              placeholder="Filter conversations..."
+              id="filterConversations"
+            />
           </div>
           <div class="sidebar-list" id="conversationList">
-            <div class="sidebar-empty">No conversations yet.<br>Search for users to start chatting!</div>
+            <div class="sidebar-empty">
+              No conversations yet.<br />Search for users to start chatting!
+            </div>
           </div>
         </div>
 
@@ -751,10 +787,16 @@
         <!-- Search Panel -->
         <div class="sidebar-panel" id="panel-search">
           <div class="sidebar-search">
-            <input type="text" placeholder="Search by name, username, or reg no..." id="userSearchInput" />
+            <input
+              type="text"
+              placeholder="Search by name, username, or reg no..."
+              id="userSearchInput"
+            />
           </div>
           <div class="sidebar-list" id="searchResults">
-            <div class="sidebar-empty">Type at least 2 characters to search</div>
+            <div class="sidebar-empty">
+              Type at least 2 characters to search
+            </div>
           </div>
         </div>
       </div>
@@ -767,7 +809,10 @@
         </div>
 
         <!-- Active chat (hidden until conversation selected) -->
-        <div id="activeChat" style="display:none; flex-direction:column; height:100%;">
+        <div
+          id="activeChat"
+          style="display: none; flex-direction: column; height: 100%"
+        >
           <div class="chat-header">
             <div class="sidebar-avatar" id="chatAvatar">?</div>
             <div>
@@ -775,14 +820,32 @@
               <div class="chat-header-sub" id="chatSub">—</div>
             </div>
             <div class="chat-header-actions">
-              <button class="topbar-btn" id="viewMembersBtn" style="display:none">Members</button>
+              <button
+                class="topbar-btn"
+                id="viewMembersBtn"
+                style="display: none"
+              >
+                Members
+              </button>
             </div>
           </div>
           <div class="chat-messages" id="chatMessages"></div>
           <div class="chat-input-bar">
-            <button class="chat-attach-btn" id="attachBtn" title="Attach file">📎</button>
-            <input type="file" class="chat-file-input" id="fileInput" accept="image/*,video/*,audio/*" />
-            <input type="text" placeholder="Type a message..." id="messageInput" autocomplete="off" />
+            <button class="chat-attach-btn" id="attachBtn" title="Attach file">
+              📎
+            </button>
+            <input
+              type="file"
+              class="chat-file-input"
+              id="fileInput"
+              accept="image/*,video/*,audio/*"
+            />
+            <input
+              type="text"
+              placeholder="Type a message..."
+              id="messageInput"
+              autocomplete="off"
+            />
             <button class="chat-send-btn" id="sendBtn" title="Send">➤</button>
           </div>
         </div>
@@ -795,7 +858,11 @@
         <h3>Create Group Chat</h3>
         <div class="form-group">
           <label>Group Name</label>
-          <input type="text" id="groupNameInput" placeholder="e.g. Study Group" />
+          <input
+            type="text"
+            id="groupNameInput"
+            placeholder="e.g. Study Group"
+          />
         </div>
         <div class="form-group">
           <label>Add Members (connected users)</label>
@@ -805,8 +872,12 @@
           </div>
         </div>
         <div class="modal-actions">
-          <button class="modal-btn secondary" id="cancelGroupBtn">Cancel</button>
-          <button class="modal-btn primary" id="confirmGroupBtn">Create Group</button>
+          <button class="modal-btn secondary" id="cancelGroupBtn">
+            Cancel
+          </button>
+          <button class="modal-btn primary" id="confirmGroupBtn">
+            Create Group
+          </button>
         </div>
       </div>
     </div>
@@ -815,9 +886,15 @@
     <div class="modal-overlay" id="membersModal">
       <div class="modal">
         <h3>Group Members</h3>
-        <div class="sidebar-list" id="membersList" style="max-height:300px; overflow-y:auto;"></div>
+        <div
+          class="sidebar-list"
+          id="membersList"
+          style="max-height: 300px; overflow-y: auto"
+        ></div>
         <div class="modal-actions">
-          <button class="modal-btn secondary" id="closeMembersBtn">Close</button>
+          <button class="modal-btn secondary" id="closeMembersBtn">
+            Close
+          </button>
         </div>
       </div>
     </div>

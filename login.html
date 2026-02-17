@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Campus360 — Login or Sign Up to access your student portal." />
+    <meta
+      name="description"
+      content="Campus360 — Login or Sign Up to access your student portal."
+    />
     <title>Campus360 — Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <style>
       /* --- Login Page Specific Styles --- */
@@ -16,7 +22,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 60%, #1e1b4b 100%);
+        background: linear-gradient(
+          135deg,
+          #1e1b4b 0%,
+          #0f172a 60%,
+          #1e1b4b 100%
+        );
         padding: 2rem;
       }
 
@@ -115,7 +126,9 @@
         color: #fff;
         font-family: inherit;
         outline: none;
-        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        transition:
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
       }
 
       .form-group input::placeholder {
@@ -138,7 +151,9 @@
         font-weight: 600;
         font-family: inherit;
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
         position: relative;
         overflow: hidden;
       }
@@ -207,8 +222,12 @@
       }
 
       @keyframes orbFloat {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(40px, -40px); }
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(40px, -40px);
+        }
       }
 
       @media (max-width: 500px) {
@@ -240,37 +259,148 @@
       <form id="loginForm" class="auth-form active" autocomplete="on">
         <div class="form-group">
           <label for="loginIdentifier">Username or Email</label>
-          <input type="text" id="loginIdentifier" name="identifier" placeholder="Enter username or email" required />
+          <input
+            type="text"
+            id="loginIdentifier"
+            name="identifier"
+            placeholder="Enter username or email"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" name="password" placeholder="Enter password" required />
+          <input
+            type="password"
+            id="loginPassword"
+            name="password"
+            placeholder="Enter password"
+            required
+          />
         </div>
         <button type="submit" class="auth-submit">Login</button>
       </form>
 
       <!-- SIGNUP FORM -->
       <form id="signupForm" class="auth-form" autocomplete="on">
+        <!-- Account type toggle -->
+        <div
+          style="
+            display: flex;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 3px;
+            margin-bottom: 0.3rem;
+          "
+        >
+          <button
+            type="button"
+            class="auth-tab active"
+            id="accTypeStudent"
+            onclick="setAccountType('student')"
+            style="flex: 1; padding: 0.5rem; font-size: 0.82rem"
+          >
+            🎓 Student
+          </button>
+          <button
+            type="button"
+            class="auth-tab"
+            id="accTypeClub"
+            onclick="setAccountType('club')"
+            style="flex: 1; padding: 0.5rem; font-size: 0.82rem"
+          >
+            🏛️ Club
+          </button>
+        </div>
+        <input type="hidden" id="signupAccountType" value="student" />
+
         <div class="form-group">
-          <label for="signupName">Full Name</label>
-          <input type="text" id="signupName" name="name" placeholder="e.g. Priya Sharma" required />
+          <label for="signupName" id="signupNameLabel">Full Name</label>
+          <input
+            type="text"
+            id="signupName"
+            name="name"
+            placeholder="e.g. Priya Sharma"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="signupUsername">Username</label>
-          <input type="text" id="signupUsername" name="username" placeholder="e.g. priya_s" required />
+          <input
+            type="text"
+            id="signupUsername"
+            name="username"
+            placeholder="e.g. priya_s"
+            required
+          />
         </div>
-        <div class="form-group">
+        <div class="form-group" id="regnoGroup">
           <label for="signupRegno">Registration Number</label>
-          <input type="text" id="signupRegno" name="regno" placeholder="e.g. 22BCE1234" required />
+          <input
+            type="text"
+            id="signupRegno"
+            name="regno"
+            placeholder="e.g. 22BCE1234"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="signupEmail">Email</label>
-          <input type="email" id="signupEmail" name="email" placeholder="e.g. priya@vitstudent.ac.in" required />
+          <input
+            type="email"
+            id="signupEmail"
+            name="email"
+            placeholder="e.g. priya@vitstudent.ac.in"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="signupPassword">Password</label>
-          <input type="password" id="signupPassword" name="password" placeholder="Min 6 characters" required minlength="6" />
+          <input
+            type="password"
+            id="signupPassword"
+            name="password"
+            placeholder="Min 6 characters"
+            required
+            minlength="6"
+          />
         </div>
+
+        <!-- Club-only fields -->
+        <div id="clubFields" style="display: none">
+          <div class="form-group">
+            <label for="signupClubDesc">Club Description</label>
+            <input
+              type="text"
+              id="signupClubDesc"
+              placeholder="Brief description of your club"
+            />
+          </div>
+          <div class="form-group">
+            <label for="signupClubCategory">Category</label>
+            <select
+              id="signupClubCategory"
+              style="
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                border-radius: 10px;
+                padding: 0.75rem 1rem;
+                font-size: 0.95rem;
+                color: #fff;
+                font-family: inherit;
+                outline: none;
+                width: 100%;
+              "
+            >
+              <option value="tech">💻 Tech</option>
+              <option value="cultural">🎭 Cultural</option>
+              <option value="sports">🏆 Sports</option>
+              <option value="social">🤝 Social</option>
+              <option value="academic">📚 Academic</option>
+              <option value="other">📌 Other</option>
+            </select>
+          </div>
+        </div>
+
         <button type="submit" class="auth-submit">Create Account</button>
       </form>
     </div>

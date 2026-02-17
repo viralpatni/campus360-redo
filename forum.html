@@ -3,16 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Campus360 Forum — Share thoughts, follow people, and engage with the campus community." />
+    <meta
+      name="description"
+      content="Campus360 Forum — Share thoughts, follow people, and engage with the campus community."
+    />
     <title>Campus360 — Forum</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
       body {
-        font-family: 'Inter', sans-serif;
+        font-family: "Inter", sans-serif;
         background: #0a0a14;
         color: #e8e8f0;
         min-height: 100vh;
@@ -49,8 +61,8 @@
       }
 
       .topbar-btn {
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         color: #ccc;
         padding: 0.4rem 0.9rem;
         border-radius: 8px;
@@ -74,15 +86,21 @@
         border-color: rgba(129, 140, 248, 0.3);
       }
 
-      .topbar-btn.danger:hover { background: rgba(244, 63, 94, 0.2); border-color: rgba(244, 63, 94, 0.3); color: #fb7185; }
+      .topbar-btn.danger:hover {
+        background: rgba(244, 63, 94, 0.2);
+        border-color: rgba(244, 63, 94, 0.3);
+        color: #fb7185;
+      }
 
       .topbar-user {
         font-size: 0.82rem;
-        color: rgba(255,255,255,0.5);
+        color: rgba(255, 255, 255, 0.5);
         margin-right: 0.5rem;
       }
 
-      .topbar-user strong { color: #fff; }
+      .topbar-user strong {
+        color: #fff;
+      }
 
       /* ===== MAIN LAYOUT ===== */
       .forum-layout {
@@ -133,7 +151,7 @@
       .card-title {
         font-size: 0.85rem;
         font-weight: 700;
-        color: rgba(255,255,255,0.5);
+        color: rgba(255, 255, 255, 0.5);
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin-bottom: 0.8rem;
@@ -158,8 +176,15 @@
         margin: 0 auto 0.5rem;
       }
 
-      .profile-name { font-weight: 700; font-size: 1rem; }
-      .profile-username { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-bottom: 0.6rem; }
+      .profile-name {
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      .profile-username {
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 0.6rem;
+      }
 
       .profile-stats {
         display: flex;
@@ -180,7 +205,7 @@
 
       .profile-stat-label {
         font-size: 0.7rem;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255, 255, 255, 0.4);
         text-transform: uppercase;
       }
 
@@ -190,10 +215,12 @@
         align-items: center;
         gap: 0.6rem;
         padding: 0.5rem 0;
-        border-bottom: 1px solid rgba(255,255,255,0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       }
 
-      .follow-req-item:last-child { border-bottom: none; }
+      .follow-req-item:last-child {
+        border-bottom: none;
+      }
 
       .follow-req-avatar {
         width: 34px;
@@ -209,11 +236,27 @@
         flex-shrink: 0;
       }
 
-      .follow-req-info { flex: 1; min-width: 0; }
-      .follow-req-name { font-weight: 600; font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .follow-req-sub { font-size: 0.72rem; color: rgba(255,255,255,0.35); }
+      .follow-req-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .follow-req-name {
+        font-weight: 600;
+        font-size: 0.82rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .follow-req-sub {
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.35);
+      }
 
-      .follow-req-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
+      .follow-req-actions {
+        display: flex;
+        gap: 0.3rem;
+        flex-shrink: 0;
+      }
 
       .follow-req-btn {
         padding: 0.25rem 0.55rem;
@@ -226,10 +269,20 @@
         transition: all 0.15s;
       }
 
-      .follow-req-btn.accept { background: rgba(34,197,94,0.15); color: #4ade80; }
-      .follow-req-btn.accept:hover { background: rgba(34,197,94,0.3); }
-      .follow-req-btn.reject { background: rgba(244,63,94,0.12); color: #fb7185; }
-      .follow-req-btn.reject:hover { background: rgba(244,63,94,0.25); }
+      .follow-req-btn.accept {
+        background: rgba(34, 197, 94, 0.15);
+        color: #4ade80;
+      }
+      .follow-req-btn.accept:hover {
+        background: rgba(34, 197, 94, 0.3);
+      }
+      .follow-req-btn.reject {
+        background: rgba(244, 63, 94, 0.12);
+        color: #fb7185;
+      }
+      .follow-req-btn.reject:hover {
+        background: rgba(244, 63, 94, 0.25);
+      }
 
       /* ===== POST COMPOSER ===== */
       .composer {
@@ -260,8 +313,8 @@
 
       .composer textarea {
         flex: 1;
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         padding: 0.7rem 1rem;
         color: #fff;
@@ -273,8 +326,12 @@
         transition: border-color 0.2s;
       }
 
-      .composer textarea:focus { border-color: rgba(129, 140, 248, 0.4); }
-      .composer textarea::placeholder { color: rgba(255,255,255,0.25); }
+      .composer textarea:focus {
+        border-color: rgba(129, 140, 248, 0.4);
+      }
+      .composer textarea::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+      }
 
       .composer-actions {
         display: flex;
@@ -292,11 +349,11 @@
         display: flex;
         align-items: center;
         gap: 0.4rem;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         padding: 0.35rem 0.7rem;
-        color: rgba(255,255,255,0.6);
+        color: rgba(255, 255, 255, 0.6);
         font-size: 0.78rem;
         font-weight: 500;
         cursor: pointer;
@@ -304,19 +361,27 @@
         font-family: inherit;
       }
 
-      .visibility-toggle:hover { border-color: rgba(129,140,248,0.3); color: #fff; }
-      .visibility-toggle.private { color: #f472b6; border-color: rgba(244,114,182,0.3); }
+      .visibility-toggle:hover {
+        border-color: rgba(129, 140, 248, 0.3);
+        color: #fff;
+      }
+      .visibility-toggle.private {
+        color: #f472b6;
+        border-color: rgba(244, 114, 182, 0.3);
+      }
 
       .attach-btn {
         background: none;
         border: none;
         font-size: 1.2rem;
         cursor: pointer;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255, 255, 255, 0.4);
         transition: color 0.2s;
       }
 
-      .attach-btn:hover { color: #818cf8; }
+      .attach-btn:hover {
+        color: #818cf8;
+      }
 
       .post-btn {
         background: linear-gradient(135deg, #6366f1, #7c3aed);
@@ -331,8 +396,16 @@
         font-family: inherit;
       }
 
-      .post-btn:hover { box-shadow: 0 4px 20px rgba(99,102,241,0.4); transform: translateY(-1px); }
-      .post-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+      .post-btn:hover {
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        transform: translateY(-1px);
+      }
+      .post-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
 
       /* ===== POST CARD ===== */
       .post-card {
@@ -361,23 +434,45 @@
         flex-shrink: 0;
       }
 
-      .post-author-name { font-weight: 600; font-size: 0.9rem; }
-      .post-meta { font-size: 0.72rem; color: rgba(255,255,255,0.35); display: flex; align-items: center; gap: 0.4rem; }
-      .post-badge { font-size: 0.65rem; padding: 1px 5px; border-radius: 4px; font-weight: 600; }
-      .post-badge.public { background: rgba(34,197,94,0.15); color: #4ade80; }
-      .post-badge.private { background: rgba(244,114,182,0.15); color: #f472b6; }
+      .post-author-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .post-meta {
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.35);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .post-badge {
+        font-size: 0.65rem;
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+      .post-badge.public {
+        background: rgba(34, 197, 94, 0.15);
+        color: #4ade80;
+      }
+      .post-badge.private {
+        background: rgba(244, 114, 182, 0.15);
+        color: #f472b6;
+      }
 
       .post-delete {
         margin-left: auto;
         background: none;
         border: none;
-        color: rgba(255,255,255,0.2);
+        color: rgba(255, 255, 255, 0.2);
         cursor: pointer;
         font-size: 1rem;
         transition: color 0.2s;
       }
 
-      .post-delete:hover { color: #f43f5e; }
+      .post-delete:hover {
+        color: #f43f5e;
+      }
 
       .post-content {
         font-size: 0.92rem;
@@ -398,7 +493,7 @@
         display: flex;
         gap: 1.2rem;
         padding-top: 0.3rem;
-        border-top: 1px solid rgba(255,255,255,0.05);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
       }
 
       .post-action-btn {
@@ -407,7 +502,7 @@
         gap: 0.35rem;
         background: none;
         border: none;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255, 255, 255, 0.4);
         font-size: 0.82rem;
         font-weight: 500;
         cursor: pointer;
@@ -416,18 +511,26 @@
         padding: 0.3rem 0;
       }
 
-      .post-action-btn:hover { color: #818cf8; }
-      .post-action-btn.liked { color: #f43f5e; }
-      .post-action-btn .icon { font-size: 1.05rem; }
+      .post-action-btn:hover {
+        color: #818cf8;
+      }
+      .post-action-btn.liked {
+        color: #f43f5e;
+      }
+      .post-action-btn .icon {
+        font-size: 1.05rem;
+      }
 
       /* ===== COMMENTS ===== */
       .comments-section {
         padding-top: 0.5rem;
-        border-top: 1px solid rgba(255,255,255,0.05);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
         display: none;
       }
 
-      .comments-section.open { display: block; }
+      .comments-section.open {
+        display: block;
+      }
 
       .comment-item {
         display: flex;
@@ -451,15 +554,26 @@
       }
 
       .comment-body {
-        background: rgba(255,255,255,0.05);
+        background: rgba(255, 255, 255, 0.05);
         border-radius: 10px;
         padding: 0.4rem 0.7rem;
         flex: 1;
       }
 
-      .comment-author { font-weight: 600; font-size: 0.78rem; color: #818cf8; }
-      .comment-text { font-size: 0.82rem; margin-top: 1px; }
-      .comment-time { font-size: 0.65rem; color: rgba(255,255,255,0.25); margin-top: 2px; }
+      .comment-author {
+        font-weight: 600;
+        font-size: 0.78rem;
+        color: #818cf8;
+      }
+      .comment-text {
+        font-size: 0.82rem;
+        margin-top: 1px;
+      }
+      .comment-time {
+        font-size: 0.65rem;
+        color: rgba(255, 255, 255, 0.25);
+        margin-top: 2px;
+      }
 
       .comment-input-row {
         display: flex;
@@ -469,8 +583,8 @@
 
       .comment-input-row input {
         flex: 1;
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         padding: 0.45rem 0.7rem;
         color: #fff;
@@ -479,10 +593,12 @@
         outline: none;
       }
 
-      .comment-input-row input::placeholder { color: rgba(255,255,255,0.25); }
+      .comment-input-row input::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+      }
 
       .comment-submit {
-        background: rgba(99,102,241,0.2);
+        background: rgba(99, 102, 241, 0.2);
         border: none;
         color: #818cf8;
         padding: 0.4rem 0.8rem;
@@ -494,13 +610,15 @@
         transition: all 0.2s;
       }
 
-      .comment-submit:hover { background: rgba(99,102,241,0.35); }
+      .comment-submit:hover {
+        background: rgba(99, 102, 241, 0.35);
+      }
 
       /* ===== SEARCH CARD ===== */
       .search-input {
         width: 100%;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         padding: 0.55rem 0.8rem;
         color: #fff;
@@ -511,18 +629,24 @@
         box-sizing: border-box;
       }
 
-      .search-input::placeholder { color: rgba(255,255,255,0.25); }
-      .search-input:focus { border-color: rgba(129,140,248,0.4); }
+      .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.25);
+      }
+      .search-input:focus {
+        border-color: rgba(129, 140, 248, 0.4);
+      }
 
       .search-result-item {
         display: flex;
         align-items: center;
         gap: 0.6rem;
         padding: 0.5rem 0;
-        border-bottom: 1px solid rgba(255,255,255,0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       }
 
-      .search-result-item:last-child { border-bottom: none; }
+      .search-result-item:last-child {
+        border-bottom: none;
+      }
 
       .follow-btn {
         padding: 0.3rem 0.7rem;
@@ -536,21 +660,39 @@
         flex-shrink: 0;
       }
 
-      .follow-btn.follow { background: rgba(99,102,241,0.2); color: #818cf8; }
-      .follow-btn.follow:hover { background: rgba(99,102,241,0.35); }
-      .follow-btn.pending { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); cursor: default; }
-      .follow-btn.following { background: rgba(244,63,94,0.12); color: #fb7185; }
-      .follow-btn.following:hover { background: rgba(244,63,94,0.25); }
+      .follow-btn.follow {
+        background: rgba(99, 102, 241, 0.2);
+        color: #818cf8;
+      }
+      .follow-btn.follow:hover {
+        background: rgba(99, 102, 241, 0.35);
+      }
+      .follow-btn.pending {
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.4);
+        cursor: default;
+      }
+      .follow-btn.following {
+        background: rgba(244, 63, 94, 0.12);
+        color: #fb7185;
+      }
+      .follow-btn.following:hover {
+        background: rgba(244, 63, 94, 0.25);
+      }
 
       /* ===== EMPTY STATE ===== */
       .empty-state {
         text-align: center;
         padding: 2rem 1rem;
-        color: rgba(255,255,255,0.25);
+        color: rgba(255, 255, 255, 0.25);
         font-size: 0.85rem;
       }
 
-      .empty-state-icon { font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.5; }
+      .empty-state-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.5;
+      }
 
       /* ===== TOAST ===== */
       .toast {
@@ -564,24 +706,27 @@
         border-radius: 10px;
         font-size: 0.88rem;
         font-weight: 500;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-        border: 1px solid rgba(129,140,248,0.15);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(129, 140, 248, 0.15);
         z-index: 9999;
         opacity: 0;
         transition: all 0.3s ease;
       }
 
-      .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
 
       /* ===== LOAD MORE ===== */
       .load-more-btn {
         display: block;
         width: 100%;
         padding: 0.7rem;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
-        color: rgba(255,255,255,0.5);
+        color: rgba(255, 255, 255, 0.5);
         font-size: 0.85rem;
         font-weight: 500;
         cursor: pointer;
@@ -589,17 +734,28 @@
         transition: all 0.2s;
       }
 
-      .load-more-btn:hover { background: rgba(99,102,241,0.1); color: #818cf8; }
+      .load-more-btn:hover {
+        background: rgba(99, 102, 241, 0.1);
+        color: #818cf8;
+      }
 
       /* ===== RESPONSIVE ===== */
       @media (max-width: 1024px) {
-        .forum-right { display: none; }
-        .mobile-search-card { display: block !important; }
+        .forum-right {
+          display: none;
+        }
+        .mobile-search-card {
+          display: block !important;
+        }
       }
 
       @media (max-width: 768px) {
-        .forum-left { display: none; }
-        .forum-layout { padding: 0.8rem; }
+        .forum-left {
+          display: none;
+        }
+        .forum-layout {
+          padding: 0.8rem;
+        }
       }
 
       .mobile-search-card {
@@ -607,11 +763,12 @@
       }
 
       /* File input hidden */
-      .hidden-input { display: none; }
+      .hidden-input {
+        display: none;
+      }
     </style>
   </head>
   <body>
-
     <!-- TOP BAR -->
     <div class="topbar">
       <a href="index.html" class="topbar-brand">Campus360</a>
@@ -620,13 +777,13 @@
         <a href="index.html" class="topbar-btn">Home</a>
         <a href="forum.html" class="topbar-btn active-nav">Forum</a>
         <a href="messages.html" class="topbar-btn">Messages</a>
+        <a href="events.html" class="topbar-btn">Events</a>
         <button class="topbar-btn danger" id="logoutBtn">Logout</button>
       </div>
     </div>
 
     <!-- MAIN LAYOUT -->
     <div class="forum-layout">
-
       <!-- LEFT SIDEBAR -->
       <aside class="forum-left">
         <!-- Profile card -->
@@ -652,9 +809,13 @@
 
         <!-- Follow requests -->
         <div class="card" id="followReqCard">
-          <div class="card-title">Follow Requests <span id="reqBadge" style="color:#f43f5e;"></span></div>
+          <div class="card-title">
+            Follow Requests <span id="reqBadge" style="color: #f43f5e"></span>
+          </div>
           <div id="followReqList">
-            <div class="empty-state" style="padding:0.5rem;">No pending requests</div>
+            <div class="empty-state" style="padding: 0.5rem">
+              No pending requests
+            </div>
           </div>
         </div>
       </aside>
@@ -664,9 +825,16 @@
         <!-- Mobile/Tablet Search (visible when right sidebar is hidden) -->
         <div class="card mobile-search-card">
           <div class="card-title">🔍 Find People</div>
-          <input type="text" class="search-input" id="userSearchMobile" placeholder="Search by name or username..." />
+          <input
+            type="text"
+            class="search-input"
+            id="userSearchMobile"
+            placeholder="Search by name or username..."
+          />
           <div id="searchResultsMobile">
-            <div class="empty-state" style="padding:0.5rem;">Type to search</div>
+            <div class="empty-state" style="padding: 0.5rem">
+              Type to search
+            </div>
           </div>
         </div>
 
@@ -674,18 +842,42 @@
         <div class="card composer" id="composer">
           <div class="composer-top">
             <div class="composer-avatar" id="composerAvatar">?</div>
-            <textarea id="postContent" placeholder="What's on your mind?" rows="3"></textarea>
+            <textarea
+              id="postContent"
+              placeholder="What's on your mind?"
+              rows="3"
+            ></textarea>
           </div>
           <div class="composer-actions">
             <div class="composer-left-actions">
-              <button class="visibility-toggle" id="visToggle" onclick="toggleVisibility()">
+              <button
+                class="visibility-toggle"
+                id="visToggle"
+                onclick="toggleVisibility()"
+              >
                 🌍 Public
               </button>
-              <button class="attach-btn" id="imageAttachBtn" title="Attach image">📷</button>
-              <input type="file" class="hidden-input" id="postImageInput" accept="image/*" />
-              <span id="imagePreviewName" style="font-size:0.75rem; color:rgba(255,255,255,0.4);"></span>
+              <button
+                class="attach-btn"
+                id="imageAttachBtn"
+                title="Attach image"
+              >
+                📷
+              </button>
+              <input
+                type="file"
+                class="hidden-input"
+                id="postImageInput"
+                accept="image/*"
+              />
+              <span
+                id="imagePreviewName"
+                style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.4)"
+              ></span>
             </div>
-            <button class="post-btn" id="postBtn" onclick="createPost()">Post</button>
+            <button class="post-btn" id="postBtn" onclick="createPost()">
+              Post
+            </button>
           </div>
         </div>
 
@@ -693,7 +885,12 @@
         <div id="feedContainer"></div>
 
         <!-- Load more -->
-        <button class="load-more-btn" id="loadMoreBtn" onclick="loadMorePosts()" style="display:none;">
+        <button
+          class="load-more-btn"
+          id="loadMoreBtn"
+          onclick="loadMorePosts()"
+          style="display: none"
+        >
           Load more posts...
         </button>
       </main>
@@ -703,9 +900,16 @@
         <!-- Search users -->
         <div class="card">
           <div class="card-title">🔍 Find People</div>
-          <input type="text" class="search-input" id="userSearch" placeholder="Search by name or username..." />
+          <input
+            type="text"
+            class="search-input"
+            id="userSearch"
+            placeholder="Search by name or username..."
+          />
           <div id="searchResults">
-            <div class="empty-state" style="padding:0.5rem;">Type to search</div>
+            <div class="empty-state" style="padding: 0.5rem">
+              Type to search
+            </div>
           </div>
         </div>
       </aside>
