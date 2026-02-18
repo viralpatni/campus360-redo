@@ -88,7 +88,14 @@ function createEventCard(ev) {
   card.id = "event-" + ev.id;
 
   const initial = ev.club_name ? ev.club_name.charAt(0).toUpperCase() : "?";
-  const dateStr = formatDate(ev.event_date);
+
+  // Format Date Range
+  let dateStr = formatDate(ev.event_date);
+  if (ev.event_date_end && ev.event_date_end !== ev.event_date) {
+    // If different year, show full dates. If same year, maybe shorten?
+    // For now, simple range: "Mar 1, 2026 – Mar 3, 2026"
+    dateStr += " – " + formatDate(ev.event_date_end);
+  }
   const timeStr =
     formatTime12(ev.event_time_start) +
     (ev.event_time_end ? " – " + formatTime12(ev.event_time_end) : "");
@@ -237,11 +244,29 @@ async function cancelEvent(eventId) {
   }
 }
 
-// ===== CREATE EVENT =====
+// Make it globally available
+window.createEvent = createEvent;
+
+// Bind immediately (script is at end of body)
+const createBtn = document.getElementById("createEventBtn");
+if (createBtn) {
+  console.log("Create button found, attaching listener");
+  createBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log("Button clicked via listener");
+    createEvent();
+  });
+} else {
+  console.error("CRITICAL: Create button NOT found in DOM");
+}
+
 async function createEvent() {
+  console.log("createEvent called");
+  alert("Debug: Starting creation...");
   const title = document.getElementById("eventTitle").value.trim();
   const desc = document.getElementById("eventDesc").value.trim();
   const date = document.getElementById("eventDate").value;
+  const dateEnd = document.getElementById("eventDateEnd").value;
   const timeStart = document.getElementById("eventTimeStart").value;
   const timeEnd = document.getElementById("eventTimeEnd").value;
   const venue = document.getElementById("eventVenue").value.trim();
@@ -252,7 +277,12 @@ async function createEvent() {
   const odEnd = document.getElementById("odTimeEnd").value;
 
   if (!title || !date || !timeStart) {
-    showToast("Title, date, and start time are required");
+    showToast("Title, start date, and start time are required");
+    return;
+  }
+
+  if (dateEnd && dateEnd < date) {
+    showToast("End date cannot be before start date");
     return;
   }
 
@@ -281,6 +311,7 @@ async function createEvent() {
     formData.append("title", title);
     formData.append("description", desc);
     formData.append("event_date", date);
+    if (dateEnd) formData.append("event_date_end", dateEnd);
     formData.append("event_time_start", timeStart);
     if (timeEnd) formData.append("event_time_end", timeEnd);
     formData.append("venue", venue);
@@ -292,7 +323,14 @@ async function createEvent() {
     if (odChecked && odEnd) formData.append("od_time_end", odEnd);
 
     const res = await fetch(EVENTS_API, { method: "POST", body: formData });
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (err) {
+      console.error("Server response:", text);
+      throw new Error("Server Error: " + text.substring(0, 100) + "...");
+    }
 
     if (data.success) {
       showToast("Event created! 🎉");
@@ -300,6 +338,7 @@ async function createEvent() {
       document.getElementById("eventTitle").value = "";
       document.getElementById("eventDesc").value = "";
       document.getElementById("eventDate").value = "";
+      document.getElementById("eventDateEnd").value = "";
       document.getElementById("eventTimeStart").value = "";
       document.getElementById("eventTimeEnd").value = "";
       document.getElementById("eventVenue").value = "";
@@ -312,11 +351,37 @@ async function createEvent() {
       selectedPoster = null;
       toggleOdFields();
       loadEvents(1);
+      // Close modal/overlay if any
+      document.getElementById("eventComposer").classList.remove("visible");
     } else {
-      showToast(data.error || "Failed to create event");
+      // Check for specific DB error requiring migration
+      if (
+        data.error &&
+        data.error.includes("Unknown column 'event_date_end'")
+      ) {
+        if (
+          confirm(
+            "Database Update Required: The 'End Date' feature needs a database change. Update now?",
+          )
+        ) {
+          try {
+            const migRes = await fetch("php/migrate_events.php");
+            const migText = await migRes.text();
+            alert("Database Update Result:\n" + migText);
+            showToast("Database updated! Try creating event again.");
+          } catch (migErr) {
+            alert("Failed to run migration: " + migErr);
+          }
+        }
+      } else {
+        showToast(data.error || "Failed to create event");
+      }
     }
   } catch (e) {
-    showToast("Error creating event");
+    console.error("createEvent error:", e);
+    // Show the actual error to the user for debugging
+    showToast("Error: " + (e.message || e));
+    alert("Create Event Error:\n" + (e.stack || e));
   } finally {
     btn.disabled = false;
   }
@@ -343,12 +408,23 @@ function toggleOdFields() {
 
 // ===== FILTERS =====
 function filterCategory(cat, btn) {
-  activeCategory = cat;
   currentPage = 1;
-  document
-    .querySelectorAll(".filter-group:first-child .filter-btn")
-    .forEach((b) => b.classList.remove("active"));
-  btn.classList.add("active");
+  const allBtns = document.querySelectorAll("#categoryFilters .filter-btn");
+
+  // If clicking the already-active category, reset to 'all'
+  if (activeCategory === cat && cat !== "all") {
+    activeCategory = "all";
+    allBtns.forEach((b) => b.classList.remove("active"));
+    // Mark the 'All' button as active
+    allBtns.forEach((b) => {
+      if (b.textContent.trim().replace(/^.\s*/, "") === "All")
+        b.classList.add("active");
+    });
+  } else {
+    activeCategory = cat;
+    allBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+  }
   loadEvents(1);
 }
 

@@ -692,7 +692,7 @@
         <div class="card">
           <div class="card-title">🎯 Filter Events</div>
 
-          <div class="filter-group">
+          <div class="filter-group" id="categoryFilters">
             <div class="filter-label">Category</div>
             <button
               class="filter-btn active"
@@ -784,9 +784,16 @@
 
           <div class="composer-row">
             <div class="composer-field">
-              <label>Date *</label>
+              <label>Start Date *</label>
               <input type="date" class="composer-input" id="eventDate" />
             </div>
+            <div class="composer-field">
+              <label>End Date</label>
+              <input type="date" class="composer-input" id="eventDateEnd" />
+            </div>
+          </div>
+
+          <div class="composer-row">
             <div class="composer-field">
               <label>Start Time *</label>
               <input type="time" class="composer-input" id="eventTimeStart" />
@@ -872,11 +879,7 @@
             </div>
           </div>
 
-          <button
-            class="create-event-btn"
-            id="createEventBtn"
-            onclick="createEvent()"
-          >
+          <button class="create-event-btn" id="createEventBtn">
             Create Event
           </button>
         </div>
@@ -911,6 +914,6 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
-    <script src="js/events.js"></script>
+    <script src="js/events.js?v=4"></script>
   </body>
 </html>

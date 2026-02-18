@@ -1,4 +1,7 @@
 <?php
+file_put_contents(__DIR__ . '/../debug_log.txt', "--- API Hit " . date('Y-m-d H:i:s') . " ---\n", FILE_APPEND);
+file_put_contents(__DIR__ . '/../debug_log.txt', "Request: " . print_r($_REQUEST, true) . "\n", FILE_APPEND);
+
 // ============================================
 // Campus360 — Events API (clubs, events, RSVPs)
 // ============================================
@@ -7,6 +10,7 @@
 // ============================================
 
 require_once __DIR__ . '/config.php';
+ini_set('display_errors', 0);
 
 header('Content-Type: application/json');
 
@@ -53,6 +57,14 @@ switch ($action) {
     }
 
     $whereStr = implode(' AND ', $where);
+
+    // If fetching upcoming events, hide past ones (even if status is 'upcoming')
+    // This ensures the list starts with today/future events
+    // Logic: If (End Date OR Start Date) >= Today, show it.
+    if ($status === 'upcoming') {
+        $whereStr .= " AND (COALESCE(e.event_date_end, e.event_date) >= CURDATE())";
+    }
+
     $params[] = $limit;
     $params[] = $offset;
 
@@ -124,13 +136,23 @@ switch ($action) {
   // CREATE EVENT (club only)
   // ==========================================
   case 'create_event':
-    $clubId = requireClub();
+    file_put_contents(__DIR__ . '/../debug_log.txt', "--- Create Event Call " . date('Y-m-d H:i:s') . " ---\n", FILE_APPEND);
+    file_put_contents(__DIR__ . '/../debug_log.txt', "POST: " . print_r($_POST, true) . "\n", FILE_APPEND);
+
+    try {
+        $clubId = requireClub();
+    } catch (Exception $e) {
+        file_put_contents(__DIR__ . '/../debug_log.txt', "Auth Error: " . $e->getMessage() . "\n", FILE_APPEND);
+        jsonResponse(['success' => false, 'error' => $e->getMessage()], 403);
+    }
+    file_put_contents(__DIR__ . '/../debug_log.txt', "Club ID: $clubId\n", FILE_APPEND);
 
     $title      = trim($_POST['title'] ?? '');
     $desc       = trim($_POST['description'] ?? '');
     $eventDate  = $_POST['event_date'] ?? '';
     $timeStart  = $_POST['event_time_start'] ?? '';
     $timeEnd    = $_POST['event_time_end'] ?? null;
+    $eventDateEnd = $_POST['event_date_end'] ?? null;
     $venue      = trim($_POST['venue'] ?? '');
     $posterPath = $_POST['poster_path'] ?? null;
     $regLink    = trim($_POST['registration_link'] ?? '');
@@ -140,22 +162,33 @@ switch ($action) {
     $odEnd      = $_POST['od_time_end'] ?? null;
 
     if (!$title || !$eventDate || !$timeStart) {
+        file_put_contents(__DIR__ . '/../debug_log.txt', "Validation Failed: Missing required fields\n", FILE_APPEND);
         jsonResponse(['success' => false, 'error' => 'Title, date, and start time are required'], 400);
     }
 
-    $stmt = $pdo->prepare("
-      INSERT INTO events (club_id, title, description, event_date, event_time_start, event_time_end,
-                          venue, poster_path, registration_link, max_capacity,
-                          od_provided, od_time_start, od_time_end)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ");
-    $stmt->execute([
-        $clubId, $title, $desc, $eventDate, $timeStart, $timeEnd ?: null,
-        $venue, $posterPath, $regLink ?: null, $maxCap,
-        $odProvided, $odStart ?: null, $odEnd ?: null
-    ]);
+    try {
+        $stmt = $pdo->prepare("
+          INSERT INTO events (club_id, title, description, event_date, event_date_end, event_time_start, event_time_end,
+                              venue, poster_path, registration_link, max_capacity,
+                              od_provided, od_time_start, od_time_end)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $params = [
+            $clubId, $title, $desc, $eventDate, $eventDateEnd ?: null, $timeStart, $timeEnd ?: null,
+            $venue, $posterPath, $regLink ?: null, $maxCap,
+            $odProvided, $odStart ?: null, $odEnd ?: null
+        ];
+        file_put_contents(__DIR__ . '/../debug_log.txt', "Params: " . print_r($params, true) . "\n", FILE_APPEND);
+        
+        $stmt->execute($params);
 
-    jsonResponse(['success' => true, 'event_id' => $pdo->lastInsertId()]);
+        $newId = $pdo->lastInsertId();
+        file_put_contents(__DIR__ . '/../debug_log.txt', "Success: Event ID $newId\n", FILE_APPEND);
+        jsonResponse(['success' => true, 'event_id' => $newId]);
+    } catch (PDOException $e) {
+        file_put_contents(__DIR__ . '/../debug_log.txt', "DB Error: " . $e->getMessage() . "\n", FILE_APPEND);
+        jsonResponse(['success' => false, 'error' => 'Database error: ' . $e->getMessage()], 500);
+    }
     break;
 
   // ==========================================
