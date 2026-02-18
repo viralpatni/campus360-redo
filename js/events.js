@@ -250,19 +250,13 @@ window.createEvent = createEvent;
 // Bind immediately (script is at end of body)
 const createBtn = document.getElementById("createEventBtn");
 if (createBtn) {
-  console.log("Create button found, attaching listener");
   createBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    console.log("Button clicked via listener");
     createEvent();
   });
-} else {
-  console.error("CRITICAL: Create button NOT found in DOM");
 }
 
 async function createEvent() {
-  console.log("createEvent called");
-  alert("Debug: Starting creation...");
   const title = document.getElementById("eventTitle").value.trim();
   const desc = document.getElementById("eventDesc").value.trim();
   const date = document.getElementById("eventDate").value;

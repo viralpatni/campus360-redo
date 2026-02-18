@@ -1,7 +1,4 @@
 <?php
-file_put_contents(__DIR__ . '/../debug_log.txt', "--- API Hit " . date('Y-m-d H:i:s') . " ---\n", FILE_APPEND);
-file_put_contents(__DIR__ . '/../debug_log.txt', "Request: " . print_r($_REQUEST, true) . "\n", FILE_APPEND);
-
 // ============================================
 // Campus360 — Events API (clubs, events, RSVPs)
 // ============================================
@@ -136,16 +133,11 @@ switch ($action) {
   // CREATE EVENT (club only)
   // ==========================================
   case 'create_event':
-    file_put_contents(__DIR__ . '/../debug_log.txt', "--- Create Event Call " . date('Y-m-d H:i:s') . " ---\n", FILE_APPEND);
-    file_put_contents(__DIR__ . '/../debug_log.txt', "POST: " . print_r($_POST, true) . "\n", FILE_APPEND);
-
     try {
         $clubId = requireClub();
     } catch (Exception $e) {
-        file_put_contents(__DIR__ . '/../debug_log.txt', "Auth Error: " . $e->getMessage() . "\n", FILE_APPEND);
         jsonResponse(['success' => false, 'error' => $e->getMessage()], 403);
     }
-    file_put_contents(__DIR__ . '/../debug_log.txt', "Club ID: $clubId\n", FILE_APPEND);
 
     $title      = trim($_POST['title'] ?? '');
     $desc       = trim($_POST['description'] ?? '');
@@ -162,7 +154,6 @@ switch ($action) {
     $odEnd      = $_POST['od_time_end'] ?? null;
 
     if (!$title || !$eventDate || !$timeStart) {
-        file_put_contents(__DIR__ . '/../debug_log.txt', "Validation Failed: Missing required fields\n", FILE_APPEND);
         jsonResponse(['success' => false, 'error' => 'Title, date, and start time are required'], 400);
     }
 
@@ -178,15 +169,12 @@ switch ($action) {
             $venue, $posterPath, $regLink ?: null, $maxCap,
             $odProvided, $odStart ?: null, $odEnd ?: null
         ];
-        file_put_contents(__DIR__ . '/../debug_log.txt', "Params: " . print_r($params, true) . "\n", FILE_APPEND);
         
         $stmt->execute($params);
 
         $newId = $pdo->lastInsertId();
-        file_put_contents(__DIR__ . '/../debug_log.txt', "Success: Event ID $newId\n", FILE_APPEND);
         jsonResponse(['success' => true, 'event_id' => $newId]);
     } catch (PDOException $e) {
-        file_put_contents(__DIR__ . '/../debug_log.txt', "DB Error: " . $e->getMessage() . "\n", FILE_APPEND);
         jsonResponse(['success' => false, 'error' => 'Database error: ' . $e->getMessage()], 500);
     }
     break;
