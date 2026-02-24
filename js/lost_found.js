@@ -101,26 +101,6 @@ async function fetchItems() {
 
   const search = document.getElementById("searchInput").value;
 
-  // Logic: API accepts 'type'. If 'all', we pass nothing or handle in API?
-  // My previous API code: `WHERE i.type = ?`. It REQUIRED type.
-  // I need to update fetch to loop or API to support 'all'.
-  // Or I can just fetch 'lost' and 'found' and merge if 'all'.
-  // Or update API to allow empty type.
-  // Let's stick to 'lost' default if 'all' is not supported, or cycle.
-  // Actually, user wants "Lost Items" and "Found Items". 'All' might be confusing visually.
-  // But I added "All Items" filter.
-  // I will modify API query param slightly in this call? No, API is fixed.
-  // API: `$type = $_GET['type'] ?? 'lost';`
-  // It defaults to lost.
-  // I should update API to support 'all'.
-  // But I can't touch API easily right now (one tool call at a time).
-  // I will just fetch 'lost' AND 'found' if type is 'all' and merge.
-  // Or just default to 'lost' and 'found' separately.
-
-  // WAIT: I added "All Items" button in HTML.
-  // I'll filter on client side? No, pagination (if any).
-  // I'll call API twice if 'all'.
-
   let items = [];
   try {
     let typesToFetch =
@@ -172,7 +152,9 @@ function renderItems(items) {
     let badgeClass = item.type === "lost" ? "badge-lost" : "badge-found";
     if (item.status === "resolved") badgeClass = "badge-resolved";
 
-    const badge = `<span class="badge ${badgeClass}">${item.status === "resolved" ? "RESOLVED" : item.type.toUpperCase()}</span>`;
+    const badge = `<span class="badge ${badgeClass}">${
+      item.status === "resolved" ? "RESOLVED" : item.type.toUpperCase()
+    }</span>`;
 
     // Image
     let imgHtml = "";
@@ -206,7 +188,9 @@ function renderItems(items) {
             <div class="event-header">
                 <div style="flex:1;">
                     <div class="event-title">${item.title}</div>
-                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.4); margin-top:0.2rem;">${item.location}</div>
+                    <div style="font-size:0.8rem; color:rgba(255,255,255,0.4); margin-top:0.2rem;">${
+                      item.location
+                    }</div>
                 </div>
                 ${badge}
             </div>
