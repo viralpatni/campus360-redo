@@ -57,7 +57,7 @@ $relativePath = 'uploads/' . $type . '/' . $filename;
 
 jsonResponse([
     'success'   => true,
-    'file_path' => $relativePath,
+    'path'      => $relativePath,
     'file_type' => $type,
     'file_name' => $file['name'],
 ]);

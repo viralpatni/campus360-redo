@@ -1,0 +1,13 @@
+{
+  "name": "campus360-ws",
+  "version": "1.0.0",
+  "description": "Campus360 WebSocket server for real-time chat",
+  "main": "ws-server.js",
+  "scripts": {
+    "start": "node ws-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0",
+    "mysql2": "^3.9.0"
+  }
+}
