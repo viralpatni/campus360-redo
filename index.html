@@ -1,13 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Campus360 — Your all-in-one student portal for campus life, academics, and opportunities at VIT." />
+    <meta
+      name="description"
+      content="Campus360 — Your all-in-one student portal for campus life, academics, and opportunities at VIT."
+    />
     <title id="title">Campus360</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
@@ -31,11 +37,12 @@
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="forum.html">Forum</a></li>
-          <li><a href="internships.html">Internships</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li id="navAuthItem"><a href="login.html" id="navAuthLink">Login / Sign Up</a></li>
+          <li id="navAuthItem">
+            <a href="login.html" id="navAuthLink">Login / Sign Up</a>
+          </li>
         </ul>
       </nav>
     </header>
@@ -74,16 +81,18 @@
     <section id="features" class="scroll-reveal">
       <h2>Campus360 Features</h2>
       <div class="features-list">
-        <div class="feature-item">
-          <span class="feature-icon">💬</span>
-          <div>
-            <strong>Forum</strong>
-            <p>
-              Connect, discuss, and share ideas with fellow students in a
-              vibrant online community.
-            </p>
-          </div>
-        </div>
+        <a href="forum.html" style="text-decoration: none; color: inherit"
+          ><div class="feature-item">
+            <span class="feature-icon">💬</span>
+            <div>
+              <strong>Forum</strong>
+              <p>
+                Connect, discuss, and share ideas with fellow students in a
+                vibrant online community.
+              </p>
+            </div>
+          </div></a
+        >
         <div class="feature-item">
           <span class="feature-icon">🏢</span>
           <div>
@@ -93,15 +102,17 @@
             </p>
           </div>
         </div>
-        <div class="feature-item">
-          <span class="feature-icon">🎉</span>
-          <div>
-            <strong>Events Corner</strong>
-            <p>
-              Stay updated on campus events, workshops, and club activities.
-            </p>
-          </div>
-        </div>
+        <a href="events.html" style="text-decoration: none; color: inherit"
+          ><div class="feature-item">
+            <span class="feature-icon">🎉</span>
+            <div>
+              <strong>Events Corner</strong>
+              <p>
+                Stay updated on campus events, workshops, and club activities.
+              </p>
+            </div>
+          </div></a
+        >
         <div class="feature-item">
           <span class="feature-icon">🔗</span>
           <div>
@@ -219,17 +230,34 @@
         Campus360 is dedicated to enhancing the student experience through
         innovative solutions and services.
       </p>
+      <p>
+        This website is dedicated to solve all your co-curicular and academic
+        related doubts, queries and all internship related doubts to be solved
+        with immediate response.
+      </p>
     </section>
 
     <section id="services" class="scroll-reveal">
       <h2>Our Services</h2>
       <div class="services-grid">
-        <div class="service-card"><span class="service-icon">🎉</span> Events &amp; Club Activities</div>
-        <div class="service-card"><span class="service-icon">🔍</span> Lost &amp; Found Corner</div>
-        <div class="service-card"><span class="service-icon">💬</span> Student Forum</div>
-        <div class="service-card"><span class="service-icon">❓</span> FAQs</div>
-        <div class="service-card"><span class="service-icon">🌐</span> Internship Tracker</div>
-        <div class="service-card"><span class="service-icon">🔗</span> VTOP</div>
+        <div class="service-card">
+          <span class="service-icon">🎉</span> Events &amp; Club Activities
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🔍</span> Lost &amp; Found Corner
+        </div>
+        <div class="service-card">
+          <span class="service-icon">💬</span> Student Forum
+        </div>
+        <div class="service-card">
+          <span class="service-icon">❓</span> FAQs
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🌐</span> Internship Tracker
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🔗</span> VTOP
+        </div>
       </div>
     </section>
 
@@ -255,34 +283,34 @@
 
     <script>
       // === AUTH GATE ===
-      (async function() {
+      (async function () {
         try {
-          const res = await fetch('php/auth.php?action=check');
+          const res = await fetch("php/auth.php?action=check");
           const data = await res.json();
           if (!data.loggedIn) {
-            window.location.href = 'login.html';
+            window.location.href = "login.html";
             return;
           }
           // Personalize greeting
-          const heading = document.getElementById('welcomeHeading');
+          const heading = document.getElementById("welcomeHeading");
           if (heading && data.user?.name) {
-            heading.textContent = 'Welcome, ' + data.user.name + '!';
+            heading.textContent = "Welcome, " + data.user.name + "!";
           }
           // Show logout link instead of login
-          const authLink = document.getElementById('navAuthLink');
-          const authItem = document.getElementById('navAuthItem');
+          const authLink = document.getElementById("navAuthLink");
+          const authItem = document.getElementById("navAuthItem");
           if (authLink) {
-            authLink.textContent = 'Logout';
-            authLink.href = '#';
-            authLink.addEventListener('click', async (e) => {
+            authLink.textContent = "Logout";
+            authLink.href = "#";
+            authLink.addEventListener("click", async (e) => {
               e.preventDefault();
-              await fetch('php/auth.php?action=logout');
-              window.location.href = 'login.html';
+              await fetch("php/auth.php?action=logout");
+              window.location.href = "login.html";
             });
           }
         } catch (e) {
           // If PHP not reachable (opened as file://), skip auth gate
-          console.warn('Auth check failed — WAMP may not be running.');
+          console.warn("Auth check failed — WAMP may not be running.");
         }
       })();
 
