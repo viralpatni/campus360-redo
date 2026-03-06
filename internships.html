@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Campus360 — Browse live internship opportunities scraped from Internshala and more." />
+    <title>Campus360 — Internships</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* --- Internships Page Styles --- */
+      body.internships-page {
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      /* Top navigation bar */
+      .intern-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.8rem 2rem;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.92) 0%, rgba(139, 92, 246, 0.85) 40%, rgba(244, 63, 94, 0.78) 100%);
+        color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 24px rgba(99, 102, 241, 0.2);
+      }
+
+      .intern-topbar-brand {
+        font-weight: 800;
+        font-size: 1.3rem;
+        letter-spacing: -0.3px;
+        text-decoration: none;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .intern-topbar-brand:hover {
+        opacity: 0.9;
+      }
+
+      .intern-topbar-nav {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .intern-topbar-nav a {
+        color: rgba(255,255,255,0.85);
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: color 0.2s ease;
+        padding-bottom: 2px;
+        border-bottom: 2px solid transparent;
+      }
+
+      .intern-topbar-nav a:hover {
+        color: #fff;
+        border-bottom-color: rgba(255,255,255,0.5);
+      }
+
+      .intern-topbar-nav a.active {
+        color: #fff;
+        border-bottom-color: #fff;
+      }
+
+      /* Hero / Header area */
+      .intern-hero {
+        text-align: center;
+        padding: 3rem 2rem 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .intern-hero h1 {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.4em;
+        letter-spacing: -0.5px;
+      }
+
+      .intern-hero p {
+        color: var(--text-muted);
+        font-size: 1.05rem;
+        max-width: 600px;
+        margin: 0 auto 1.5rem;
+        line-height: 1.6;
+      }
+
+      /* Search & Filters */
+      .intern-controls {
+        max-width: 1000px;
+        margin: 0 auto 2rem;
+        padding: 0 2rem;
+      }
+
+      .intern-search-wrapper {
+        position: relative;
+        margin-bottom: 1rem;
+      }
+
+      .intern-search-wrapper input {
+        width: 100%;
+        padding: 0.95rem 1.3rem 0.95rem 3.2rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(var(--glass-blur));
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        color: var(--text);
+        font-family: var(--font);
+        outline: none;
+        box-shadow: var(--shadow-sm);
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        box-sizing: border-box;
+      }
+
+      .intern-search-wrapper input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+      }
+
+      .intern-search-wrapper input::placeholder {
+        color: var(--text-light);
+      }
+
+      .intern-search-icon {
+        position: absolute;
+        left: 1.1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.1rem;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      /* Filter row */
+      .intern-filters {
+        display: flex;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .intern-filter-chip {
+        padding: 0.5rem 1.1rem;
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--border);
+        background: var(--bg-card-solid);
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: var(--font);
+        user-select: none;
+      }
+
+      .intern-filter-chip:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .intern-filter-chip.active {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 2px 12px rgba(99, 102, 241, 0.25);
+      }
+
+      .intern-refresh-btn {
+        margin-left: auto;
+        padding: 0.5rem 1.2rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--bg-card-solid);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: var(--font);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .intern-refresh-btn:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+      }
+
+      .intern-refresh-btn.loading .refresh-icon {
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      /* Stats bar */
+      .intern-stats {
+        max-width: 1000px;
+        margin: 0 auto 1.5rem;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.88rem;
+      }
+
+      .intern-stats .stat-count {
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 1.1rem;
+      }
+
+      .intern-stats .stat-label {
+        display: inline !important;
+        font-size: inherit !important;
+        font-weight: inherit !important;
+        color: inherit !important;
+        margin-top: 0 !important;
+      }
+
+      .intern-stats .cached-badge {
+        background: rgba(34, 197, 94, 0.12);
+        color: #22c55e;
+        padding: 0.2rem 0.7rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      /* Internship cards grid */
+      .intern-grid {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 2rem 4rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.2rem;
+      }
+
+      /* Card */
+      .intern-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(var(--glass-blur));
+        -webkit-backdrop-filter: blur(var(--glass-blur));
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        position: relative;
+        overflow: hidden;
+        /* Animation entrance */
+        opacity: 0;
+        transform: translateY(20px);
+        animation: cardIn 0.5s var(--ease) forwards;
+      }
+
+      @keyframes cardIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .intern-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(99, 102, 241, 0.25);
+      }
+
+      .intern-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+
+      .intern-card-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.35;
+        flex: 1;
+      }
+
+      .intern-source-badge {
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 0.25rem 0.65rem;
+        border-radius: 12px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .intern-source-badge.internshala {
+        background: linear-gradient(135deg, rgba(0, 120, 215, 0.12), rgba(0, 120, 215, 0.06));
+        color: #0078d7;
+        border: 1px solid rgba(0, 120, 215, 0.2);
+      }
+
+      .intern-source-badge.webscraper {
+        background: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(244, 63, 94, 0.06));
+        color: var(--accent);
+        border: 1px solid rgba(244, 63, 94, 0.2);
+      }
+
+      .intern-card-company {
+        font-size: 0.88rem;
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .intern-card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 0.2rem;
+      }
+
+      .intern-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+
+      .intern-meta-item .meta-icon {
+        font-size: 0.95rem;
+        opacity: 0.7;
+      }
+
+      /* Tags */
+      .intern-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin-top: 0.2rem;
+      }
+
+      .intern-tag {
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.2rem 0.55rem;
+        border-radius: 8px;
+        background: rgba(99, 102, 241, 0.08);
+        color: var(--primary);
+        border: 1px solid rgba(99, 102, 241, 0.12);
+      }
+
+      .intern-card-footer {
+        margin-top: auto;
+        padding-top: 0.8rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .intern-stipend {
+        font-weight: 700;
+        font-size: 1rem;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .intern-view-btn {
+        padding: 0.45rem 1.1rem;
+        border-radius: var(--radius-sm);
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .intern-view-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      }
+
+      /* Loading skeletons */
+      .intern-skeleton {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .skeleton-line {
+        height: 14px;
+        border-radius: 7px;
+        background: linear-gradient(90deg, var(--border) 25%, rgba(99,102,241,0.08) 50%, var(--border) 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+
+      .skeleton-line.w-75 { width: 75%; }
+      .skeleton-line.w-50 { width: 50%; }
+      .skeleton-line.w-40 { width: 40%; }
+      .skeleton-line.w-30 { width: 30%; }
+      .skeleton-line.h-20 { height: 20px; }
+
+      @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+
+      /* Empty state */
+      .intern-empty {
+        text-align: center;
+        padding: 4rem 2rem;
+        grid-column: 1 / -1;
+      }
+
+      .intern-empty-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .intern-empty h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 0.4rem;
+      }
+
+      .intern-empty p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* Error state */
+      .intern-error {
+        text-align: center;
+        padding: 3rem 2rem;
+        grid-column: 1 / -1;
+        background: rgba(244, 63, 94, 0.06);
+        border: 1px solid rgba(244, 63, 94, 0.15);
+        border-radius: var(--radius-md);
+      }
+
+      .intern-error h3 {
+        color: var(--accent);
+        margin-bottom: 0.3rem;
+      }
+
+      .intern-error p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      /* Dark mode overrides */
+      body.dark-mode .intern-topbar {
+        background: linear-gradient(135deg, rgba(15, 15, 26, 0.95) 0%, rgba(30, 27, 75, 0.9) 40%, rgba(79, 70, 229, 0.6) 100%);
+      }
+
+      body.dark-mode .intern-search-wrapper input {
+        background: rgba(22, 22, 38, 0.8);
+        border-color: rgba(129, 140, 248, 0.15);
+        color: #e8e8f0;
+      }
+
+      body.dark-mode .intern-filter-chip {
+        background: rgba(22, 22, 38, 0.6);
+        border-color: rgba(129, 140, 248, 0.12);
+        color: #9ca3c0;
+      }
+
+      body.dark-mode .intern-filter-chip.active {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      body.dark-mode .intern-refresh-btn {
+        background: rgba(22, 22, 38, 0.6);
+        border-color: rgba(129, 140, 248, 0.12);
+      }
+
+      body.dark-mode .intern-card {
+        background: rgba(22, 22, 38, 0.6);
+        border-color: rgba(129, 140, 248, 0.1);
+      }
+
+      body.dark-mode .intern-card:hover {
+        border-color: rgba(129, 140, 248, 0.25);
+      }
+
+      body.dark-mode .skeleton-line {
+        background: linear-gradient(90deg, rgba(129,140,248,0.08) 25%, rgba(129,140,248,0.15) 50%, rgba(129,140,248,0.08) 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+
+      /* Responsive */
+      @media (max-width: 700px) {
+        .intern-topbar {
+          padding: 0.7rem 1rem;
+        }
+
+        .intern-topbar-nav {
+          gap: 0.8rem;
+        }
+
+        .intern-hero {
+          padding: 2rem 1.2rem 1.5rem;
+        }
+
+        .intern-controls {
+          padding: 0 1.2rem;
+        }
+
+        .intern-grid {
+          grid-template-columns: 1fr;
+          padding: 0 1.2rem 3rem;
+        }
+
+        .intern-stats {
+          padding: 0 1.2rem;
+          flex-wrap: wrap;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .intern-topbar-brand span:last-child {
+          display: none;
+        }
+
+        .intern-filters {
+          gap: 0.4rem;
+        }
+
+        .intern-filter-chip {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="internships-page">
+
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" aria-label="Toggle dark mode">
+      <span id="darkModeIcon"> </span>
+    </button>
+
+    <!-- Top Bar -->
+    <nav class="intern-topbar">
+      <a href="index.html" class="intern-topbar-brand">
+        <span>🎓</span>
+        <span>Campus360</span>
+      </a>
+      <div class="intern-topbar-nav">
+        <a href="index.html">Home</a>
+        <a href="forum.html">Forum</a>
+        <a href="internships.html" class="active">Internships</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="intern-hero">
+      <h1>🎓 Internship Explorer</h1>
+      <p>Live internship opportunities for <strong>B.Tech undergraduates</strong> — scraped from <strong>Internshala</strong> and <strong>Webscraper</strong> across CS, ECE, Mech, Civil, AI/ML & more.</p>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="intern-controls">
+      <div class="intern-search-wrapper">
+        <span class="intern-search-icon">🔍</span>
+        <input type="text" id="internSearch" placeholder="Search internships by title, company, location..." autocomplete="off" />
+      </div>
+      <div class="intern-filters">
+        <button class="intern-filter-chip active" data-source="all">All Sources</button>
+        <button class="intern-filter-chip" data-source="internshala">🏢 Internshala</button>
+        <button class="intern-filter-chip" data-source="webscraper">🌐 Webscraper</button>
+        <button class="intern-filter-chip" data-category="cs">💻 CS / IT</button>
+        <button class="intern-filter-chip" data-category="ece">🔌 ECE / EEE</button>
+        <button class="intern-filter-chip" data-category="mech">⚙️ Mechanical</button>
+        <button class="intern-filter-chip" data-category="data">📊 Data / AI</button>
+        <button class="intern-refresh-btn" id="refreshBtn">
+          <span class="refresh-icon">🔄</span> Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="intern-stats" id="internStats" style="display: none;">
+      <span><span class="stat-count" id="resultCount">0</span> <span class="stat-label">internships found</span></span>
+      <span id="cachedBadge" class="cached-badge" style="display: none;">📦 Cached</span>
+      <span id="lastUpdated" style="font-size: 0.8rem;"></span>
+    </div>
+
+    <!-- Internship Cards Grid -->
+    <div class="intern-grid" id="internGrid">
+      <!-- Loading skeletons (shown initially) -->
+      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
+      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
+      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
+      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
+      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
+      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
+    </div>
+
+    <script src="js/live_data.js"></script>
+    <script src="js/internships.js"></script>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+      (function () {
+        const toggle = document.getElementById("darkModeToggle");
+        const icon = document.getElementById("darkModeIcon");
+
+        function setIcon() {
+          const isDark = document.body.classList.contains("dark-mode");
+          if (isDark) {
+            icon.innerHTML =
+              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+            toggle.setAttribute("aria-label", "Switch to light mode");
+          } else {
+            icon.innerHTML =
+              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path></svg>';
+            toggle.setAttribute("aria-label", "Switch to dark mode");
+          }
+        }
+
+        if (toggle && icon) {
+          toggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            setIcon();
+          });
+          setIcon();
+        }
+      })();
+    </script>
+  </body>
+</html>

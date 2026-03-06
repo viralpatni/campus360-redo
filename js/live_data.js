@@ -1,0 +1,2802 @@
+window.LIVE_INTERNSHIPS = {
+  "success": true,
+  "internships": [
+    {
+      "source": "Internshala",
+      "title": "Python/Django & React Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/python-django-react-engineering-internship-in-delhi-at-the-agency-source1772711271",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mobile App Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 4,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mobile-app-development-internship-in-multiple-locations-at-peaceinfotech-services-private-limited1772449543",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Growth & Automation",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/growth-automation-internship-in-mohali-at-mudra-portfolio-managers1772684621",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Tech And Digital Operations",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/tech-and-digital-operations-internship-in-hyderabad-at-alter-hub1772270489",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "WordPress Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/wordpress-development-internship-in-kolkata-at-ib-arts-private-limited1772087883",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Cyber Security",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 13,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/cyber-security-internship-in-multiple-locations-at-jungleworks1772780664",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Experiential Learning Mentor",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 15,000 - 18,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/experiential-learning-mentor-internship-in-bangalore-at-robo-g1772684968",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 7,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-ahmedabad-at-padosiagent-servtech-pvt-ltd1771501567",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Subject Matter Expert (SME) \u2013 Computer Science \u2013 School Textbooks K8",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/subject-matter-expert-sme--computer-science--school-textbooks-k8-internship-in-multiple-locations-at-arihant-publications1771992812",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Quality Analyst",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/quality-analyst-internship-in-mumbai-at-sportvot1772800020",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Global Talent Intern",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "Unpaid / Not disclosed",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/global-talent-intern-internship-in-multiple-locations-at-aiesec-india1772795796",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Network Engineering",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 - 10,002 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-network-engineering-internship-at-ntt-data1772682266",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Hardware Design Engineer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/hardware-design-engineer-internship-in-multiple-locations-at-cms-info-systems1771240235",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "QA Testing",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 13,000 - 16,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-qa-testing-internship-at-sarkari-scan1770610432",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Subject Matter Expert (SME)",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 24,000 - 35,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-subject-matter-expert-sme-internship-at-scaler1770363288",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Product",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/product-internship-in-bangalore-at-crarity1772780179",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Presales Executive",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/presales-executive-internship-in-kolkata-at-prime-infoserv-llp1772689566",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-indore-at-logiqlink-technologies1772800602",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Sales Audit Agent",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-sales-audit-agent-internship-at-supernova-ai1772791020",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Quality Analyst",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 - 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-quality-analyst-internship-at-supernova-ai1772787858",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Accounting Software Tester",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-accounting-software-tester-internship-at-meru-technosoft-private-limited1772798675",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "iOS App Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/ios-app-development-internship-in-delhi-at-smarrtif-ai1772695837",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Game Writer",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 12,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-game-writer-internship-at-sas-group1772798729",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Game Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/game-development-internship-in-ahmedabad-at-eshiabim1772714434",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Application Engineer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/application-engineer-internship-in-bangalore-at-senso-vision-system1772712369",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Cloud Engineer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/cloud-engineer-internship-in-multiple-locations-at-tsteps-private-limited1772535395",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Internal Tools/QA Engineering",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-internal-tools-qa-engineering-internship-at-namaah-pvt-ltd1772775151",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-nagpur-at-custofar-technologies-pvt-ltd1772260157",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "UI/UX Testing/IOS Testing",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 2,500 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-ui-ux-testing-ios-testing-internship-at-across-the-globe-atg1772792805",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,501 - 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-ahmedabad-at-omnidya-tech-llp1772204391",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Flutter Developer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/flutter-developer-internship-in-varanasi-at-nextgen-samvaad-private-limited1771932312",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Project Management/Scrum Master",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 5,001 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-project-management-scrum-master-internship-at-yoliday-llp1770742476",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mobile App Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,000 - 7,002 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mobile-app-development-internship-in-pune-at-shoonyansh-pvt-ltd1772266342",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mobile App Developer",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-mobile-app-developer-internship-at-namaah-pvt-ltd1772709260",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Junior PHP Developer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,000 - 18,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/junior-php-developer-internship-in-multiple-locations-at-fyntune-solution-private-limited1772693200",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Business Systems Analyst",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-part-time-business-systems-analyst-internship-at-the-flying-panda1772779936",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "IT Executive",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 13,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/it-executive-internship-in-multiple-locations-at-jungleworks1771674913",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Flutter Development",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 3,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-flutter-development-internship-at-resolute-ai-software-private-limited1772697421",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Food Technology- QA And Operations",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,000 - 25,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/food-technology-qa-and-operations-internship-in-bangalore-at-padma-food-products1772519816",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Technical Scrum Master",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-technical-scrum-master-internship-at-resolute-ai-software-private-limited1772697206",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,001 - 5,002 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-agartala-at-prabhabi-infocom1770267546",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Software Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/software-development-internship-in-mumbai-at-caterersnearme1772792639",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Zoho Developer",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-zoho-developer-internship-at-insightcrew1772792420",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "UX/UI Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 15,000 - 30,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/ux-ui-design-internship-in-bangalore-at-libre-wireless-technology1772791552",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Game Development",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 7,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-game-development-internship-at-esrot-consulting-labs1772782152",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Flutter Development",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 4,999 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-flutter-development-internship-at-hds-infotech1772780573",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Product Management",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/product-management-internship-in-mumbai-at-mearch-online-travel-services-llp1772772821",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 4,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-jaipur-at-thinker-technology1772771363",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Android App Development",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 2,000 - 4,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-android-app-development-internship-at-ods-network-private-limited1772770201",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Software Engineer",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 15,000 - 28,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/ai-software-engineer-internship-in-multiple-locations-at-dialabank1772770032",
+      "tags": [
+        "B.Tech",
+        "Computer Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electronics Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 4,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electronics-engineering-internship-in-ahmedabad-at-auto-forest1771306284",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Robotics Trainer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/robotics-trainer-internship-in-lucknow-at-klassway1772696364",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mechanical Product Designer & 3D Printing Engineer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mechanical-product-designer-3d-printing-engineer-internship-in-delhi-at-3d-paradise1772786712",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electronics Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electronics-engineering-internship-in-mumbai-at-pixiq-cinetech-pvt-ltd1771417053",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Robotics Technical Workshop",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/technical-workshop-internship-in-pune-at-botmakers-private-limited1770631924",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 11,000 - 17,500 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-internship-in-ahmedabad-at-omnidya-tech-llp1771944611",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems Developer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 15,000 - 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-developer-internship-in-mumbai-at-raylogic-control-systems-pvt-ltd1770195059",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electrical Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electrical-engineering-internship-in-chennai-at-planys-technologies-private-limited1772696745",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Product Designer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 15,000 - 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/product-designer-internship-in-multiple-locations-at-pereyan-llp1772605837",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Junior 3D Artist",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 15,000 - 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/junior-3d-artist-internship-in-noida-at-khelai1772602915",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-internship-in-kolkata-at-ultratech-solutions1771305223",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "PCB Designer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/pcb-designer-internship-in-mohali-at-innow81772799451",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Defence Drone Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 6,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/defence-drone-engineering-internship-in-multiple-locations-at-shunya-iot-ai-research-private-limited1772799355",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electrical Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electrical-engineering-internship-in-jabalpur-at-ouranos-robotics-private-limited1772784609",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mechatronic System Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mechatronic-system-design-internship-in-pune-at-nesa-innovation-labs1772706496",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Robotics Trainer Cum Engineer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/part-time-robotics-trainer-cum-engineer-internship-in-coimbatore-at-i-think-robotics-lab1772703610",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 4,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-internship-in-ahmedabad-at-saltriver-infosystems-private-limited1772676086",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electrical Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electrical-engineering-internship-in-multiple-locations-at-kreative-technomation-pvtltd1772518479",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electronics Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,500 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electronics-engineering-internship-in-faridabad-at-smaa-electronics-technologies-india-private-limited1772451040",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Service Engineer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/service-engineer-internship-in-namakkal-at-amopa-solutions-private-limited1772042572",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electronics Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/part-time-electronics-engineering-internship-in-bhopal-at-ansoz-creations-private-limited1771866139",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electronics Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electronics-engineering-internship-in-indore-at-comet-instruments1771746245",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "3D Designer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/3d-designer-internship-in-delhi-at-sakshi-media-group1771315082",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electronics Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 13,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electronics-engineering-internship-in-jaipur-at-circuitloop-technologies-llp1771229751",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "2D Design - 3D Animation Developer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 20,000 - 30,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/2d-design-3d-animation-developer-internship-in-delhi-at-brains-aviation-pvt-ltd1770965529",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Optical System Design Engineer - Laser Tx/Rx Systems.",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "Competitive stipend",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/optical-system-design-engineer-laser-tx-rx-systems-internship-in-haryana-at-qbitronic-solutions1772704509",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Design & 3D Printing Engineer (Internship-Final Year/Recent Graduate) - Delhi Onsite",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "Competitive stipend",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/design-3d-printing-engineer-internship-final-year-recent-graduate-delhi-onsite-internship-in-delhi-at-curiosity-3d1771666393",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Robotics Engineer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/robotics-engineer-internship-in-multiple-locations-at-tsteps-private-limited1772709917",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 1,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-part-time-embedded-systems-internship-at-embedded-pathashala1772628368",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mechatronics",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,000 - 27,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mechatronics-internship-in-bangalore-at-chota-kissan-robotics1772627745",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "XR-VR Unity Developer",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-xr-vr-unity-developer-internship-at-bhavesh-k1772515818",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Game Assests & Design Creator",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 1,001 - 1,501 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-part-time-game-assests-design-creator-internship-at-maneesh-meena1772515153",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-part-time-embedded-systems-internship-at-emoolar-technology-private-limited1772512080",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electronics Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electronics-engineering-internship-in-delhi-at-identium-tech-solutions1772488448",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 4,000 - 7,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-internship-in-multiple-locations-at-arvyax-technologies-private-limited1772375305",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Internet Of Things (IoT)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 3,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/internet-of-things-iot-internship-in-ahmedabad-at-techiesms1772290260",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-internship-in-gurgaon-at-olus-infomatics1772289537",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Techincal Solutions",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/techincal-solutions-internship-in-bangalore-at-vizmo1772270205",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Electrical Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/electrical-engineering-internship-in-pune-at-maqlabs1772190290",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Robotics",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 17,000 - 30,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/robotics-internship-in-indore-at-modern-village-future-innovations1772166258",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Robotics",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 20,000 - 30,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/robotics-internship-in-chennai-at-gritsys1772021091",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Hardware And Embedded Firmware",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/hardware-and-embedded-firmware-internship-in-pune-at-sujan-industries1772015884",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Internet Of Things (IoT)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 11,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/internet-of-things-iot-internship-in-bangalore-at-intugine-technologies-private-limited1772011458",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Associate Project Manager",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 20,000 - 25,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/associate-project-manager-internship-in-mumbai-at-sekyo-innovations1771999071",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-internship-in-jaipur-at-blazonlabs-itech-private-limited1771994859",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,500 - 11,500 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-internship-in-delhi-at-academy-of-embedded-technology1771958098",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "C++ Development",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 12,499 - 12,500 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-c-development-internship-at-wobot-intelligence-private-limited1771927453",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Embedded Systems",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/embedded-systems-internship-in-nashik-at-aerogravity-private-limited1771874588",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Robotics Perception And Systems Engineering",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 25,000 - 30,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/part-time-robotics-perception-and-systems-engineering-internship-in-noida-at-xolver1771843648",
+      "tags": [
+        "B.Tech",
+        "Electronics"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mechanical Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mechanical-engineering-internship-in-pondicherry-at-vaahan-renew-energy-private-limited1771479558",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Architecture",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/architecture-internship-in-multiple-locations-at-design-module1770297300",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Industrial And Production Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/industrial-and-production-engineering-internship-in-multiple-locations-at-tsteps-private-limited1770271669",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "CAD Developer & 3-D Printing",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 1,500 - 3,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-cad-developer-3-d-printing-internship-at-cbdns-france1770616283",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Research Assistant (Mechanical/Mechatronics)",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-part-time-research-assistant-mechanical-mechatronics-internship-at-intromech1770218706",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Industrial Product Designer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/industrial-product-designer-internship-in-bangalore-at-mindwatt-industries1770200076",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "CAD Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 20,000 - 22,500 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/cad-design-internship-in-pune-at-lelogix-design-solutions-private-limited1770872621",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Architecture",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/architecture-internship-in-dehradun-at-the-blue-khirki1770806260",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Unity FX Artist (VFX) \u2013 Mobile Game Project",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 - 30,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-part-time-unity-fx-artist-vfx--mobile-game-project-internship-at-anemative-private-limited1770900840",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "3d Design Intern",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 3,000 - 4,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-part-time-3d-design-intern-internship-at-m-s-innovations1770966748",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Thermal Engineering",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 7,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-thermal-engineering-internship-at-equiterion-energy1770899470",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Interior Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/interior-design-internship-in-indore-at-make-my-house1770912277",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Architecture",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/architecture-internship-in-gurgaon-at-anugrah-design-studio1770705635",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Robotics Trainer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/robotics-trainer-internship-in-lucknow-at-main-marshals1770860023",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Industrial And Production Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "Unpaid",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/industrial-and-production-engineering-internship-in-hyderabad-at-space-renaissance-indian-chapter1770912611",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mechanical Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mechanical-engineering-internship-in-karnal-at-jp-tins-private-limited1770876916",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "CAD Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/cad-design-internship-in-bangalore-at-psyc-aerospace-and-defence-industries-private-limited1770185754",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mechanical Design & Prototyping",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mechanical-design-prototyping-internship-in-multiple-locations-at-stravex-technologies-private-limited1770196165",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Freelance Product Designer (Steam Toys)",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "Competitive stipend",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-freelance-product-designer-steam-toys-internship-at-exhale1767694627",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Interior Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/interior-design-internship-in-greater-noida-west-at-insignia-spaces1770639132",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "CAD Design",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 3,000 - 7,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-cad-design-internship-at-fixbuddy1771652466",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Interior Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/interior-design-internship-in-pune-at-charnockite-design-and-build1770632761",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Architect & Interior",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/architect-interior-internship-in-jaipur-at-arch-point-consultants-private-limited1772174105",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "3D Visualizer",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 3,500 - 4,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-3d-visualizer-internship-at-the-tiles-house1770804700",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Creative Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/creative-design-internship-in-pondicherry-at-hidesign-india-private-limited1772598115",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Manufacturing Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 15,000 - 18,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/manufacturing-engineering-internship-in-multiple-locations-at-heew-hr-solutions-pvt-ltd1771405161",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mechanical Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 25,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mechanical-engineering-internship-in-tiruppur-at-mantechserv1771307145",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "CAD Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/cad-design-internship-in-multiple-locations-at-anirajs-harkris1771229951",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AutoCad Designer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "Competitive stipend",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/autocad-designer-internship-in-rohini-at-ss-solutions1772704330",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Hiring -  Engineering Intelligence Scout (Mechanical / Manufacturing)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "Competitive stipend",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/hiring-engineering-intelligence-scout-mechanical-manufacturing-internship-in-chennai-at-groval-selectia1772704566",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mechanical Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 3,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mechanical-engineering-internship-in-mumbai-at-rohan-baichwal1771402250",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Architecture",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 3,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/architecture-internship-in-rajkot-at-riyal-limbasiya1772133349",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Incoming Quality Check",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/incoming-quality-check-internship-in-chennai-at-r-and-d-instrument-services1771316203",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Interior Designer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/interior-designer-internship-in-noida-at-vivin-chand-design1771930340",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Interior Design",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/interior-design-internship-in-gurgaon-at-paudha-private-limited1772528962",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Product Design (AutoCAD/Solidworks)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/part-time-product-design-autocad-solidworks-internship-in-bhopal-at-toyart-diy-enterprises1771866178",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Production Of Circuit Boards",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/production-of-circuit-boards-internship-in-hyderabad-at-pradham-microsystems-private-limited1770626267",
+      "tags": [
+        "B.Tech",
+        "Mechanical"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Junior Architect",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/junior-architect-internship-in-delhi-at-the-agency-source1772711100",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Artificial Intelligence (AI)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 25,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-kolkata-at-storybizz-media-private-limited1772454731",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Social Listening",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/social-listening-internship-in-bangalore-at-curejoy-media-private-limited-unigage1772710891",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Customer Success",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 11,000 - 17,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-ai-customer-success-internship-at-tailortalk1772792745",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Market Research",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 6,000 - 9,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/market-research-internship-in-pune-at-speedyora-pvt-ltd1771319488",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI & Automation",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/ai-automation-internship-in-hyderabad-at-audym-lifesciences1771840698",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Digital Marketing Specialist",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/digital-marketing-specialist-internship-in-multiple-locations-at-pereyan-llp1772605374",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Performance Marketing",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 3,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/performance-marketing-internship-in-jaipur-at-viralchilly1772790132",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Research (NARI)",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-ai-research-nari-internship-at-namaah-pvt-ltd1772775317",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Founders Office",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 6,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/founders-office-internship-in-pune-at-chamadia-group1771844712",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Product Entry And Marketing.",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/ai-product-entry-and-marketing-internship-in-hyderabad-at-jai-rajaji-stone-studio1772436373",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "HR Operations",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "Unpaid",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-hr-operations-internship-at-jarurat-care1772731414",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Content Creator",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-ai-content-creator-internship-at-brain-quest1772694286",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Social Media",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/social-media-internship-in-vadodara-at-webbybutter-technologies1771045425",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Market Research",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/market-research-internship-in-chennai-at-voltare1770709784",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "SEO Manager (Full-time, Work From Office) | PPO",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 16,000 - 40,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/seo-manager-full-time-work-from-office--ppo-internship-in-bangalore-at-valuebound1772799967",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Machine Learning",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/machine-learning-internship-in-kolkata-at-above-alpha-solutions-llp1772789029",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Data Analytics",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,500 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/data-analytics-internship-in-vashi-navi-mumbai-at-deepak-babel1772778526",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Market Research",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 35,000 - 40,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/market-research-internship-in-mumbai-at-pluginlive-technologies-private-limited1772775976",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Video Content Creator",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/ai-video-content-creator-internship-in-delhi-at-dilogs-ai1772775275",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Marketing",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 - 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-ai-marketing-internship-at-see-the-unseen-travels1772774121",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Artificial Intelligence (AI)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 2,001 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-mumbai-at-heptaverse-technologies-private-limited1772712113",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Process Implementor",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/ai-process-implementor-internship-in-coimbatore-at-white-co1772705282",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Data Science",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/part-time-data-science-internship-in-chennai-at-random-groups-of-companies1772696799",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Marketing and Business Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/marketing-and-business-development-internship-in-thane-at-kritikal-hire1772700120",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Digital Marketing",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/digital-marketing-internship-in-delhi-at-kipenzi-pets-pvt-ltd1772699677",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Talking Object Video Creator (English)",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 3,500 - 7,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-ai-talking-object-video-creator-english-internship-at-tailored-paw1772693899",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Artificial Intelligence (AI)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 12,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-pune-at-mulberry-leaf1772686616",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Sales - Partner & Channel",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,500 - 31,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/sales-partner-channel-internship-in-multiple-locations-at-ranksecure1772686103",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Digital Marketing & Influencer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 13,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/digital-marketing-influencer-internship-in-chennai-at-vakilsearch-legal-solutions-private-limited1772625349",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "SEO Outreach Specialist",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 9,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-seo-outreach-specialist-internship-at-diary-entry-io1772625211",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Image Creator & Graphic Design",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-ai-image-creator-graphic-design-internship-at-the-funkydelic-store1772623292",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Marketing and Business Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/marketing-and-business-development-internship-in-mumbai-at-jewelvue1772621728",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Social Media Marketing",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/social-media-marketing-internship-in-mumbai-at-flipside-systems-consultancy-private-limited1772607523",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "AI Ad Creative",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/ai-ad-creative-internship-in-vadodara-at-parmar-techmero-solutions-private-limited1772607426",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Technical Content Creation",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 - 2,100 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/technical-content-creation-internship-in-bangalore-at-marga-education1772603682",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Digital Marketing",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 5,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-digital-marketing-internship-at-inspiring-wave-digitech-private-limited1772603175",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Founders Office",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 1,000 - 1,500 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-part-time-founders-office-internship-at-manma-digital1772602260",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Lead Generation (Technical Role - W/ Web Scraping)",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 2,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-lead-generation-technical-role-w-web-scraping-internship-at-good-dopamine-technologies-private-limited1772512927",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Creative Strategy (Growth) Project",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 20,000 - 25,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/creative-strategy-growth-project-internship-in-gurgaon-at-airblack1772345514",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Prompt Engineering",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 7,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/prompt-engineering-internship-in-mumbai-at-bhavesh-information-technology-and-textiles-private-limited1772262348",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Social Media Marketing",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/social-media-marketing-internship-in-multiple-locations-at-scribbld-social1772185958",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Operations",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "Unpaid",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/operations-internship-in-indore-at-vijay-social-welfare-society1772171991",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Research And Strategy - Advertising",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/research-and-strategy-advertising-internship-in-multiple-locations-at-agency091771764637",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Marketing",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/marketing-internship-in-ahmedabad-at-petpooja1771740223",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Social Media",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 9,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/social-media-internship-in-gurgaon-at-art-of-puja1771738679",
+      "tags": [
+        "B.Tech",
+        "Data Science"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "ReactJS Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 16,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/reactjs-development-internship-in-patna-at-socygen1772739289",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-mumbai-at-aurify-systems-private-limited1772739064",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 10,001 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-hyderabad-at-intuites-llc1772723410",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 3,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-madurai-at-reach-skyline1772689897",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Developer (Women In Tech Drive)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/part-time-full-stack-developer-women-in-tech-drive-internship-in-bangalore-at-frontbaseapp1772695348",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "PHP Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/php-development-internship-in-mira-bhayandar-at-trrev-technology-opc-private-limited1772680509",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "PHP Development",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 1,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-php-development-internship-at-techqueto-llp1772601890",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Mobile App & Web Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,500 - 3,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/mobile-app-web-development-internship-in-multiple-locations-at-pioneer-sam-energia1772547880",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "PHP Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 3,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/php-development-internship-in-visakhapatnam-at-web-technologies-india-private-limited1772457329",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "C# Backend Development (Male Candidates)",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/c-backend-development-male-candidates-internship-in-delhi-at-sahota-info-private-limited1772287996",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Android App Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 3,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/android-app-development-internship-in-indore-at-bridgelogic-software-private-limited1772275129",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "IT Trainer/Computer Teacher",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 3,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/it-trainer-computer-teacher-internship-in-hingna-at-cloudprix-technology-solutions1772271187",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Website Design And Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 12,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/website-design-and-development-internship-in-thiruvananthapuram-at-womens-business-incubation-program1772185573",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Python Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 2,000 lump sum",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/python-development-internship-in-ahmedabad-at-fincept1772167793",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Assistant Project Manager",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/assistant-project-manager-internship-in-multiple-locations-at-cogzin-technology1772085242",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Digital Marketing",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 7,500 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/digital-marketing-internship-in-indore-at-rajneesh-mitra1772077313",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Software Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 6,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/software-development-internship-in-kolkata-at-c-n-n-associates1771995703",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Law/Legal",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 15,000 - 40,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/law-legal-internship-in-surat-at-rahul-kathiriya1771923786",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "WordPress Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/wordpress-development-internship-in-kanpur-at-aryan-jalan1771411456",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Front End Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 8,000 - 10,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/front-end-development-internship-in-nashik-at-planeteye-infra1771216903",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "WordPress Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 5,000 - 5,001 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/wordpress-development-internship-in-ahmedabad-at-fx31-labs1770977095",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "WordPress Development Intern",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "Competitive stipend",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-wordpress-development-intern-internship-at-tanvix-technologies-ltd1772790067",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full-Stack Web Development Intern",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "Competitive stipend",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-web-development-intern-internship-in-noida-at-team-variance1772704747",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Frontend Engineering Intern (React)",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "Competitive stipend",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-frontend-engineering-intern-react-internship-at-auraverse1772703071",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 2,000 - 5,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-full-stack-development-internship-at-hashbinary-services1772795231",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Computer Vision",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 25,000 - 65,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-computer-vision-internship-at-mytron-labs-llp1772798924",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Web Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 15,000 - 18,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/web-development-internship-in-lucknow-at-techgrah-consulting1772795187",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Web Development",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 3,000 - 4,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/work-from-home-web-development-internship-at-karostartup1772791599",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 6,000 - 18,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/part-time-full-stack-development-internship-in-multiple-locations-at-mindenious-edutech1772783887",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Full Stack Development",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 18,000 - 20,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/full-stack-development-internship-in-hyderabad-at-cosmo-radiance1772776258",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Senior Java Software Engineer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/senior-java-software-engineer-internship-in-multiple-locations-at-tsteps-private-limited1772782454",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Web Developer",
+      "company": "Unknown",
+      "location": "Not specified",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/web-developer-internship-in-multiple-locations-at-tsteps-private-limited1772782401",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    },
+    {
+      "source": "Internshala",
+      "title": "Software Engineer",
+      "company": "Unknown",
+      "location": "Work From Home",
+      "stipend": "\u20b9 10,000 - 15,000 /month",
+      "duration": "",
+      "link": "https://internshala.com/internship/detail/software-engineer-internship-in-multiple-locations-at-tsteps-private-limited1772780866",
+      "tags": [
+        "B.Tech",
+        "Web Dev"
+      ]
+    }
+  ],
+  "timestamp": 1772817040,
+  "cached": true
+};

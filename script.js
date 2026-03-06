@@ -30,7 +30,7 @@ const externalLinks = {
   forum: "https://forum.example.com",
   events: "https://chennaievents.vit.ac.in",
   lostAndFound: "https://lostandfound.example.com",
-  internships: "https://internships.example.com",
+  internships: "internships.html",
 };
 
 // Initialize external link redirects
