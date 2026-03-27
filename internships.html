@@ -324,10 +324,16 @@
         border: 1px solid rgba(0, 120, 215, 0.2);
       }
 
-      .intern-source-badge.webscraper {
-        background: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(244, 63, 94, 0.06));
-        color: var(--accent);
-        border: 1px solid rgba(244, 63, 94, 0.2);
+      .intern-source-badge.unstop {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.06));
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      .intern-source-badge.indeed {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.06));
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.2);
       }
 
       .intern-card-company {
@@ -596,7 +602,7 @@
     <!-- Hero -->
     <div class="intern-hero">
       <h1>🎓 Internship Explorer</h1>
-      <p>Live internship opportunities for <strong>B.Tech undergraduates</strong> — scraped from <strong>Internshala</strong> and <strong>Webscraper</strong> across CS, ECE, Mech, Civil, AI/ML & more.</p>
+      <p>Live internship opportunities for <strong>B.Tech undergraduates</strong> — scraped from <strong>Internshala and Unstop</strong> across CS, ECE, Mech, Civil, AI/ML & more.</p>
     </div>
 
     <!-- Search & Filters -->
@@ -608,7 +614,7 @@
       <div class="intern-filters">
         <button class="intern-filter-chip active" data-source="all">All Sources</button>
         <button class="intern-filter-chip" data-source="internshala">🏢 Internshala</button>
-        <button class="intern-filter-chip" data-source="webscraper">🌐 Webscraper</button>
+        <button class="intern-filter-chip" data-source="unstop">🎯 Unstop</button>
         <button class="intern-filter-chip" data-category="cs">💻 CS / IT</button>
         <button class="intern-filter-chip" data-category="ece">🔌 ECE / EEE</button>
         <button class="intern-filter-chip" data-category="mech">⚙️ Mechanical</button>
@@ -637,8 +643,7 @@
       <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
     </div>
 
-    <script src="js/live_data.js"></script>
-    <script src="js/internships.js"></script>
+    <script src="js/internships.js?v=5"></script>
 
     <!-- Dark Mode Toggle Script -->
     <script>
