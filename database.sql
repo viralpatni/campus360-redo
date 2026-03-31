@@ -72,3 +72,38 @@ CREATE INDEX idx_messages_conv   ON messages(conversation_id, created_at);
 CREATE INDEX idx_invites_to      ON chat_invites(to_user, status);
 CREATE INDEX idx_invites_from    ON chat_invites(from_user, status);
 CREATE INDEX idx_conv_members    ON conversation_members(user_id);
+
+-- ----- Study Resources (DB-backed uploads) -----
+CREATE TABLE IF NOT EXISTS study_resources (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  name              VARCHAR(255) NOT NULL,
+  category          VARCHAR(100) NOT NULL DEFAULT 'General',
+  original_filename VARCHAR(255) NOT NULL,
+  mime_type         VARCHAR(150) NOT NULL DEFAULT 'application/octet-stream',
+  file_data         LONGBLOB NOT NULL,
+  file_size         INT UNSIGNED NOT NULL,
+  uploaded_by       INT NULL,
+  created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (uploaded_by) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- ----- PYQ Files (DB-backed uploads) -----
+CREATE TABLE IF NOT EXISTS pyq_files (
+  id                INT AUTO_INCREMENT PRIMARY KEY,
+  subject           VARCHAR(255) NOT NULL,
+  exam_year         VARCHAR(20) NOT NULL,
+  category          VARCHAR(100) NOT NULL DEFAULT 'General',
+  original_filename VARCHAR(255) NOT NULL,
+  mime_type         VARCHAR(150) NOT NULL DEFAULT 'application/octet-stream',
+  file_data         LONGBLOB NOT NULL,
+  file_size         INT UNSIGNED NOT NULL,
+  uploaded_by       INT NULL,
+  created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (uploaded_by) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- ----- Indexes for uploads -----
+CREATE INDEX idx_resources_category ON study_resources(category);
+CREATE INDEX idx_resources_created  ON study_resources(created_at);
+CREATE INDEX idx_pyq_category       ON pyq_files(category);
+CREATE INDEX idx_pyq_created        ON pyq_files(created_at);

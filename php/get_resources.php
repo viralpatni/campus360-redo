@@ -1,34 +1,71 @@
 <?php
-// get_resources.php
-// Returns paginated list of study resources
+require_once __DIR__ . '/config.php';
+
 header('Content-Type: application/json');
 
-echo json_encode(['resources' => $resources, 'hasMore' => $hasMore]);
+try {
+    $pdo->exec("CREATE TABLE IF NOT EXISTS study_resources (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        category VARCHAR(100) NOT NULL DEFAULT 'General',
+        original_filename VARCHAR(255) NOT NULL,
+        mime_type VARCHAR(150) NOT NULL DEFAULT 'application/octet-stream',
+        file_data LONGBLOB NOT NULL,
+        file_size INT UNSIGNED NOT NULL,
+        uploaded_by INT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_resources_category (category),
+        INDEX idx_resources_created (created_at),
+        CONSTRAINT fk_resources_uploaded_by FOREIGN KEY (uploaded_by) REFERENCES users(id) ON DELETE SET NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+} catch (Throwable $e) {
+    jsonResponse(['resources' => [], 'hasMore' => false], 200);
+}
 
-$metaFile = __DIR__ . '/resource_meta.json';
-$meta = file_exists($metaFile) ? json_decode(file_get_contents($metaFile), true) : [];
-$category = isset($_GET['category']) ? $_GET['category'] : '';
-$search = isset($_GET['search']) ? strtolower($_GET['search']) : '';
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$category = trim($_GET['category'] ?? '');
+$search = trim($_GET['search'] ?? '');
+$page = max(1, (int) ($_GET['page'] ?? 1));
 $pageSize = 10;
-$filtered = array_filter($meta, function($item) use ($category, $search) {
-    $catMatch = !$category || strtolower($item['category']) === strtolower($category);
-    $searchMatch = !$search || strpos(strtolower($item['name']), $search) !== false;
-    return $catMatch && $searchMatch;
-});
-$filtered = array_values($filtered);
-$total = count($filtered);
-$start = ($page - 1) * $pageSize;
-$end = min($start + $pageSize, $total);
+$offset = ($page - 1) * $pageSize;
+
+$where = [];
+$params = [];
+
+if ($category !== '') {
+    $where[] = 'category = ?';
+    $params[] = $category;
+}
+
+if ($search !== '') {
+    $where[] = 'LOWER(name) LIKE ?';
+    $params[] = '%' . strtolower($search) . '%';
+}
+
+$whereSql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
+
+$countStmt = $pdo->prepare("SELECT COUNT(*) AS total FROM study_resources $whereSql");
+$countStmt->execute($params);
+$total = (int) $countStmt->fetchColumn();
+
+$listSql = "SELECT id, name, category, created_at FROM study_resources $whereSql ORDER BY id DESC LIMIT ? OFFSET ?";
+$listStmt = $pdo->prepare($listSql);
+$bindIndex = 1;
+foreach ($params as $param) {
+    $listStmt->bindValue($bindIndex++, $param, PDO::PARAM_STR);
+}
+$listStmt->bindValue($bindIndex++, $pageSize, PDO::PARAM_INT);
+$listStmt->bindValue($bindIndex, $offset, PDO::PARAM_INT);
+$listStmt->execute();
+
 $resources = [];
-for ($i = $start; $i < $end; $i++) {
-    $item = $filtered[$i];
+while ($row = $listStmt->fetch(PDO::FETCH_ASSOC)) {
     $resources[] = [
-        'name' => $item['name'],
-        'category' => $item['category'],
-        'uploadDate' => $item['uploadDate'],
-        'url' => '../uploads/resources/' . $item['filename']
+        'name' => $row['name'],
+        'category' => $row['category'],
+        'uploadDate' => $row['created_at'],
+        'url' => 'php/download_resource.php?id=' . (int) $row['id']
     ];
 }
-$hasMore = $end < $total;
-echo json_encode(['resources' => $resources, 'hasMore' => $hasMore]);
+
+$hasMore = ($offset + count($resources)) < $total;
+jsonResponse(['resources' => $resources, 'hasMore' => $hasMore]);

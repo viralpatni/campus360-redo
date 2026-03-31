@@ -1,55 +1,79 @@
 <?php
-// upload_pyq.php
-// Handles PYQ uploads
+require_once __DIR__ . '/config.php';
+
 header('Content-Type: application/json');
 
-$pyqDir = '../uploads/pyqs/';
-if (!is_dir($pyqDir)) {
-    mkdir($pyqDir, 0777, true);
+try {
+    $pdo->exec("CREATE TABLE IF NOT EXISTS pyq_files (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        subject VARCHAR(255) NOT NULL,
+        exam_year VARCHAR(20) NOT NULL,
+        category VARCHAR(100) NOT NULL DEFAULT 'General',
+        original_filename VARCHAR(255) NOT NULL,
+        mime_type VARCHAR(150) NOT NULL DEFAULT 'application/octet-stream',
+        file_data LONGBLOB NOT NULL,
+        file_size INT UNSIGNED NOT NULL,
+        uploaded_by INT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_pyq_category (category),
+        INDEX idx_pyq_created (created_at),
+        CONSTRAINT fk_pyq_uploaded_by FOREIGN KEY (uploaded_by) REFERENCES users(id) ON DELETE SET NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+} catch (Throwable $e) {
+    jsonResponse(['success' => false, 'error' => 'Failed to prepare PYQ table'], 500);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['pyqFile'])) {
-    $subject = isset($_POST['pyqSubject']) ? preg_replace('/[^a-zA-Z0-9]/', '_', $_POST['pyqSubject']) : 'Unknown';
-    $year = isset($_POST['pyqYear']) ? preg_replace('/[^a-zA-Z0-9]/', '_', $_POST['pyqYear']) : 'Unknown';
-    $category = isset($_POST['pyqCategory']) ? $_POST['pyqCategory'] : 'General';
-    $fileTmp = $_FILES['pyqFile']['tmp_name'];
-    $fileExt = pathinfo($_FILES['pyqFile']['name'], PATHINFO_EXTENSION);
-    $safeName = $subject . '_' . $year . '_' . uniqid() . '.' . $fileExt;
-    $target = $pyqDir . $safeName;
-    $uploadDate = date('Y-m-d H:i:s');
-    $errorDetails = [];
-    if (!is_uploaded_file($fileTmp)) {
-        $errorDetails['phpFileError'] = $_FILES['pyqFile']['error'];
-        $errorDetails['tmpName'] = $fileTmp;
-        echo json_encode(['success' => false, 'error' => 'No valid file uploaded', 'details' => $errorDetails]);
-        exit;
-    }
-    if (move_uploaded_file($fileTmp, $target)) {
-        // Save metadata
-        $metaFile = __DIR__ . '/pyq_meta.json';
-        $meta = file_exists($metaFile) ? json_decode(file_get_contents($metaFile), true) : [];
-        if (!is_array($meta)) $meta = [];
-        $meta[] = [
-            'subject' => $subject,
-            'year' => $year,
-            'filename' => $safeName,
-            'category' => $category,
-            'uploadDate' => $uploadDate
-        ];
-        $json = json_encode($meta, JSON_PRETTY_PRINT);
-        if ($json === false) {
-            echo json_encode(['success' => false, 'error' => 'Metadata encoding failed']);
-            exit;
-        }
-        file_put_contents($metaFile, $json);
-        echo json_encode(['success' => true, 'filename' => $safeName]);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsonResponse(['success' => false, 'error' => 'Invalid request method'], 405);
+}
+
+if (!isset($_FILES['pyqFile']) || $_FILES['pyqFile']['error'] !== UPLOAD_ERR_OK) {
+    jsonResponse(['success' => false, 'error' => 'No valid file uploaded'], 400);
+}
+
+$subject = trim($_POST['pyqSubject'] ?? 'Unknown');
+$year = trim($_POST['pyqYear'] ?? 'Unknown');
+$category = trim($_POST['pyqCategory'] ?? 'General');
+$tmpPath = $_FILES['pyqFile']['tmp_name'];
+$originalFilename = $_FILES['pyqFile']['name'];
+$mimeType = $_FILES['pyqFile']['type'] ?: 'application/octet-stream';
+$fileSize = (int) $_FILES['pyqFile']['size'];
+$uploadedBy = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : null;
+
+if ($subject === '') {
+    $subject = 'Unknown';
+}
+if ($year === '') {
+    $year = 'Unknown';
+}
+
+$fileData = file_get_contents($tmpPath);
+if ($fileData === false) {
+    jsonResponse(['success' => false, 'error' => 'Failed to read uploaded file'], 500);
+}
+
+try {
+    $stmt = $pdo->prepare('INSERT INTO pyq_files (subject, exam_year, category, original_filename, mime_type, file_data, file_size, uploaded_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->bindValue(1, $subject);
+    $stmt->bindValue(2, $year);
+    $stmt->bindValue(3, $category === '' ? 'General' : $category);
+    $stmt->bindValue(4, $originalFilename);
+    $stmt->bindValue(5, $mimeType);
+    $stmt->bindValue(6, $fileData, PDO::PARAM_LOB);
+    $stmt->bindValue(7, $fileSize, PDO::PARAM_INT);
+    if ($uploadedBy === null) {
+        $stmt->bindValue(8, null, PDO::PARAM_NULL);
     } else {
-        $errorDetails['phpFileError'] = $_FILES['pyqFile']['error'];
-        $errorDetails['tmpName'] = $fileTmp;
-        $errorDetails['target'] = $target;
-        $errorDetails['permissions'] = is_writable(dirname($target));
-        echo json_encode(['success' => false, 'error' => 'Upload failed', 'details' => $errorDetails]);
+        $stmt->bindValue(8, $uploadedBy, PDO::PARAM_INT);
     }
-} else {
-    echo json_encode(['success' => false, 'error' => 'No file uploaded']);
+    $stmt->execute();
+
+    jsonResponse([
+        'success' => true,
+        'id' => (int) $pdo->lastInsertId(),
+        'subject' => $subject,
+        'year' => $year
+    ]);
+} catch (Throwable $e) {
+    jsonResponse(['success' => false, 'error' => 'Database save failed'], 500);
 }

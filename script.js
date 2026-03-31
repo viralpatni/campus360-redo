@@ -1,91 +1,111 @@
+// --- Scroll Reveal Animations ---
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Initialize Icons
-  lucide.createIcons();
+  const revealElements = document.querySelectorAll(".scroll-reveal");
 
-  // 0. Logout functionality
-  const logoutLink = document.getElementById("navAuthLink");
-  if (logoutLink) {
-    logoutLink.addEventListener("click", async function (e) {
-      e.preventDefault();
-      try {
-        const res = await fetch("php/auth.php?action=logout", { method: "POST" });
-        const data = await res.json();
-        if (data.success) {
-          // Remove any user info from localStorage if used
-          localStorage.removeItem("user");
-          window.location.href = "login.html";
-        } else {
-          alert("Logout failed. Please try again.");
-        }
-      } catch (err) {
-        alert("Network error during logout.");
-      }
-    });
-  }
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
 
-  // 2. Horizontal Drag-to-Scroll for Marketplace
-  const marketScroll = document.getElementById('marketScroll');
-  if(marketScroll) {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    marketScroll.addEventListener('mousedown', (e) => {
-      isDown = true;
-      marketScroll.style.cursor = 'grabbing';
-      startX = e.pageX - marketScroll.offsetLeft;
-      scrollLeft = marketScroll.scrollLeft;
-    });
-    marketScroll.addEventListener('mouseleave', () => {
-      isDown = false;
-      marketScroll.style.cursor = 'grab';
-    });
-    marketScroll.addEventListener('mouseup', () => {
-      isDown = false;
-      marketScroll.style.cursor = 'grab';
-    });
-    marketScroll.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - marketScroll.offsetLeft;
-      const walk = (x - startX) * 2; // Scroll-fast multiplier
-      marketScroll.scrollLeft = scrollLeft - walk;
-    });
-  }
-
-  // 3. Theme Toggle (Dark / Light Mode)
-  const darkModeToggle = document.getElementById("darkModeToggle");
-  const themeIcon = document.getElementById("themeIcon");
-
-  function updateThemeIcon() {
-    const isDark = document.body.classList.contains("dark-mode");
-    themeIcon.setAttribute("data-lucide", isDark ? "sun" : "moon");
-    lucide.createIcons({ nameAttr: 'data-lucide' });
-  }
-
-  // Check saved theme or system preference
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark-mode");
-  } else if (savedTheme === "light") {
-    document.body.classList.remove("dark-mode");
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.body.classList.add("dark-mode");
-  }
-  
-  updateThemeIcon();
-
-  if (darkModeToggle) {
-    darkModeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      
-      if (document.body.classList.contains("dark-mode")) {
-        localStorage.setItem("theme", "dark");
-      } else {
-        localStorage.setItem("theme", "light");
-      }
-      
-      updateThemeIcon();
-    });
+    revealElements.forEach((el) => revealObserver.observe(el));
+  } else {
+    // Fallback: reveal everything immediately
+    revealElements.forEach((el) => el.classList.add("revealed"));
   }
 });
+
+const externalLinks = {
+  vtop: "https://vtopcc.vit.ac.in",
+  vitiancc: "https://chennai.vit.ac.in",
+  testimonials: "testimonials.example.com",
+  // Add more links here as needed
+  forum: "https://forum.example.com",
+  events: "https://chennaievents.vit.ac.in",
+  lostAndFound: "https://lostandfound.example.com",
+  internships: "internships.html",
+};
+
+// Initialize external link redirects
+(function () {
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get all feature items
+    const featureItems = document.querySelectorAll(".feature-item");
+
+    featureItems.forEach((item) => {
+      const title = item.querySelector("strong");
+      if (!title) return;
+
+      const titleText = title.textContent.toLowerCase();
+
+      // VTOP Button
+      if (titleText.includes("vtop")) {
+        makeClickable(item, externalLinks.vtop, "Go to VTOP Portal");
+      }
+
+      // VITianCC Button
+      if (titleText.includes("vitiancc")) {
+        makeClickable(item, externalLinks.vitiancc, "Go to VITianCC");
+      }
+
+      // Internships
+      if (titleText.includes("internship")) {
+        makeClickable(item, externalLinks.internships, "Go to Internships");
+      }
+
+      // Forum
+      if (titleText.includes("forum")) {
+        makeClickable(item, externalLinks.forum, "Go to Forum");
+      }
+
+      // Events Corner
+      if (titleText.includes("events")) {
+        makeClickable(item, externalLinks.events, "Go to Events");
+      }
+
+      // Lost and Found
+      if (titleText.includes("lost and found")) {
+        makeClickable(item, externalLinks.lostAndFound, "Go to Lost and Found");
+      }
+    });
+
+    // Testimonials section redirect
+    const testimonialsSection = document.getElementById("testimonials");
+    if (testimonialsSection) {
+      makeClickable(
+        testimonialsSection,
+        externalLinks.testimonials,
+        "View more testimonials",
+      );
+    }
+  });
+
+  // Helper function to make elements clickable with redirect
+  function makeClickable(element, url, ariaLabel) {
+    element.style.cursor = "pointer";
+    element.setAttribute("role", "link");
+    element.setAttribute("aria-label", ariaLabel);
+    element.setAttribute("tabindex", "0");
+
+    // Click handler
+    element.addEventListener("click", function (e) {
+      // Don't redirect if clicking on an existing link inside
+      if (e.target.tagName === "A") return;
+      window.open(url, "_blank");
+    });
+
+    // Keyboard accessibility (Enter key)
+    element.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        window.open(url, "_blank");
+      }
+    });
+  }
+})();
