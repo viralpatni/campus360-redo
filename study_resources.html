@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Resources</title>
+    
+    <!-- Importing Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <style>
+        /* ===== BASE RESET & VARIABLES ===== */
+        :root {
+            --bg-color: #05050a;
+            --text-main: #e8e8f0;
+            --text-muted: #8b8b9f;
+            --primary: #6366f1;
+            --primary-hover: #818cf8;
+            --secondary: #ec4899;
+            --glass-bg: rgba(20, 20, 35, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ===== AMBIENT BACKGROUND ===== */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.5;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Glowing Orbs */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.35;
+            animation: float 10s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            top: -5%; left: -10%;
+            width: 500px; height: 500px;
+            background: var(--primary);
+        }
+
+        body::after {
+            bottom: -5%; right: -10%;
+            width: 400px; height: 400px;
+            background: var(--secondary);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 50px); }
+        }
+
+        /* ===== CONTAINER & TYPOGRAPHY ===== */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #a78bfa, #f472b6, #818cf8);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 10px rgba(167, 139, 250, 0.2));
+            animation: gradientText 5s linear infinite;
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* ===== SECTIONS (PREMIUM GLASSMORPHISM) ===== */
+        .section {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Staggered entrance animations */
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--glass-border), transparent);
+        }
+
+        /* ===== FORMS & INPUTS ===== */
+        .upload-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        input[type="text"], 
+        select {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            color: #fff;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        input[type="text"]:focus, 
+        select:focus {
+            border-color: var(--primary-hover);
+            background: rgba(99, 102, 241, 0.05);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+
+        select option {
+            background: #1e1e35;
+            color: #fff;
+        }
+
+        /* Styled File Input */
+        input[type="file"] {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            flex: 1;
+            min-width: 250px;
+        }
+
+        input[type="file"]::file-selector-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            margin-right: 15px;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        /* ===== BUTTONS ===== */
+        button[type="submit"] {
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+        }
+
+        button[type="submit"]:hover {
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* ===== LISTS (Resources & PYQs) ===== */
+        .resource-list, 
+        .pyq-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .resource-item, 
+        .pyq-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .resource-item:hover, 
+        .pyq-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(129, 140, 248, 0.3);
+            transform: translateX(6px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dynamic JS elements styling */
+        .resource-item span:first-child, 
+        .pyq-item span:first-child {
+            font-weight: 500;
+            color: #fff;
+        }
+
+        /* Glowing Badges */
+        .resource-item span:last-child, 
+        .pyq-item span:last-child {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-hover);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.1);
+        }
+
+        .pyq-item span:last-child {
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.1);
+        }
+
+        /* ===== LOAD MORE BUTTON ===== */
+        .load-more {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+        }
+
+        .load-more:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            border-color: var(--primary-hover);
+            border-style: solid;
+        }
+
+        .load-more:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            border-style: dashed;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .upload-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            button[type="submit"] {
+                width: 100%;
+                padding: 1rem;
+            }
+            .section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Study Resources</h1>
+        
+        <div class="section">
+            <div class="section-title">Upload Resource</div>
+            <form class="upload-form" id="uploadForm" enctype="multipart/form-data">
+                <input type="file" name="resourceFile" id="resourceFile" required>
+                <input type="text" name="resourceName" id="resourceName" placeholder="Resource Name" required>
+                <select name="resourceCategory" id="resourceCategory" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="General">General</option>
+                    <option value="Notes">Notes</option>
+                    <option value="Books">Books</option>
+                    <option value="Assignments">Assignments</option>
+                    <option value="Other">Other</option>
+                </select>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Upload PYQ</div>
+            <form class="upload-form" id="uploadPyqForm" enctype="multipart/form-data">
+                <input type="file" name="pyqFile" id="pyqFile" required>
+                <input type="text" name="pyqSubject" id="pyqSubject" placeholder="Subject" required>
+                <input type="text" name="pyqYear" id="pyqYear" placeholder="Year" required>
+                <select name="pyqCategory" id="pyqCategory" required>
+                    <option value="" disabled selected>Select Branch</option>
+                    <option value="General">General</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="MECH">MECH</option>
+                    <option value="Other">Other</option>
+                </select>
+                <button type="submit">Upload PYQ</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Available Resources</div>
+            <ul class="resource-list" id="resourceList">
+                 <!-- Resources will be loaded here via JS -->
+            </ul>
+            <button class="load-more" id="loadMoreResources">Load More</button>
+        </div>
+
+        <div class="section">
+            <div class="section-title">PYQ Section</div>
+            <ul class="pyq-list" id="pyqList">
+                 <!-- PYQs will be loaded here via JS -->
+            </ul>
+            <button class="load-more" id="loadMorePyqs">Load More</button>
+        </div>
+    </div>
+    
+    <script src="js/study_resources.js"></script>
+</body>
+</html>
