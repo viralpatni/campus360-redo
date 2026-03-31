@@ -5,45 +5,47 @@
 /* --- 0. CSS Custom Properties --- */
 :root {
   /* Primary palette */
-  --primary: #6366f1;
-  --primary-light: #818cf8;
-  --primary-dark: #4f46e5;
-  --accent: #f43f5e;
-  --accent-light: #fb7185;
-  --accent-soft: rgba(244, 63, 94, 0.12);
+  --primary: #0f62fe;
+  --primary-light: #2f80ff;
+  --primary-dark: #003cc6;
+  --accent: #ff5f1f;
+  --accent-light: #ff8a57;
+  --accent-soft: rgba(255, 95, 31, 0.12);
 
   /* Neutrals */
-  --bg: #f0f2f5;
-  --bg-card: rgba(255, 255, 255, 0.6);
-  --bg-card-solid: #ffffff;
-  --text: #1e1e2e;
-  --text-muted: #64748b;
-  --text-light: #94a3b8;
-  --border: rgba(99, 102, 241, 0.12);
+  --bg: #f7f4ea;
+  --bg-card: #fffef8;
+  --bg-card-solid: #fffef8;
+  --text: #111827;
+  --text-muted: #4b5563;
+  --text-light: #6b7280;
+  --border: rgba(17, 24, 39, 0.35);
 
   /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.35);
-  --glass-blur: 16px;
+  --glass-bg: #fffef8;
+  --glass-border: rgba(17, 24, 39, 0.35);
+  --glass-blur: 0px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 20px rgba(99, 102, 241, 0.08);
-  --shadow-lg: 0 8px 40px rgba(99, 102, 241, 0.12);
-  --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.15);
+  --shadow-sm: 3px 3px 0 #111827;
+  --shadow-md: 6px 6px 0 #111827;
+  --shadow-lg: 10px 10px 0 #111827;
+  --shadow-glow: 0 0 0 transparent;
 
   /* Radii */
-  --radius-sm: 8px;
+  --radius-sm: 10px;
   --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  --radius-lg: 16px;
+  --radius-xl: 18px;
 
   /* Transitions */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --duration: 0.3s;
 
   /* Typography */
-  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font:
+    "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --display-font: "Archivo Black", "Arial Black", sans-serif;
   --section-width: 980px;
 }
 
@@ -65,6 +67,10 @@ html {
 body {
   font-family: var(--font);
   background: var(--bg);
+  background-image:
+    linear-gradient(90deg, rgba(17, 24, 39, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(17, 24, 39, 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
   color: var(--text);
   line-height: 1.7;
   transition:
@@ -172,12 +178,7 @@ img {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(99, 102, 241, 0.82) 0%,
-    rgba(139, 92, 246, 0.75) 40%,
-    rgba(244, 63, 94, 0.68) 100%
-  );
+  background: linear-gradient(135deg, #ffdc58 0%, #ff7b2f 56%, #ff4f4f 100%);
   z-index: 1;
 }
 
@@ -227,6 +228,8 @@ img {
 .hero h1 {
   font-size: clamp(2.2rem, 5vw, 3.4rem);
   font-weight: 800;
+  font-family: var(--display-font);
+  text-transform: uppercase;
   letter-spacing: -0.5px;
   color: #fff;
   margin-bottom: 0.4em;
@@ -255,18 +258,16 @@ img {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  background: rgba(22, 26, 47, 0.26);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #111827;
+  border: 2px solid #111827;
   border-radius: var(--radius-xl);
   padding: 0.78rem 1.4rem;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(11, 15, 35, 0.15);
+  box-shadow: 5px 5px 0 #f7f4ea;
 }
 
 body.nav-scrolled .hero nav ul {
-  background: rgba(17, 24, 39, 0.52);
-  box-shadow: 0 12px 36px rgba(11, 15, 35, 0.28);
+  background: #111827;
+  box-shadow: 6px 6px 0 #f7f4ea;
 }
 
 .nav-toggle {
@@ -332,18 +333,15 @@ body.nav-scrolled .hero nav ul {
 /* CTA Button */
 .cta-btn {
   display: inline-block;
-  background: linear-gradient(
-    135deg,
-    var(--accent) 0%,
-    var(--accent-light) 100%
-  );
-  color: #fff;
+  background: #111827;
+  color: #fffef8;
   padding: 0.85em 2.4em;
-  border-radius: var(--radius-xl);
+  border-radius: 12px;
+  border: 2px solid #111827;
   font-weight: 600;
   font-size: 1.05rem;
   letter-spacing: 0.3px;
-  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35);
+  box-shadow: 4px 4px 0 #ffdc58;
   transition:
     transform var(--duration) var(--ease),
     box-shadow var(--duration) var(--ease);
@@ -368,8 +366,8 @@ body.nav-scrolled .hero nav ul {
 }
 
 .cta-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 28px rgba(244, 63, 94, 0.45);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #ffdc58;
 }
 
 .cta-btn:hover::before {
@@ -379,9 +377,7 @@ body.nav-scrolled .hero nav ul {
 /* --- 4. Sections (Glass) --- */
 section {
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
+  border: 2px solid var(--glass-border);
   margin: 2.2rem auto;
   padding: 2.7rem 2.3rem;
   border-radius: var(--radius-lg);
@@ -404,6 +400,8 @@ section h2 + * {
 section h2 {
   font-size: clamp(1.5rem, 3vw, 1.9rem);
   font-weight: 700;
+  font-family: var(--display-font);
+  text-transform: uppercase;
   color: var(--text);
   margin-bottom: 0.3em;
   letter-spacing: -0.3px;

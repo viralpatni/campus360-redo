@@ -3,11 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Campus360 — Browse live internship opportunities scraped from Internshala and more." />
+    <meta
+      name="description"
+      content="Campus360 — Browse live internship opportunities scraped from Internshala and more."
+    />
     <title>Campus360 — Internships</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="neo-theme.css" />
     <link rel="stylesheet" href="styles.css" />
     <style>
       /* --- Internships Page Styles --- */
@@ -23,7 +30,12 @@
         align-items: center;
         justify-content: space-between;
         padding: 0.8rem 2rem;
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.92) 0%, rgba(139, 92, 246, 0.85) 40%, rgba(244, 63, 94, 0.78) 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(99, 102, 241, 0.92) 0%,
+          rgba(139, 92, 246, 0.85) 40%,
+          rgba(244, 63, 94, 0.78) 100%
+        );
         color: #fff;
         position: sticky;
         top: 0;
@@ -54,7 +66,7 @@
       }
 
       .intern-topbar-nav a {
-        color: rgba(255,255,255,0.85);
+        color: rgba(255, 255, 255, 0.85);
         font-weight: 500;
         font-size: 0.9rem;
         text-decoration: none;
@@ -65,7 +77,7 @@
 
       .intern-topbar-nav a:hover {
         color: #fff;
-        border-bottom-color: rgba(255,255,255,0.5);
+        border-bottom-color: rgba(255, 255, 255, 0.5);
       }
 
       .intern-topbar-nav a.active {
@@ -124,7 +136,9 @@
         font-family: var(--font);
         outline: none;
         box-shadow: var(--shadow-sm);
-        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        transition:
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
         box-sizing: border-box;
       }
 
@@ -209,8 +223,12 @@
       }
 
       @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
       }
 
       /* Stats bar */
@@ -267,7 +285,10 @@
         border-radius: var(--radius-md);
         padding: 1.5rem;
         box-shadow: var(--shadow-sm);
-        transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+        transition:
+          transform 0.3s var(--ease),
+          box-shadow 0.3s var(--ease),
+          border-color 0.3s var(--ease);
         display: flex;
         flex-direction: column;
         gap: 0.8rem;
@@ -319,19 +340,31 @@
       }
 
       .intern-source-badge.internshala {
-        background: linear-gradient(135deg, rgba(0, 120, 215, 0.12), rgba(0, 120, 215, 0.06));
+        background: linear-gradient(
+          135deg,
+          rgba(0, 120, 215, 0.12),
+          rgba(0, 120, 215, 0.06)
+        );
         color: #0078d7;
         border: 1px solid rgba(0, 120, 215, 0.2);
       }
 
       .intern-source-badge.unstop {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.06));
+        background: linear-gradient(
+          135deg,
+          rgba(239, 68, 68, 0.12),
+          rgba(239, 68, 68, 0.06)
+        );
         color: #ef4444;
         border: 1px solid rgba(239, 68, 68, 0.2);
       }
 
       .intern-source-badge.indeed {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.06));
+        background: linear-gradient(
+          135deg,
+          rgba(16, 185, 129, 0.12),
+          rgba(16, 185, 129, 0.06)
+        );
         color: #10b981;
         border: 1px solid rgba(16, 185, 129, 0.2);
       }
@@ -401,7 +434,11 @@
       .intern-view-btn {
         padding: 0.45rem 1.1rem;
         border-radius: var(--radius-sm);
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
         color: #fff;
         font-size: 0.82rem;
         font-weight: 600;
@@ -431,20 +468,39 @@
       .skeleton-line {
         height: 14px;
         border-radius: 7px;
-        background: linear-gradient(90deg, var(--border) 25%, rgba(99,102,241,0.08) 50%, var(--border) 75%);
+        background: linear-gradient(
+          90deg,
+          var(--border) 25%,
+          rgba(99, 102, 241, 0.08) 50%,
+          var(--border) 75%
+        );
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite;
       }
 
-      .skeleton-line.w-75 { width: 75%; }
-      .skeleton-line.w-50 { width: 50%; }
-      .skeleton-line.w-40 { width: 40%; }
-      .skeleton-line.w-30 { width: 30%; }
-      .skeleton-line.h-20 { height: 20px; }
+      .skeleton-line.w-75 {
+        width: 75%;
+      }
+      .skeleton-line.w-50 {
+        width: 50%;
+      }
+      .skeleton-line.w-40 {
+        width: 40%;
+      }
+      .skeleton-line.w-30 {
+        width: 30%;
+      }
+      .skeleton-line.h-20 {
+        height: 20px;
+      }
 
       @keyframes shimmer {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
       }
 
       /* Empty state */
@@ -494,7 +550,12 @@
 
       /* Dark mode overrides */
       body.dark-mode .intern-topbar {
-        background: linear-gradient(135deg, rgba(15, 15, 26, 0.95) 0%, rgba(30, 27, 75, 0.9) 40%, rgba(79, 70, 229, 0.6) 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(15, 15, 26, 0.95) 0%,
+          rgba(30, 27, 75, 0.9) 40%,
+          rgba(79, 70, 229, 0.6) 100%
+        );
       }
 
       body.dark-mode .intern-search-wrapper input {
@@ -529,7 +590,12 @@
       }
 
       body.dark-mode .skeleton-line {
-        background: linear-gradient(90deg, rgba(129,140,248,0.08) 25%, rgba(129,140,248,0.15) 50%, rgba(129,140,248,0.08) 75%);
+        background: linear-gradient(
+          90deg,
+          rgba(129, 140, 248, 0.08) 25%,
+          rgba(129, 140, 248, 0.15) 50%,
+          rgba(129, 140, 248, 0.08) 75%
+        );
         background-size: 200% 100%;
         animation: shimmer 1.5s infinite;
       }
@@ -577,10 +643,141 @@
           font-size: 0.8rem;
         }
       }
+
+      /* ===== NEO THEME OVERRIDES ===== */
+      body.internships-page.neo-theme {
+        background: #f7f4ea;
+      }
+
+      body.internships-page.neo-theme .intern-topbar {
+        background: #fffef8;
+        border-bottom: 2px solid #111827;
+        box-shadow: 0 4px 0 #111827;
+      }
+
+      body.internships-page.neo-theme .intern-topbar-brand,
+      body.internships-page.neo-theme .intern-topbar-nav a {
+        color: #111827;
+        border-bottom-color: #111827;
+      }
+
+      body.internships-page.neo-theme .intern-hero h1,
+      body.internships-page.neo-theme .intern-stipend {
+        background: linear-gradient(135deg, #111827, #0f62fe, #ff5f1f);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      body.internships-page.neo-theme .intern-search-wrapper input,
+      body.internships-page.neo-theme .intern-card,
+      body.internships-page.neo-theme .intern-skeleton {
+        background: #fffef8;
+        border: 2px solid #111827;
+        box-shadow: 6px 6px 0 #111827;
+        backdrop-filter: none;
+      }
+
+      body.internships-page.neo-theme .intern-filter-chip,
+      body.internships-page.neo-theme .intern-refresh-btn,
+      body.internships-page.neo-theme .intern-view-btn {
+        background: #fffef8;
+        color: #111827;
+        border: 2px solid #111827;
+        box-shadow: 3px 3px 0 #111827;
+      }
+
+      body.internships-page.neo-theme .intern-filter-chip.active,
+      body.internships-page.neo-theme .intern-filter-chip:hover,
+      body.internships-page.neo-theme .intern-refresh-btn:hover,
+      body.internships-page.neo-theme .intern-view-btn:hover {
+        background: #ffd84d;
+        color: #111827;
+        border-color: #111827;
+        transform: translate(-1px, -1px);
+      }
+
+      body.internships-page.neo-theme .intern-card-footer {
+        border-top: 1px solid rgba(17, 24, 39, 0.2);
+      }
+
+      body.internships-page.neo-theme .intern-card-company,
+      body.internships-page.neo-theme .stat-count {
+        color: #0f62fe;
+      }
+
+      body.internships-page.neo-theme .intern-hero p,
+      body.internships-page.neo-theme .intern-meta-item,
+      body.internships-page.neo-theme .intern-empty p,
+      body.internships-page.neo-theme .intern-stats,
+      body.internships-page.neo-theme #lastUpdated {
+        color: #4b5563;
+      }
+
+      body.internships-page.neo-theme[data-theme="dark"] {
+        background: #0b1020;
+        color: #dbe8ff;
+      }
+
+      body.internships-page.neo-theme[data-theme="dark"] .intern-topbar {
+        background: #11172b;
+        border-bottom-color: #9db8ff;
+        box-shadow: 0 4px 0 #050914;
+      }
+
+      body.internships-page.neo-theme[data-theme="dark"] .intern-topbar-brand,
+      body.internships-page.neo-theme[data-theme="dark"] .intern-topbar-nav a {
+        color: #dbe8ff;
+        border-bottom-color: #dbe8ff;
+      }
+
+      body.internships-page.neo-theme[data-theme="dark"]
+        .intern-search-wrapper
+        input,
+      body.internships-page.neo-theme[data-theme="dark"] .intern-card,
+      body.internships-page.neo-theme[data-theme="dark"] .intern-skeleton {
+        background: #11172b;
+        color: #dbe8ff;
+        border-color: #9db8ff;
+        box-shadow: 6px 6px 0 #050914;
+      }
+
+      body.internships-page.neo-theme[data-theme="dark"] .intern-filter-chip,
+      body.internships-page.neo-theme[data-theme="dark"] .intern-refresh-btn,
+      body.internships-page.neo-theme[data-theme="dark"] .intern-view-btn {
+        background: #16203a;
+        color: #dbe8ff;
+        border-color: #9db8ff;
+        box-shadow: 3px 3px 0 #050914;
+      }
+
+      body.internships-page.neo-theme[data-theme="dark"]
+        .intern-filter-chip.active,
+      body.internships-page.neo-theme[data-theme="dark"]
+        .intern-filter-chip:hover,
+      body.internships-page.neo-theme[data-theme="dark"]
+        .intern-refresh-btn:hover,
+      body.internships-page.neo-theme[data-theme="dark"]
+        .intern-view-btn:hover {
+        background: #7eaefe;
+        color: #0a1224;
+      }
+
+      body.internships-page.neo-theme[data-theme="dark"] .intern-hero p,
+      body.internships-page.neo-theme[data-theme="dark"] .intern-meta-item,
+      body.internships-page.neo-theme[data-theme="dark"] .intern-empty p,
+      body.internships-page.neo-theme[data-theme="dark"] .intern-stats,
+      body.internships-page.neo-theme[data-theme="dark"] #lastUpdated {
+        color: #9fb0d8;
+      }
+
+      body.internships-page.neo-theme[data-theme="dark"] .intern-card-company,
+      body.internships-page.neo-theme[data-theme="dark"] .stat-count {
+        color: #8cb8ff;
+      }
     </style>
   </head>
-  <body class="internships-page">
-
+  <body class="internships-page neo-theme">
     <!-- Dark Mode Toggle -->
     <button id="darkModeToggle" aria-label="Toggle dark mode">
       <span id="darkModeIcon"> </span>
@@ -602,23 +799,47 @@
     <!-- Hero -->
     <div class="intern-hero">
       <h1>🎓 Internship Explorer</h1>
-      <p>Live internship opportunities for <strong>B.Tech undergraduates</strong> — scraped from <strong>Internshala and Unstop</strong> across CS, ECE, Mech, Civil, AI/ML & more.</p>
+      <p>
+        Live internship opportunities for
+        <strong>B.Tech undergraduates</strong> — scraped from
+        <strong>Internshala and Unstop</strong> across CS, ECE, Mech, Civil,
+        AI/ML & more.
+      </p>
     </div>
 
     <!-- Search & Filters -->
     <div class="intern-controls">
       <div class="intern-search-wrapper">
         <span class="intern-search-icon">🔍</span>
-        <input type="text" id="internSearch" placeholder="Search internships by title, company, location..." autocomplete="off" />
+        <input
+          type="text"
+          id="internSearch"
+          placeholder="Search internships by title, company, location..."
+          autocomplete="off"
+        />
       </div>
       <div class="intern-filters">
-        <button class="intern-filter-chip active" data-source="all">All Sources</button>
-        <button class="intern-filter-chip" data-source="internshala">🏢 Internshala</button>
-        <button class="intern-filter-chip" data-source="unstop">🎯 Unstop</button>
-        <button class="intern-filter-chip" data-category="cs">💻 CS / IT</button>
-        <button class="intern-filter-chip" data-category="ece">🔌 ECE / EEE</button>
-        <button class="intern-filter-chip" data-category="mech">⚙️ Mechanical</button>
-        <button class="intern-filter-chip" data-category="data">📊 Data / AI</button>
+        <button class="intern-filter-chip active" data-source="all">
+          All Sources
+        </button>
+        <button class="intern-filter-chip" data-source="internshala">
+          🏢 Internshala
+        </button>
+        <button class="intern-filter-chip" data-source="unstop">
+          🎯 Unstop
+        </button>
+        <button class="intern-filter-chip" data-category="cs">
+          💻 CS / IT
+        </button>
+        <button class="intern-filter-chip" data-category="ece">
+          🔌 ECE / EEE
+        </button>
+        <button class="intern-filter-chip" data-category="mech">
+          ⚙️ Mechanical
+        </button>
+        <button class="intern-filter-chip" data-category="data">
+          📊 Data / AI
+        </button>
         <button class="intern-refresh-btn" id="refreshBtn">
           <span class="refresh-icon">🔄</span> Refresh
         </button>
@@ -626,52 +847,69 @@
     </div>
 
     <!-- Stats -->
-    <div class="intern-stats" id="internStats" style="display: none;">
-      <span><span class="stat-count" id="resultCount">0</span> <span class="stat-label">internships found</span></span>
-      <span id="cachedBadge" class="cached-badge" style="display: none;">📦 Cached</span>
-      <span id="lastUpdated" style="font-size: 0.8rem;"></span>
+    <div class="intern-stats" id="internStats" style="display: none">
+      <span
+        ><span class="stat-count" id="resultCount">0</span>
+        <span class="stat-label">internships found</span></span
+      >
+      <span id="cachedBadge" class="cached-badge" style="display: none"
+        >📦 Cached</span
+      >
+      <span id="lastUpdated" style="font-size: 0.8rem"></span>
     </div>
 
     <!-- Internship Cards Grid -->
     <div class="intern-grid" id="internGrid">
       <!-- Loading skeletons (shown initially) -->
-      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
-      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
-      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
-      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
-      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
-      <div class="intern-skeleton"><div class="skeleton-line h-20 w-75"></div><div class="skeleton-line w-50"></div><div class="skeleton-line w-40"></div><div class="skeleton-line w-30"></div></div>
+      <div class="intern-skeleton">
+        <div class="skeleton-line h-20 w-75"></div>
+        <div class="skeleton-line w-50"></div>
+        <div class="skeleton-line w-40"></div>
+        <div class="skeleton-line w-30"></div>
+      </div>
+      <div class="intern-skeleton">
+        <div class="skeleton-line h-20 w-75"></div>
+        <div class="skeleton-line w-50"></div>
+        <div class="skeleton-line w-40"></div>
+        <div class="skeleton-line w-30"></div>
+      </div>
+      <div class="intern-skeleton">
+        <div class="skeleton-line h-20 w-75"></div>
+        <div class="skeleton-line w-50"></div>
+        <div class="skeleton-line w-40"></div>
+        <div class="skeleton-line w-30"></div>
+      </div>
+      <div class="intern-skeleton">
+        <div class="skeleton-line h-20 w-75"></div>
+        <div class="skeleton-line w-50"></div>
+        <div class="skeleton-line w-40"></div>
+        <div class="skeleton-line w-30"></div>
+      </div>
+      <div class="intern-skeleton">
+        <div class="skeleton-line h-20 w-75"></div>
+        <div class="skeleton-line w-50"></div>
+        <div class="skeleton-line w-40"></div>
+        <div class="skeleton-line w-30"></div>
+      </div>
+      <div class="intern-skeleton">
+        <div class="skeleton-line h-20 w-75"></div>
+        <div class="skeleton-line w-50"></div>
+        <div class="skeleton-line w-40"></div>
+        <div class="skeleton-line w-30"></div>
+      </div>
     </div>
 
+    <script src="js/theme.js"></script>
     <script src="js/internships.js?v=5"></script>
-
-    <!-- Dark Mode Toggle Script -->
     <script>
-      (function () {
-        const toggle = document.getElementById("darkModeToggle");
-        const icon = document.getElementById("darkModeIcon");
-
-        function setIcon() {
-          const isDark = document.body.classList.contains("dark-mode");
-          if (isDark) {
-            icon.innerHTML =
-              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-            toggle.setAttribute("aria-label", "Switch to light mode");
-          } else {
-            icon.innerHTML =
-              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path></svg>';
-            toggle.setAttribute("aria-label", "Switch to dark mode");
-          }
-        }
-
-        if (toggle && icon) {
-          toggle.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-            setIcon();
-          });
-          setIcon();
-        }
-      })();
+      if (window.CampusTheme) {
+        window.CampusTheme.initToggle({
+          toggleId: "darkModeToggle",
+          iconId: "darkModeIcon",
+          darkClass: "dark-mode",
+          defaultMode: "light",
+        });
+      }
     </script>
   </body>
 </html>

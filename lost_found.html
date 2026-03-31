@@ -7,9 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="neo-theme.css" />
     <!-- Copying styles from events.html for consistency -->
     <style>
       *,
@@ -342,9 +343,66 @@
         opacity: 1;
         transform: translateX(-50%) translateY(0);
       }
+
+      /* ===== NEO THEME OVERRIDES ===== */
+      body.neo-theme {
+        font-family: "Space Grotesk", sans-serif;
+        background: #f7f4ea;
+        color: #111827;
+      }
+
+      body.neo-theme .topbar {
+        background: #fffef8;
+        border-bottom: 2px solid #111827;
+        box-shadow: 0 4px 0 #111827;
+        backdrop-filter: none;
+      }
+
+      body.neo-theme .topbar-brand {
+        font-family: "Archivo Black", "Arial Black", sans-serif;
+        background: none;
+        color: #111827;
+      }
+
+      body.neo-theme .card {
+        background: #fffef8;
+        border: 2px solid #111827;
+        box-shadow: 6px 6px 0 #111827;
+        backdrop-filter: none;
+      }
+
+      body.neo-theme .topbar-btn,
+      body.neo-theme .filter-btn,
+      body.neo-theme .create-event-btn {
+        background: #fffef8;
+        color: #111827;
+        border: 2px solid #111827;
+        box-shadow: 3px 3px 0 #111827;
+      }
+
+      body.neo-theme .topbar-btn:hover,
+      body.neo-theme .filter-btn:hover,
+      body.neo-theme .create-event-btn:hover {
+        background: #ffd84d;
+        transform: translate(-1px, -1px);
+      }
+
+      body.neo-theme .composer-input {
+        background: #fff;
+        color: #111827;
+        border: 2px solid #111827;
+      }
+
+      body.neo-theme .topbar-user,
+      body.neo-theme .filter-label,
+      body.neo-theme .event-meta-item,
+      body.neo-theme .event-description,
+      body.neo-theme .empty-state {
+        color: #4b5563;
+      }
     </style>
   </head>
-  <body>
+  <body class="neo-theme">
     <!-- TOP BAR -->
     <div class="topbar">
       <a href="index.html" class="topbar-brand">Campus360</a>
@@ -354,8 +412,8 @@
         <a href="forum.html" class="topbar-btn">Forum</a>
         <a href="messages.html" class="topbar-btn">Messages</a>
         <a href="events.html" class="topbar-btn">Events</a>
-          <a href="study_resources.html" class="topbar-btn">Study Resources</a>
-          <a href="lost_found.html" class="topbar-btn active-nav">Lost & Found</a>
+        <a href="study_resources.html" class="topbar-btn">Study Resources</a>
+        <a href="lost_found.html" class="topbar-btn active-nav">Lost & Found</a>
         <button class="topbar-btn danger" id="logoutBtn">Logout</button>
       </div>
     </div>

@@ -11,9 +11,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="neo-theme.css" />
     <style>
       *,
       *::before,
@@ -863,9 +864,147 @@
       body.light-mode .profile-stat-num {
         color: #4f46e5;
       }
+
+      /* ===== NEO THEME OVERRIDES ===== */
+      body.neo-theme {
+        font-family: "Space Grotesk", sans-serif;
+        background: #f7f4ea;
+        color: #111827;
+      }
+
+      body.neo-theme .topbar {
+        background: #fffef8;
+        border-bottom: 2px solid #111827;
+        box-shadow: 0 4px 0 #111827;
+        backdrop-filter: none;
+      }
+
+      body.neo-theme .topbar-brand {
+        font-family: "Archivo Black", "Arial Black", sans-serif;
+        background: none;
+        color: #111827;
+      }
+
+      body.neo-theme .card {
+        background: #fffef8;
+        border: 2px solid #111827;
+        box-shadow: 6px 6px 0 #111827;
+        backdrop-filter: none;
+      }
+
+      body.neo-theme .topbar-btn,
+      body.neo-theme .post-btn,
+      body.neo-theme .load-more-btn,
+      body.neo-theme .follow-btn,
+      body.neo-theme .comment-submit,
+      body.neo-theme .visibility-toggle {
+        background: #fffef8;
+        color: #111827;
+        border: 2px solid #111827;
+        box-shadow: 3px 3px 0 #111827;
+      }
+
+      body.neo-theme .topbar-btn:hover,
+      body.neo-theme .post-btn:hover,
+      body.neo-theme .load-more-btn:hover,
+      body.neo-theme .follow-btn:hover,
+      body.neo-theme .comment-submit:hover,
+      body.neo-theme .visibility-toggle:hover {
+        background: #ffd84d;
+        transform: translate(-1px, -1px);
+      }
+
+      body.neo-theme .composer textarea,
+      body.neo-theme .search-input,
+      body.neo-theme .comment-input-row input,
+      body.neo-theme .comment-body {
+        background: #ffffff;
+        color: #111827;
+        border: 2px solid #111827;
+      }
+
+      body.neo-theme .topbar-user,
+      body.neo-theme .profile-username,
+      body.neo-theme .post-meta,
+      body.neo-theme .comment-time,
+      body.neo-theme .empty-state {
+        color: #4b5563;
+      }
+
+      body.neo-theme .post-actions,
+      body.neo-theme .comments-section,
+      body.neo-theme .follow-req-item,
+      body.neo-theme .search-result-item {
+        border-color: rgba(17, 24, 39, 0.2);
+      }
+
+      body.neo-theme .post-action-btn,
+      body.neo-theme .attach-btn {
+        color: #374151;
+      }
+
+      body.neo-theme[data-theme="dark"] {
+        background: #0b1020;
+        color: #dbe8ff;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar,
+      body.neo-theme[data-theme="dark"] .card {
+        background: #11172b;
+        border-color: #a4beff;
+        box-shadow: 6px 6px 0 #050914;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar-brand {
+        color: #dbe8ff;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar-btn,
+      body.neo-theme[data-theme="dark"] .post-btn,
+      body.neo-theme[data-theme="dark"] .load-more-btn,
+      body.neo-theme[data-theme="dark"] .follow-btn,
+      body.neo-theme[data-theme="dark"] .comment-submit,
+      body.neo-theme[data-theme="dark"] .visibility-toggle {
+        background: #16203a;
+        color: #dbe8ff;
+        border-color: #a4beff;
+        box-shadow: 3px 3px 0 #050914;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar-btn:hover,
+      body.neo-theme[data-theme="dark"] .post-btn:hover,
+      body.neo-theme[data-theme="dark"] .load-more-btn:hover,
+      body.neo-theme[data-theme="dark"] .follow-btn:hover,
+      body.neo-theme[data-theme="dark"] .comment-submit:hover,
+      body.neo-theme[data-theme="dark"] .visibility-toggle:hover {
+        background: #7eaefe;
+        color: #091226;
+      }
+
+      body.neo-theme[data-theme="dark"] .composer textarea,
+      body.neo-theme[data-theme="dark"] .search-input,
+      body.neo-theme[data-theme="dark"] .comment-input-row input,
+      body.neo-theme[data-theme="dark"] .comment-body {
+        background: #0f152a;
+        color: #dbe8ff;
+        border-color: #90b0ff;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar-user,
+      body.neo-theme[data-theme="dark"] .profile-username,
+      body.neo-theme[data-theme="dark"] .post-meta,
+      body.neo-theme[data-theme="dark"] .comment-time,
+      body.neo-theme[data-theme="dark"] .empty-state {
+        color: #9fb0d8;
+      }
+
+      body.neo-theme[data-theme="dark"] .post-action-btn,
+      body.neo-theme[data-theme="dark"] .attach-btn {
+        color: #b8cbff;
+      }
     </style>
   </head>
-  <body>
+  <body class="neo-theme">
     <!-- TOP BAR -->
     <div class="topbar">
       <a href="index.html" class="topbar-brand">Campus360</a>
@@ -1025,6 +1164,7 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
+    <script src="js/theme.js"></script>
     <script src="js/forum.js"></script>
   </body>
 </html>

@@ -1,0 +1,52 @@
+/* Shared neo-brutalist design tokens and primitives */
+:root {
+  --neo-bg: #f7f4ea;
+  --neo-surface: #fffef8;
+  --neo-ink: #121212;
+  --neo-muted: #4b5563;
+  --neo-border: #121212;
+  --neo-accent-yellow: #ffd84d;
+  --neo-accent-cyan: #9de8ff;
+  --neo-accent-pink: #ff7fbe;
+  --neo-accent-green: #9af59e;
+  --neo-shadow: 6px 6px 0 #121212;
+  --neo-shadow-sm: 4px 4px 0 #121212;
+  --neo-radius: 14px;
+  --neo-font-body: "Space Grotesk", "Segoe UI", sans-serif;
+  --neo-font-display: "Archivo Black", "Arial Black", sans-serif;
+}
+
+body.neo-theme {
+  font-family: var(--neo-font-body);
+  background-color: var(--neo-bg);
+  background-image:
+    linear-gradient(90deg, rgba(18, 18, 18, 0.05) 1px, transparent 1px),
+    linear-gradient(rgba(18, 18, 18, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.neo-card {
+  background: var(--neo-surface);
+  border: 2px solid var(--neo-border);
+  border-radius: var(--neo-radius);
+  box-shadow: var(--neo-shadow);
+}
+
+.neo-btn {
+  border: 2px solid var(--neo-border);
+  border-radius: 12px;
+  box-shadow: var(--neo-shadow-sm);
+  font-weight: 700;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #121212;
+}
+
+.neo-display {
+  font-family: var(--neo-font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
