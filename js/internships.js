@@ -39,7 +39,6 @@
       "java",
       "javascript",
       "node",
-      "react",
       "angular",
       "django",
       "mobile app",
@@ -178,10 +177,14 @@
     try {
       if (forceRefresh) {
         try {
-          const refreshRes = await fetch(`${API_BASE}?action=refresh&source=all`);
+          const refreshRes = await fetch(
+            `${API_BASE}?action=refresh&source=all`,
+          );
           const refreshData = await refreshRes.json();
           if (refreshData.message) console.log("Refresh:", refreshData.message);
-        } catch(e) { console.error("Refresh trigger failed:", e); }
+        } catch (e) {
+          console.error("Refresh trigger failed:", e);
+        }
       }
 
       const url = `${API_BASE}?action=fetch&limit=200&source=all`;
