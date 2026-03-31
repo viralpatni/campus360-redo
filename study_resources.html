@@ -107,6 +107,36 @@
         z-index: 1;
       }
 
+      .study-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        padding: 0.9rem;
+        border: 1px solid var(--glass-border);
+        background: var(--glass-bg);
+        border-radius: 14px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+
+      .study-nav a {
+        text-decoration: none;
+        color: var(--text-main);
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 999px;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.88rem;
+        font-weight: 600;
+        transition: var(--transition);
+      }
+
+      .study-nav a:hover {
+        border-color: var(--primary-hover);
+        color: var(--primary-hover);
+        transform: translateY(-1px);
+      }
+
       .theme-toggle {
         position: fixed;
         top: 16px;
@@ -178,14 +208,17 @@
       }
 
       /* Staggered entrance animations */
-      .section:nth-child(2) {
+      .section:nth-of-type(1) {
         animation-delay: 0.1s;
       }
-      .section:nth-child(3) {
+      .section:nth-of-type(2) {
         animation-delay: 0.2s;
       }
-      .section:nth-child(4) {
+      .section:nth-of-type(3) {
         animation-delay: 0.3s;
+      }
+      .section:nth-of-type(4) {
+        animation-delay: 0.4s;
       }
 
       @keyframes fadeInUp {
@@ -402,6 +435,16 @@
 
       /* ===== RESPONSIVE ===== */
       @media (max-width: 768px) {
+        .container {
+          margin-top: 70px;
+        }
+        .study-nav {
+          gap: 0.5rem;
+        }
+        .study-nav a {
+          font-size: 0.82rem;
+          padding: 0.42rem 0.72rem;
+        }
         .upload-form {
           flex-direction: column;
           align-items: stretch;
@@ -426,6 +469,14 @@
       <span id="themeIcon" aria-hidden="true"></span>
     </button>
     <div class="container">
+      <nav class="study-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="forum.html">Forum</a>
+        <a href="messages.html">Messages</a>
+        <a href="events.html">Events</a>
+        <a href="internships.html">Internships</a>
+        <a href="lost_found.html">Lost & Found</a>
+      </nav>
       <h1>Study Resources</h1>
 
       <div class="section">
