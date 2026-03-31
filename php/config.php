@@ -10,10 +10,10 @@ error_reporting(E_ALL);
 session_start();
 
 // --- Database credentials ---
-define('DB_HOST', getenv('DB_HOST') !== false ? getenv('DB_HOST') : 'localhost');
-define('DB_NAME', getenv('DB_NAME') !== false ? getenv('DB_NAME') : 'campus360');
-define('DB_USER', getenv('DB_USER') !== false ? getenv('DB_USER') : 'root');
-define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : ''); // Default WAMP root password is empty
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'campus360');
+define('DB_USER', 'root');
+define('DB_PASS', 'karan@viral');          // Default WAMP root password is empty
 
 // --- PDO Connection ---
 try {
@@ -28,7 +28,6 @@ try {
         ]
     );
 } catch (PDOException $e) {
-    error_log('[DB] PDO connection failed: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Database connection failed']);
     exit;

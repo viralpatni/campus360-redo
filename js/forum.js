@@ -2,34 +2,30 @@
 // Campus360 — Forum JS (forum.html)
 // ============================================
 
-const AUTH_API = "php/auth.php";
-const FORUM_API = "php/forum_api.php";
-const UPLOAD_API = "php/upload.php";
+const AUTH_API  = 'php/auth.php';
+const FORUM_API = 'php/forum_api.php';
+const UPLOAD_API = 'php/upload.php';
 
 let currentUser = null;
 let currentPage = 1;
-let postVisibility = "public";
+let postVisibility = 'public';
 let selectedImage = null;
 
 // ===== INIT =====
 (async function init() {
   try {
-    const res = await fetch(AUTH_API + "?action=check");
+    const res = await fetch(AUTH_API + '?action=check');
     const data = await res.json();
-    if (!data.loggedIn) {
-      window.location.href = "login.html";
-      return;
-    }
+    if (!data.loggedIn) { window.location.href = 'login.html'; return; }
     currentUser = data.user;
-    document.getElementById("userName").textContent = currentUser.name;
+    document.getElementById('userName').textContent = currentUser.name;
 
     // Set profile
     const initial = currentUser.name.charAt(0).toUpperCase();
-    document.getElementById("myAvatar").textContent = initial;
-    document.getElementById("composerAvatar").textContent = initial;
-    document.getElementById("myName").textContent = currentUser.name;
-    document.getElementById("myUsername").textContent =
-      "@" + currentUser.username;
+    document.getElementById('myAvatar').textContent = initial;
+    document.getElementById('composerAvatar').textContent = initial;
+    document.getElementById('myName').textContent = currentUser.name;
+    document.getElementById('myUsername').textContent = '@' + currentUser.username;
 
     loadProfile();
     loadFeed();
@@ -40,27 +36,25 @@ let selectedImage = null;
       loadFollowRequests();
     }, 10000);
   } catch (e) {
-    window.location.href = "login.html";
+    window.location.href = 'login.html';
   }
 })();
 
 // ===== LOGOUT =====
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await fetch(AUTH_API + "?action=logout");
-  window.location.href = "login.html";
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  await fetch(AUTH_API + '?action=logout');
+  window.location.href = 'login.html';
 });
 
 // ===== PROFILE =====
 async function loadProfile() {
   try {
-    const res = await fetch(FORUM_API + "?action=get_profile");
+    const res = await fetch(FORUM_API + '?action=get_profile');
     const data = await res.json();
     if (data.success) {
-      document.getElementById("myPosts").textContent = data.user.post_count;
-      document.getElementById("myFollowers").textContent =
-        data.user.follower_count;
-      document.getElementById("myFollowing").textContent =
-        data.user.following_count;
+      document.getElementById('myPosts').textContent = data.user.post_count;
+      document.getElementById('myFollowers').textContent = data.user.follower_count;
+      document.getElementById('myFollowing').textContent = data.user.following_count;
     }
   } catch (e) {}
 }
@@ -68,12 +62,12 @@ async function loadProfile() {
 // ===== FEED =====
 async function loadFeed(page = 1) {
   try {
-    const res = await fetch(FORUM_API + "?action=get_feed&page=" + page);
+    const res = await fetch(FORUM_API + '?action=get_feed&page=' + page);
     const data = await res.json();
     if (!data.success) return;
 
-    const container = document.getElementById("feedContainer");
-    if (page === 1) container.innerHTML = "";
+    const container = document.getElementById('feedContainer');
+    if (page === 1) container.innerHTML = '';
 
     if (data.posts.length === 0 && page === 1) {
       container.innerHTML = `
@@ -83,21 +77,19 @@ async function loadFeed(page = 1) {
             <p>No posts yet. Be the first to share something!</p>
           </div>
         </div>`;
-      document.getElementById("loadMoreBtn").style.display = "none";
+      document.getElementById('loadMoreBtn').style.display = 'none';
       return;
     }
 
-    data.posts.forEach((post) => {
+    data.posts.forEach(post => {
       container.appendChild(createPostElement(post));
     });
 
-    document.getElementById("loadMoreBtn").style.display =
-      data.posts.length >= 20 ? "block" : "none";
+    document.getElementById('loadMoreBtn').style.display =
+      data.posts.length >= 20 ? 'block' : 'none';
 
     currentPage = page;
-  } catch (e) {
-    console.error("Feed error:", e);
-  }
+  } catch (e) { console.error('Feed error:', e); }
 }
 
 function loadMorePosts() {
@@ -105,19 +97,18 @@ function loadMorePosts() {
 }
 
 function createPostElement(post) {
-  const card = document.createElement("div");
-  card.className = "card post-card";
-  card.id = "post-" + post.id;
+  const card = document.createElement('div');
+  card.className = 'card post-card';
+  card.id = 'post-' + post.id;
 
   const isMine = String(post.user_id) === String(currentUser.id);
   const liked = parseInt(post.liked_by_me) > 0;
-  const initial = (post.author_name || "?").charAt(0).toUpperCase();
+  const initial = (post.author_name || '?').charAt(0).toUpperCase();
   const time = formatTime(post.created_at);
 
-  let imageHtml = "";
+  let imageHtml = '';
   if (post.image_path) {
-    const imageUrl = normalizeAssetUrl(post.image_path);
-    imageHtml = `<img class="post-image" src="${escHtml(imageUrl)}" alt="Post image" onclick="window.open('${escHtml(imageUrl)}','_blank')" loading="lazy" />`;
+    imageHtml = `<img class="post-image" src="${escHtml(post.image_path)}" alt="Post image" onclick="window.open('${escHtml(post.image_path)}','_blank')" />`;
   }
 
   card.innerHTML = `
@@ -127,16 +118,16 @@ function createPostElement(post) {
         <div class="post-author-name">${escHtml(post.author_name)}</div>
         <div class="post-meta">
           @${escHtml(post.author_username)} · ${time}
-          <span class="post-badge ${post.visibility}">${post.visibility === "public" ? "🌍 Public" : "🔒 Private"}</span>
+          <span class="post-badge ${post.visibility}">${post.visibility === 'public' ? '🌍 Public' : '🔒 Private'}</span>
         </div>
       </div>
-      ${isMine ? `<button class="post-delete" onclick="deletePost(${post.id})" title="Delete post">🗑</button>` : ""}
+      ${isMine ? `<button class="post-delete" onclick="deletePost(${post.id})" title="Delete post">🗑</button>` : ''}
     </div>
-    ${post.content ? `<div class="post-content">${escHtml(post.content)}</div>` : ""}
+    ${post.content ? `<div class="post-content">${escHtml(post.content)}</div>` : ''}
     ${imageHtml}
     <div class="post-actions">
-      <button class="post-action-btn ${liked ? "liked" : ""}" onclick="toggleLike(${post.id}, this)">
-        <span class="icon">${liked ? "❤️" : "🤍"}</span>
+      <button class="post-action-btn ${liked ? 'liked' : ''}" onclick="toggleLike(${post.id}, this)">
+        <span class="icon">${liked ? '❤️' : '🤍'}</span>
         <span class="like-count">${post.like_count}</span>
       </button>
       <button class="post-action-btn" onclick="toggleComments(${post.id})">
@@ -158,17 +149,17 @@ function createPostElement(post) {
 
 // ===== CREATE POST =====
 async function createPost() {
-  const textarea = document.getElementById("postContent");
+  const textarea = document.getElementById('postContent');
   const content = textarea.value.trim();
-  const btn = document.getElementById("postBtn");
+  const btn = document.getElementById('postBtn');
 
   if (!content && !selectedImage) {
-    showToast("Please write something or attach an image");
+    showToast('Please write something or attach an image');
     return;
   }
 
   btn.disabled = true;
-  btn.textContent = "Posting...";
+  btn.textContent = 'Posting...';
 
   try {
     let imagePath = null;
@@ -176,76 +167,72 @@ async function createPost() {
     // Upload image if selected
     if (selectedImage) {
       const uploadData = new FormData();
-      uploadData.append("file", selectedImage);
-      uploadData.append("image", selectedImage);
-      uploadData.append("type", "image");
-      const uploadRes = await fetch(UPLOAD_API, {
-        method: "POST",
-        body: uploadData,
-      });
+      uploadData.append('file', selectedImage);
+      uploadData.append('type', 'image');
+      const uploadRes = await fetch(UPLOAD_API, { method: 'POST', body: uploadData });
       const uploadResult = await uploadRes.json();
       if (uploadResult.success) {
-        imagePath = uploadResult.path;
+        imagePath = uploadResult.file_path;
       } else {
-        showToast(uploadResult.error || "Image upload failed");
+        showToast(uploadResult.error || 'Image upload failed');
         btn.disabled = false;
-        btn.textContent = "Post";
+        btn.textContent = 'Post';
         return;
       }
     }
 
     const formData = new FormData();
-    formData.append("action", "create_post");
-    formData.append("content", content);
-    formData.append("visibility", postVisibility);
-    if (imagePath) formData.append("image_path", imagePath);
+    formData.append('action', 'create_post');
+    formData.append('content', content);
+    formData.append('visibility', postVisibility);
+    if (imagePath) formData.append('image_path', imagePath);
 
-    const res = await fetch(FORUM_API, { method: "POST", body: formData });
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success) {
-      textarea.value = "";
+      textarea.value = '';
       selectedImage = null;
-      document.getElementById("imagePreviewName").textContent = "";
-      document.getElementById("postImageInput").value = "";
-      showToast("Post published! 🎉");
+      document.getElementById('imagePreviewName').textContent = '';
+      document.getElementById('postImageInput').value = '';
+      showToast('Post published! 🎉');
       loadFeed(1);
       loadProfile();
     } else {
-      showToast(data.error || "Failed to create post");
+      showToast(data.error || 'Failed to create post');
     }
   } catch (e) {
-    showToast("Network error");
+    showToast('Network error');
   }
 
   btn.disabled = false;
-  btn.textContent = "Post";
+  btn.textContent = 'Post';
 }
 
 // ===== VISIBILITY TOGGLE =====
 function toggleVisibility() {
-  const btn = document.getElementById("visToggle");
-  if (postVisibility === "public") {
-    postVisibility = "private";
-    btn.innerHTML = "🔒 Private";
-    btn.classList.add("private");
+  const btn = document.getElementById('visToggle');
+  if (postVisibility === 'public') {
+    postVisibility = 'private';
+    btn.innerHTML = '🔒 Private';
+    btn.classList.add('private');
   } else {
-    postVisibility = "public";
-    btn.innerHTML = "🌍 Public";
-    btn.classList.remove("private");
+    postVisibility = 'public';
+    btn.innerHTML = '🌍 Public';
+    btn.classList.remove('private');
   }
 }
 
 // ===== IMAGE ATTACH =====
-document.getElementById("imageAttachBtn").addEventListener("click", () => {
-  document.getElementById("postImageInput").click();
+document.getElementById('imageAttachBtn').addEventListener('click', () => {
+  document.getElementById('postImageInput').click();
 });
 
-document.getElementById("postImageInput").addEventListener("change", (e) => {
+document.getElementById('postImageInput').addEventListener('change', (e) => {
   const file = e.target.files[0];
   if (file) {
     selectedImage = file;
-    document.getElementById("imagePreviewName").textContent = file.name;
+    document.getElementById('imagePreviewName').textContent = file.name;
   }
 });
 
@@ -253,24 +240,24 @@ document.getElementById("postImageInput").addEventListener("change", (e) => {
 async function toggleLike(postId, btn) {
   try {
     const formData = new FormData();
-    formData.append("action", "like_post");
-    formData.append("post_id", postId);
+    formData.append('action', 'like_post');
+    formData.append('post_id', postId);
 
-    const res = await fetch(FORUM_API, { method: "POST", body: formData });
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success) {
-      const icon = btn.querySelector(".icon");
-      const count = btn.querySelector(".like-count");
+      const icon = btn.querySelector('.icon');
+      const count = btn.querySelector('.like-count');
       const current = parseInt(count.textContent);
 
-      if (data.action === "liked") {
-        btn.classList.add("liked");
-        icon.textContent = "❤️";
+      if (data.action === 'liked') {
+        btn.classList.add('liked');
+        icon.textContent = '❤️';
         count.textContent = current + 1;
       } else {
-        btn.classList.remove("liked");
-        icon.textContent = "🤍";
+        btn.classList.remove('liked');
+        icon.textContent = '🤍';
         count.textContent = Math.max(0, current - 1);
       }
     }
@@ -279,75 +266,68 @@ async function toggleLike(postId, btn) {
 
 // ===== COMMENTS =====
 async function toggleComments(postId) {
-  const section = document.getElementById("comments-" + postId);
-  if (section.classList.contains("open")) {
-    section.classList.remove("open");
+  const section = document.getElementById('comments-' + postId);
+  if (section.classList.contains('open')) {
+    section.classList.remove('open');
     return;
   }
 
-  section.classList.add("open");
+  section.classList.add('open');
   await loadComments(postId);
 }
 
 async function loadComments(postId) {
   try {
-    const res = await fetch(
-      FORUM_API + "?action=get_comments&post_id=" + postId,
-    );
+    const res = await fetch(FORUM_API + '?action=get_comments&post_id=' + postId);
     const data = await res.json();
     if (!data.success) return;
 
-    const list = document.getElementById("comments-list-" + postId);
+    const list = document.getElementById('comments-list-' + postId);
     if (data.comments.length === 0) {
-      list.innerHTML =
-        '<div style="font-size:0.78rem; color:rgba(255,255,255,0.3); padding:0.3rem 0;">No comments yet</div>';
+      list.innerHTML = '<div style="font-size:0.78rem; color:rgba(255,255,255,0.3); padding:0.3rem 0;">No comments yet</div>';
       return;
     }
 
-    list.innerHTML = data.comments
-      .map(
-        (c) => `
+    list.innerHTML = data.comments.map(c => `
       <div class="comment-item">
-        <div class="comment-avatar">${(c.author_name || "?").charAt(0).toUpperCase()}</div>
+        <div class="comment-avatar">${(c.author_name || '?').charAt(0).toUpperCase()}</div>
         <div class="comment-body">
           <div class="comment-author">${escHtml(c.author_name)}</div>
           <div class="comment-text">${escHtml(c.content)}</div>
           <div class="comment-time">${formatTime(c.created_at)}</div>
         </div>
       </div>
-    `,
-      )
-      .join("");
+    `).join('');
   } catch (e) {}
 }
 
 async function addComment(postId) {
-  const input = document.getElementById("comment-input-" + postId);
+  const input = document.getElementById('comment-input-' + postId);
   const content = input.value.trim();
   if (!content) return;
 
-  input.value = "";
+  input.value = '';
 
   try {
     const formData = new FormData();
-    formData.append("action", "add_comment");
-    formData.append("post_id", postId);
-    formData.append("content", content);
+    formData.append('action', 'add_comment');
+    formData.append('post_id', postId);
+    formData.append('content', content);
 
-    const res = await fetch(FORUM_API, { method: "POST", body: formData });
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success) {
       await loadComments(postId);
       // Update comment count in the post
-      const postEl = document.getElementById("post-" + postId);
+      const postEl = document.getElementById('post-' + postId);
       if (postEl) {
-        const commentBtn = postEl.querySelectorAll(".post-action-btn")[1];
+        const commentBtn = postEl.querySelectorAll('.post-action-btn')[1];
         if (commentBtn) {
-          const span = commentBtn.querySelector("span:last-child");
+          const span = commentBtn.querySelector('span:last-child');
           const match = span.textContent.match(/(\d+)/);
           if (match) {
-            span.textContent = parseInt(match[1]) + 1 + " Comments";
+            span.textContent = (parseInt(match[1]) + 1) + ' Comments';
           }
         }
       }
@@ -357,20 +337,20 @@ async function addComment(postId) {
 
 // ===== DELETE POST =====
 async function deletePost(postId) {
-  if (!confirm("Delete this post?")) return;
+  if (!confirm('Delete this post?')) return;
 
   try {
     const formData = new FormData();
-    formData.append("action", "delete_post");
-    formData.append("post_id", postId);
+    formData.append('action', 'delete_post');
+    formData.append('post_id', postId);
 
-    const res = await fetch(FORUM_API, { method: "POST", body: formData });
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success) {
-      const el = document.getElementById("post-" + postId);
+      const el = document.getElementById('post-' + postId);
       if (el) el.remove();
-      showToast("Post deleted");
+      showToast('Post deleted');
       loadProfile();
     }
   } catch (e) {}
@@ -379,24 +359,20 @@ async function deletePost(postId) {
 // ===== FOLLOW REQUESTS =====
 async function loadFollowRequests() {
   try {
-    const res = await fetch(FORUM_API + "?action=get_follow_requests");
+    const res = await fetch(FORUM_API + '?action=get_follow_requests');
     const data = await res.json();
     if (!data.success) return;
 
-    const badge = document.getElementById("reqBadge");
-    badge.textContent =
-      data.requests.length > 0 ? `(${data.requests.length})` : "";
+    const badge = document.getElementById('reqBadge');
+    badge.textContent = data.requests.length > 0 ? `(${data.requests.length})` : '';
 
-    const list = document.getElementById("followReqList");
+    const list = document.getElementById('followReqList');
     if (data.requests.length === 0) {
-      list.innerHTML =
-        '<div class="empty-state" style="padding:0.5rem;">No pending requests</div>';
+      list.innerHTML = '<div class="empty-state" style="padding:0.5rem;">No pending requests</div>';
       return;
     }
 
-    list.innerHTML = data.requests
-      .map(
-        (r) => `
+    list.innerHTML = data.requests.map(r => `
       <div class="follow-req-item" id="freq-${r.id}">
         <div class="follow-req-avatar">${r.name.charAt(0).toUpperCase()}</div>
         <div class="follow-req-info">
@@ -408,33 +384,27 @@ async function loadFollowRequests() {
           <button class="follow-req-btn reject" onclick="respondFollow(${r.id}, 'rejected')">✕</button>
         </div>
       </div>
-    `,
-      )
-      .join("");
+    `).join('');
   } catch (e) {}
 }
 
 async function respondFollow(followId, response) {
   try {
     const formData = new FormData();
-    formData.append("action", "respond_follow");
-    formData.append("follow_id", followId);
-    formData.append("response", response);
+    formData.append('action', 'respond_follow');
+    formData.append('follow_id', followId);
+    formData.append('response', response);
 
-    const res = await fetch(FORUM_API, { method: "POST", body: formData });
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success) {
-      const el = document.getElementById("freq-" + followId);
+      const el = document.getElementById('freq-' + followId);
       if (el) el.remove();
-      showToast(
-        response === "accepted"
-          ? "Follow request accepted!"
-          : "Follow request rejected",
-      );
+      showToast(response === 'accepted' ? 'Follow request accepted!' : 'Follow request rejected');
       loadFollowRequests();
       loadProfile();
-      if (response === "accepted") loadFeed(1);
+      if (response === 'accepted') loadFeed(1);
     }
   } catch (e) {}
 }
@@ -446,38 +416,35 @@ function handleSearchInput(e, resultsId) {
   clearTimeout(searchTimeout);
   const q = e.target.value.trim();
   if (q.length < 2) {
-    document.getElementById(resultsId).innerHTML =
-      '<div class="empty-state" style="padding:0.5rem;">Type to search</div>';
+    document.getElementById(resultsId).innerHTML = '<div class="empty-state" style="padding:0.5rem;">Type to search</div>';
     return;
   }
   searchTimeout = setTimeout(() => searchUsers(q), 300);
 }
 
-document.getElementById("userSearch").addEventListener("input", (e) => {
-  handleSearchInput(e, "searchResults");
+document.getElementById('userSearch').addEventListener('input', (e) => {
+  handleSearchInput(e, 'searchResults');
 });
 
 // Mobile search (may not exist on page — use optional chaining)
-const mobileSearchEl = document.getElementById("userSearchMobile");
+const mobileSearchEl = document.getElementById('userSearchMobile');
 if (mobileSearchEl) {
-  mobileSearchEl.addEventListener("input", (e) => {
-    handleSearchInput(e, "searchResultsMobile");
+  mobileSearchEl.addEventListener('input', (e) => {
+    handleSearchInput(e, 'searchResultsMobile');
   });
 }
 
 async function searchUsers(query) {
   try {
-    const res = await fetch(
-      FORUM_API + "?action=search_users&q=" + encodeURIComponent(query),
-    );
+    const res = await fetch(FORUM_API + '?action=search_users&q=' + encodeURIComponent(query));
     const data = await res.json();
     if (!data.success) return;
 
     const resultsHtml = buildSearchResultsHtml(data.users);
 
     // Update both containers (desktop and mobile)
-    document.getElementById("searchResults").innerHTML = resultsHtml;
-    const mobileResults = document.getElementById("searchResultsMobile");
+    document.getElementById('searchResults').innerHTML = resultsHtml;
+    const mobileResults = document.getElementById('searchResultsMobile');
     if (mobileResults) mobileResults.innerHTML = resultsHtml;
   } catch (e) {}
 }
@@ -487,23 +454,22 @@ function buildSearchResultsHtml(users) {
     return '<div class="empty-state" style="padding:0.5rem;">No users found</div>';
   }
 
-  return users
-    .map((u) => {
-      let btnClass = "follow";
-      let btnText = "Follow";
-      let btnAction = `sendFollow(${u.id}, this)`;
+  return users.map(u => {
+    let btnClass = 'follow';
+    let btnText = 'Follow';
+    let btnAction = `sendFollow(${u.id}, this)`;
 
-      if (u.follow_status === "accepted") {
-        btnClass = "following";
-        btnText = "Unfollow";
-        btnAction = `unfollowUser(${u.id}, this)`;
-      } else if (u.follow_status === "pending") {
-        btnClass = "pending";
-        btnText = "Pending";
-        btnAction = "";
-      }
+    if (u.follow_status === 'accepted') {
+      btnClass = 'following';
+      btnText = 'Unfollow';
+      btnAction = `unfollowUser(${u.id}, this)`;
+    } else if (u.follow_status === 'pending') {
+      btnClass = 'pending';
+      btnText = 'Pending';
+      btnAction = '';
+    }
 
-      return `
+    return `
       <div class="search-result-item">
         <div class="follow-req-avatar">${u.name.charAt(0).toUpperCase()}</div>
         <div class="follow-req-info">
@@ -513,46 +479,43 @@ function buildSearchResultsHtml(users) {
         <button class="follow-btn ${btnClass}" onclick="${btnAction}">${btnText}</button>
       </div>
     `;
-    })
-    .join("");
+  }).join('');
 }
 
 async function sendFollow(userId, btn) {
   try {
     const formData = new FormData();
-    formData.append("action", "send_follow");
-    formData.append("user_id", userId);
+    formData.append('action', 'send_follow');
+    formData.append('user_id', userId);
 
-    const res = await fetch(FORUM_API, { method: "POST", body: formData });
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success) {
-      btn.className = "follow-btn pending";
-      btn.textContent = "Pending";
+      btn.className = 'follow-btn pending';
+      btn.textContent = 'Pending';
       btn.onclick = null;
-      showToast("Follow request sent!");
+      showToast('Follow request sent!');
     } else {
-      showToast(data.error || "Could not send request");
+      showToast(data.error || 'Could not send request');
     }
-  } catch (e) {
-    showToast("Network error");
-  }
+  } catch (e) { showToast('Network error'); }
 }
 
 async function unfollowUser(userId, btn) {
   try {
     const formData = new FormData();
-    formData.append("action", "unfollow");
-    formData.append("user_id", userId);
+    formData.append('action', 'unfollow');
+    formData.append('user_id', userId);
 
-    const res = await fetch(FORUM_API, { method: "POST", body: formData });
+    const res = await fetch(FORUM_API, { method: 'POST', body: formData });
     const data = await res.json();
 
     if (data.success) {
-      btn.className = "follow-btn follow";
-      btn.textContent = "Follow";
-      btn.setAttribute("onclick", `sendFollow(${userId}, this)`);
-      showToast("Unfollowed");
+      btn.className = 'follow-btn follow';
+      btn.textContent = 'Follow';
+      btn.setAttribute('onclick', `sendFollow(${userId}, this)`);
+      showToast('Unfollowed');
       loadProfile();
     }
   } catch (e) {}
@@ -560,49 +523,29 @@ async function unfollowUser(userId, btn) {
 
 // ===== UTILITIES =====
 function escHtml(str) {
-  if (!str) return "";
-  const div = document.createElement("div");
+  if (!str) return '';
+  const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
 }
 
-function normalizeAssetUrl(path) {
-  if (!path) return "";
-
-  const raw = String(path).trim();
-  if (/^https?:\/\//i.test(raw) || raw.startsWith("data:")) {
-    return raw;
-  }
-
-  let cleaned = raw.replace(/\\/g, "/");
-  const uploadsPos = cleaned.toLowerCase().indexOf("uploads/");
-  if (uploadsPos > 0) {
-    cleaned = cleaned.slice(uploadsPos);
-  }
-  if (cleaned.startsWith("./")) {
-    cleaned = cleaned.slice(2);
-  }
-
-  return new URL(cleaned, window.location.href).href;
-}
-
 function formatTime(dateStr) {
-  if (!dateStr) return "";
+  if (!dateStr) return '';
   const d = new Date(dateStr);
   const now = new Date();
   const diff = (now - d) / 1000;
 
-  if (diff < 60) return "Just now";
-  if (diff < 3600) return Math.floor(diff / 60) + "m ago";
-  if (diff < 86400) return Math.floor(diff / 3600) + "h ago";
-  if (diff < 604800) return Math.floor(diff / 86400) + "d ago";
+  if (diff < 60) return 'Just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
 
-  return d.toLocaleDateString([], { month: "short", day: "numeric" });
+  return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
 }
 
 function showToast(msg) {
-  const el = document.getElementById("toast");
+  const el = document.getElementById('toast');
   el.textContent = msg;
-  el.classList.add("show");
-  setTimeout(() => el.classList.remove("show"), 3000);
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
 }
