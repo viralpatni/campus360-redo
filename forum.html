@@ -74,6 +74,21 @@
         text-decoration: none;
       }
 
+      .theme-toggle-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .theme-toggle-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
       .topbar-btn:hover {
         background: rgba(99, 102, 241, 0.15);
         color: #fff;
@@ -766,6 +781,88 @@
       .hidden-input {
         display: none;
       }
+
+      /* ===== LIGHT MODE ===== */
+      body.light-mode {
+        background: #f3f6fb;
+        color: #1f2937;
+      }
+
+      body.light-mode .topbar {
+        background: rgba(255, 255, 255, 0.92);
+        border-bottom: 1px solid rgba(79, 70, 229, 0.15);
+      }
+
+      body.light-mode .topbar-user,
+      body.light-mode .topbar-user strong,
+      body.light-mode .topbar-btn {
+        color: #334155;
+      }
+
+      body.light-mode .topbar-btn {
+        background: rgba(79, 70, 229, 0.06);
+        border-color: rgba(79, 70, 229, 0.14);
+      }
+
+      body.light-mode .topbar-btn.active-nav {
+        color: #4f46e5;
+        background: rgba(79, 70, 229, 0.12);
+      }
+
+      body.light-mode .card {
+        background: #ffffff;
+        border-color: rgba(79, 70, 229, 0.12);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      }
+
+      body.light-mode .card-title,
+      body.light-mode .profile-username,
+      body.light-mode .post-meta,
+      body.light-mode .comment-time,
+      body.light-mode .empty-state {
+        color: #64748b;
+      }
+
+      body.light-mode .composer textarea,
+      body.light-mode .search-input,
+      body.light-mode .comment-input-row input,
+      body.light-mode .comment-body {
+        background: #f8fafc;
+        border-color: #dbe4f0;
+        color: #0f172a;
+      }
+
+      body.light-mode .composer textarea::placeholder,
+      body.light-mode .search-input::placeholder,
+      body.light-mode .comment-input-row input::placeholder {
+        color: #94a3b8;
+      }
+
+      body.light-mode .visibility-toggle,
+      body.light-mode .load-more-btn,
+      body.light-mode .follow-btn.pending {
+        background: #eef2ff;
+        border-color: #dbe4f0;
+        color: #475569;
+      }
+
+      body.light-mode .post-actions,
+      body.light-mode .comments-section,
+      body.light-mode .follow-req-item,
+      body.light-mode .search-result-item {
+        border-color: #e2e8f0;
+      }
+
+      body.light-mode .post-action-btn {
+        color: #64748b;
+      }
+
+      body.light-mode .post-action-btn:hover,
+      body.light-mode .attach-btn:hover,
+      body.light-mode .comment-author,
+      body.light-mode .profile-stat-num {
+        color: #4f46e5;
+      }
     </style>
   </head>
   <body>
@@ -780,6 +877,14 @@
         <a href="events.html" class="topbar-btn">Events</a>
         <a href="lost_found.html" class="topbar-btn">Lost & Found</a>
         <a href="study_resources.html" class="topbar-btn">Study Resources</a>
+        <button
+          type="button"
+          class="topbar-btn theme-toggle-btn"
+          id="forumThemeToggle"
+          aria-label="Toggle theme"
+        >
+          <span id="forumThemeIcon" aria-hidden="true"></span>
+        </button>
         <button class="topbar-btn danger" id="logoutBtn">Logout</button>
       </div>
     </div>

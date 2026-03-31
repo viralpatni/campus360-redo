@@ -2,9 +2,9 @@
 // Campus360 — Forum JS (forum.html)
 // ============================================
 
-const AUTH_API = 'php/auth.php';
-const CHAT_API = 'php/chat.php';
-const UPLOAD_API = 'php/upload.php';
+const AUTH_API = "php/auth.php";
+const CHAT_API = "php/chat.php";
+const UPLOAD_API = "php/upload.php";
 
 let currentUser = null;
 let activeConversationId = null;
@@ -13,26 +13,64 @@ let pollInterval = null;
 let conversations = [];
 let renderedMsgIds = new Set(); // track rendered message IDs to prevent duplicates
 
+const MESSAGES_THEME_KEY = "messagesTheme";
+
+function setMessagesTheme(mode) {
+  const isLight = mode === "light";
+  document.body.classList.toggle("light-mode", isLight);
+
+  const toggle = document.getElementById("messagesThemeToggle");
+  const icon = document.getElementById("messagesThemeIcon");
+  if (!toggle || !icon) return;
+
+  if (isLight) {
+    icon.innerHTML =
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path></svg>';
+    toggle.setAttribute("aria-label", "Switch to dark mode");
+  } else {
+    icon.innerHTML =
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+    toggle.setAttribute("aria-label", "Switch to light mode");
+  }
+}
+
+function initMessagesTheme() {
+  const toggle = document.getElementById("messagesThemeToggle");
+  const saved = localStorage.getItem(MESSAGES_THEME_KEY) || "dark";
+  setMessagesTheme(saved);
+
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const next = document.body.classList.contains("light-mode")
+        ? "dark"
+        : "light";
+      setMessagesTheme(next);
+      localStorage.setItem(MESSAGES_THEME_KEY, next);
+    });
+  }
+}
+
 // WebSocket
-const WS_URL = 'ws://localhost:8082';
+const WS_URL = "ws://localhost:8082";
 let ws = null;
 let wsConnected = false;
 let typingTimeout = null;
 
 // ===== INITIALIZATION =====
 (async function init() {
+  initMessagesTheme();
   // Check auth
   try {
-    const res = await fetch(AUTH_API + '?action=check');
+    const res = await fetch(AUTH_API + "?action=check");
     const data = await res.json();
     if (!data.loggedIn) {
-      window.location.href = 'login.html';
+      window.location.href = "login.html";
       return;
     }
     currentUser = data.user;
-    document.getElementById('currentUserName').textContent = currentUser.name;
+    document.getElementById("currentUserName").textContent = currentUser.name;
   } catch (e) {
-    window.location.href = 'login.html';
+    window.location.href = "login.html";
     return;
   }
 
@@ -53,57 +91,69 @@ let typingTimeout = null;
 })();
 
 // ===== SIDEBAR TABS =====
-document.querySelectorAll('.sidebar-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+document.querySelectorAll(".sidebar-tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document
+      .querySelectorAll(".sidebar-tab")
+      .forEach((t) => t.classList.remove("active"));
+    document
+      .querySelectorAll(".sidebar-panel")
+      .forEach((p) => p.classList.remove("active"));
+    tab.classList.add("active");
+    document
+      .getElementById("panel-" + tab.dataset.panel)
+      .classList.add("active");
   });
 });
 
 // ===== MOBILE SIDEBAR TOGGLE =====
-document.getElementById('toggleSidebar')?.addEventListener('click', () => {
-  document.getElementById('sidebar').classList.toggle('hidden');
+document.getElementById("toggleSidebar")?.addEventListener("click", () => {
+  document.getElementById("sidebar").classList.toggle("hidden");
 });
 
 // ===== LOGOUT =====
-document.getElementById('logoutBtn').addEventListener('click', async () => {
-  await fetch(AUTH_API + '?action=logout');
-  window.location.href = 'login.html';
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await fetch(AUTH_API + "?action=logout");
+  window.location.href = "login.html";
 });
 
 // ===== LOAD CONVERSATIONS =====
 async function loadConversations() {
   try {
-    const res = await fetch(CHAT_API + '?action=get_conversations');
+    const res = await fetch(CHAT_API + "?action=get_conversations");
     const data = await res.json();
     if (!data.success) return;
 
     conversations = data.conversations;
     renderConversations(conversations);
-  } catch (e) { /* silent */ }
+  } catch (e) {
+    /* silent */
+  }
 }
 
 function renderConversations(convos) {
-  const list = document.getElementById('conversationList');
+  const list = document.getElementById("conversationList");
   if (!convos.length) {
-    list.innerHTML = '<div class="sidebar-empty">No conversations yet.<br>Search for users to start chatting!</div>';
+    list.innerHTML =
+      '<div class="sidebar-empty">No conversations yet.<br>Search for users to start chatting!</div>';
     return;
   }
 
-  list.innerHTML = convos.map(c => {
-    const isGroup = c.type === 'group';
-    const name = isGroup ? c.group_name : (c.other_user?.name || 'Unknown');
-    const sub = isGroup ? 'Group' : (c.other_user?.username || '');
-    const initial = name.charAt(0).toUpperCase();
-    const preview = c.last_message ? truncate(c.last_message, 35) : 'No messages yet';
-    const time = c.last_message_time ? formatTime(c.last_message_time) : '';
-    const activeClass = c.id == activeConversationId ? ' active' : '';
+  list.innerHTML = convos
+    .map((c) => {
+      const isGroup = c.type === "group";
+      const name = isGroup ? c.group_name : c.other_user?.name || "Unknown";
+      const sub = isGroup ? "Group" : c.other_user?.username || "";
+      const initial = name.charAt(0).toUpperCase();
+      const preview = c.last_message
+        ? truncate(c.last_message, 35)
+        : "No messages yet";
+      const time = c.last_message_time ? formatTime(c.last_message_time) : "";
+      const activeClass = c.id == activeConversationId ? " active" : "";
 
-    return `
+      return `
       <div class="sidebar-item${activeClass}" data-conv-id="${c.id}" onclick="openConversation(${c.id})">
-        <div class="sidebar-avatar${isGroup ? ' group' : ''}">${initial}</div>
+        <div class="sidebar-avatar${isGroup ? " group" : ""}">${initial}</div>
         <div class="sidebar-item-info">
           <div class="sidebar-item-name">${escHtml(name)}</div>
           <div class="sidebar-item-preview">${escHtml(preview)}</div>
@@ -111,46 +161,53 @@ function renderConversations(convos) {
         <div class="sidebar-item-meta">${time}</div>
       </div>
     `;
-  }).join('');
+    })
+    .join("");
 }
 
 // Filter conversations
-document.getElementById('filterConversations').addEventListener('input', (e) => {
-  const q = e.target.value.toLowerCase();
-  const filtered = conversations.filter(c => {
-    const name = c.type === 'group' ? c.group_name : (c.other_user?.name || '');
-    return name.toLowerCase().includes(q);
+document
+  .getElementById("filterConversations")
+  .addEventListener("input", (e) => {
+    const q = e.target.value.toLowerCase();
+    const filtered = conversations.filter((c) => {
+      const name = c.type === "group" ? c.group_name : c.other_user?.name || "";
+      return name.toLowerCase().includes(q);
+    });
+    renderConversations(filtered);
   });
-  renderConversations(filtered);
-});
 
 // ===== LOAD INVITES =====
 async function loadInvites() {
   try {
-    const res = await fetch(CHAT_API + '?action=get_invites&type=received');
+    const res = await fetch(CHAT_API + "?action=get_invites&type=received");
     const data = await res.json();
     if (!data.success) return;
 
-    const badge = document.getElementById('inviteBadge');
+    const badge = document.getElementById("inviteBadge");
     if (data.invites.length > 0) {
       badge.textContent = data.invites.length;
-      badge.style.display = 'inline';
+      badge.style.display = "inline";
     } else {
-      badge.style.display = 'none';
+      badge.style.display = "none";
     }
 
     renderInvites(data.invites);
-  } catch (e) { /* silent */ }
+  } catch (e) {
+    /* silent */
+  }
 }
 
 function renderInvites(invites) {
-  const list = document.getElementById('inviteList');
+  const list = document.getElementById("inviteList");
   if (!invites.length) {
     list.innerHTML = '<div class="sidebar-empty">No pending invites</div>';
     return;
   }
 
-  list.innerHTML = invites.map(inv => `
+  list.innerHTML = invites
+    .map(
+      (inv) => `
     <div class="sidebar-item">
       <div class="sidebar-avatar">${inv.name.charAt(0).toUpperCase()}</div>
       <div class="sidebar-item-info">
@@ -162,21 +219,23 @@ function renderInvites(invites) {
         </div>
       </div>
     </div>
-  `).join('');
+  `,
+    )
+    .join("");
 }
 
 async function respondInvite(inviteId, response) {
   const formData = new FormData();
-  formData.append('action', 'respond_invite');
-  formData.append('invite_id', inviteId);
-  formData.append('response', response);
+  formData.append("action", "respond_invite");
+  formData.append("invite_id", inviteId);
+  formData.append("response", response);
 
-  const res = await fetch(CHAT_API, { method: 'POST', body: formData });
+  const res = await fetch(CHAT_API, { method: "POST", body: formData });
   const data = await res.json();
 
   if (data.success) {
     loadInvites();
-    if (response === 'accepted') {
+    if (response === "accepted") {
       loadConversations();
     }
   }
@@ -184,11 +243,12 @@ async function respondInvite(inviteId, response) {
 
 // ===== SEARCH USERS =====
 let searchTimeout = null;
-document.getElementById('userSearchInput').addEventListener('input', (e) => {
+document.getElementById("userSearchInput").addEventListener("input", (e) => {
   clearTimeout(searchTimeout);
   const q = e.target.value.trim();
   if (q.length < 2) {
-    document.getElementById('searchResults').innerHTML = '<div class="sidebar-empty">Type at least 2 characters to search</div>';
+    document.getElementById("searchResults").innerHTML =
+      '<div class="sidebar-empty">Type at least 2 characters to search</div>';
     return;
   }
   searchTimeout = setTimeout(() => searchUsers(q), 300);
@@ -196,17 +256,21 @@ document.getElementById('userSearchInput').addEventListener('input', (e) => {
 
 async function searchUsers(query) {
   try {
-    const res = await fetch(CHAT_API + '?action=search_users&q=' + encodeURIComponent(query));
+    const res = await fetch(
+      CHAT_API + "?action=search_users&q=" + encodeURIComponent(query),
+    );
     const data = await res.json();
     if (!data.success) return;
 
-    const list = document.getElementById('searchResults');
+    const list = document.getElementById("searchResults");
     if (!data.users.length) {
       list.innerHTML = '<div class="sidebar-empty">No users found</div>';
       return;
     }
 
-    list.innerHTML = data.users.map(u => `
+    list.innerHTML = data.users
+      .map(
+        (u) => `
       <div class="sidebar-item">
         <div class="sidebar-avatar">${u.name.charAt(0).toUpperCase()}</div>
         <div class="sidebar-item-info">
@@ -215,22 +279,26 @@ async function searchUsers(query) {
         </div>
         <button class="invite-btn accept" onclick="sendInvite(${u.id})" style="flex-shrink:0">Invite</button>
       </div>
-    `).join('');
-  } catch (e) { /* silent */ }
+    `,
+      )
+      .join("");
+  } catch (e) {
+    /* silent */
+  }
 }
 
 async function sendInvite(userId) {
   const formData = new FormData();
-  formData.append('action', 'send_invite');
-  formData.append('to_user', userId);
+  formData.append("action", "send_invite");
+  formData.append("to_user", userId);
 
-  const res = await fetch(CHAT_API, { method: 'POST', body: formData });
+  const res = await fetch(CHAT_API, { method: "POST", body: formData });
   const data = await res.json();
 
   if (data.success) {
-    alert(data.message || 'Invite sent!');
+    alert(data.message || "Invite sent!");
   } else {
-    alert(data.error || 'Could not send invite');
+    alert(data.error || "Could not send invite");
   }
 }
 
@@ -241,45 +309,54 @@ async function openConversation(convId) {
   renderedMsgIds.clear(); // reset deduplication on conversation switch
 
   // Update sidebar active state
-  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  document
+    .querySelectorAll(".sidebar-item")
+    .forEach((el) => el.classList.remove("active"));
   const activeEl = document.querySelector(`[data-conv-id="${convId}"]`);
-  if (activeEl) activeEl.classList.add('active');
+  if (activeEl) activeEl.classList.add("active");
 
   // Find conversation info
-  const conv = conversations.find(c => c.id == convId);
+  const conv = conversations.find((c) => c.id == convId);
 
   // Show chat area
-  document.getElementById('chatEmpty').style.display = 'none';
-  const activeChat = document.getElementById('activeChat');
-  activeChat.style.display = 'flex';
+  document.getElementById("chatEmpty").style.display = "none";
+  const activeChat = document.getElementById("activeChat");
+  activeChat.style.display = "flex";
 
   // Set header
-  const isGroup = conv?.type === 'group';
-  const name = isGroup ? conv.group_name : (conv?.other_user?.name || 'Chat');
+  const isGroup = conv?.type === "group";
+  const name = isGroup ? conv.group_name : conv?.other_user?.name || "Chat";
   const sub = isGroup
-    ? 'Group Chat'
-    : (conv?.other_user ? `@${conv.other_user.username} · ${conv.other_user.regno}` : '');
+    ? "Group Chat"
+    : conv?.other_user
+      ? `@${conv.other_user.username} · ${conv.other_user.regno}`
+      : "";
 
-  document.getElementById('chatName').textContent = name;
-  document.getElementById('chatSub').textContent = sub;
-  document.getElementById('chatAvatar').textContent = name.charAt(0).toUpperCase();
-  document.getElementById('chatAvatar').className = 'sidebar-avatar' + (isGroup ? ' group' : '');
-  document.getElementById('viewMembersBtn').style.display = isGroup ? 'inline-block' : 'none';
+  document.getElementById("chatName").textContent = name;
+  document.getElementById("chatSub").textContent = sub;
+  document.getElementById("chatAvatar").textContent = name
+    .charAt(0)
+    .toUpperCase();
+  document.getElementById("chatAvatar").className =
+    "sidebar-avatar" + (isGroup ? " group" : "");
+  document.getElementById("viewMembersBtn").style.display = isGroup
+    ? "inline-block"
+    : "none";
 
   // Load messages
   await loadMessages(convId, false);
 
   // Hide sidebar on mobile
   if (window.innerWidth <= 768) {
-    document.getElementById('sidebar').classList.add('hidden');
+    document.getElementById("sidebar").classList.add("hidden");
   }
 }
 
 // ===== LOAD MESSAGES =====
 async function loadMessages(convId, polling = false) {
-  let url = CHAT_API + '?action=get_messages&conversation_id=' + convId;
+  let url = CHAT_API + "?action=get_messages&conversation_id=" + convId;
   if (polling && lastMessageTime) {
-    url += '&after=' + encodeURIComponent(lastMessageTime);
+    url += "&after=" + encodeURIComponent(lastMessageTime);
   }
 
   try {
@@ -299,18 +376,20 @@ async function loadMessages(convId, polling = false) {
     if (data.messages.length > 0) {
       lastMessageTime = data.messages[data.messages.length - 1].created_at;
     }
-  } catch (e) { /* silent */ }
+  } catch (e) {
+    /* silent */
+  }
 }
 
 function renderMessages(messages, append = false) {
-  const container = document.getElementById('chatMessages');
+  const container = document.getElementById("chatMessages");
 
   if (!append) {
-    container.innerHTML = '';
+    container.innerHTML = "";
     renderedMsgIds.clear();
   }
 
-  messages.forEach(msg => {
+  messages.forEach((msg) => {
     // Skip if we already rendered this message (prevents duplicates)
     if (msg.id) {
       const msgIdStr = String(msg.id);
@@ -319,24 +398,24 @@ function renderMessages(messages, append = false) {
     }
 
     const isSent = msg.sender_id == currentUser.id;
-    const div = document.createElement('div');
-    div.className = 'message ' + (isSent ? 'sent' : 'received');
+    const div = document.createElement("div");
+    div.className = "message " + (isSent ? "sent" : "received");
 
-    let mediaHtml = '';
+    let mediaHtml = "";
     if (msg.file_path) {
-      if (msg.message_type === 'image') {
+      if (msg.message_type === "image") {
         mediaHtml = `<div class="message-media"><img src="${escHtml(msg.file_path)}" alt="Image" onclick="window.open('${escHtml(msg.file_path)}','_blank')" /></div>`;
-      } else if (msg.message_type === 'video') {
+      } else if (msg.message_type === "video") {
         mediaHtml = `<div class="message-media"><video src="${escHtml(msg.file_path)}" controls></video></div>`;
-      } else if (msg.message_type === 'audio') {
+      } else if (msg.message_type === "audio") {
         mediaHtml = `<div class="message-media"><audio src="${escHtml(msg.file_path)}" controls></audio></div>`;
       }
     }
 
-    const contentHtml = msg.content ? `<div>${escHtml(msg.content)}</div>` : '';
+    const contentHtml = msg.content ? `<div>${escHtml(msg.content)}</div>` : "";
 
     div.innerHTML = `
-      ${!isSent ? `<div class="message-sender">${escHtml(msg.sender_name)}</div>` : ''}
+      ${!isSent ? `<div class="message-sender">${escHtml(msg.sender_name)}</div>` : ""}
       <div class="message-bubble">
         ${contentHtml}
         ${mediaHtml}
@@ -352,202 +431,239 @@ function renderMessages(messages, append = false) {
 }
 
 // ===== SEND MESSAGE =====
-document.getElementById('sendBtn').addEventListener('click', sendTextMessage);
-document.getElementById('messageInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) {
+document.getElementById("sendBtn").addEventListener("click", sendTextMessage);
+document.getElementById("messageInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
     sendTextMessage();
   }
 });
 
 async function sendTextMessage() {
-  const input = document.getElementById('messageInput');
+  const input = document.getElementById("messageInput");
   const content = input.value.trim();
   if (!content || !activeConversationId) return;
 
-  input.value = '';
+  input.value = "";
 
   const formData = new FormData();
-  formData.append('action', 'send_message');
-  formData.append('conversation_id', activeConversationId);
-  formData.append('message_type', 'text');
-  formData.append('content', content);
+  formData.append("action", "send_message");
+  formData.append("conversation_id", activeConversationId);
+  formData.append("message_type", "text");
+  formData.append("content", content);
 
   try {
-    const res = await fetch(CHAT_API, { method: 'POST', body: formData });
+    const res = await fetch(CHAT_API, { method: "POST", body: formData });
     const data = await res.json();
     if (data.success) {
       // Immediately show the message
-      const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      const now = new Date().toISOString().slice(0, 19).replace("T", " ");
       const localMsg = {
         id: data.message_id,
         sender_id: currentUser.id,
         sender_name: currentUser.name,
-        message_type: 'text',
+        message_type: "text",
         content: content,
         file_path: null,
-        created_at: now
+        created_at: now,
       };
 
       renderMessages([localMsg], true);
 
       // Broadcast via WebSocket for instant delivery
       if (ws && wsConnected) {
-        ws.send(JSON.stringify({
-          type: 'new_message',
-          conversationId: activeConversationId,
-          message: localMsg,
-        }));
+        ws.send(
+          JSON.stringify({
+            type: "new_message",
+            conversationId: activeConversationId,
+            message: localMsg,
+          }),
+        );
       }
 
       // Refresh conversation list preview
       loadConversations();
     }
-  } catch (e) { /* silent */ }
+  } catch (e) {
+    /* silent */
+  }
 }
 
 // ===== FILE UPLOAD =====
-document.getElementById('attachBtn').addEventListener('click', () => {
-  document.getElementById('fileInput').click();
+document.getElementById("attachBtn").addEventListener("click", () => {
+  document.getElementById("fileInput").click();
 });
 
-document.getElementById('fileInput').addEventListener('change', async (e) => {
+document.getElementById("fileInput").addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file || !activeConversationId) return;
 
   // Determine type
-  let type = 'image';
-  if (file.type.startsWith('video/')) type = 'video';
-  else if (file.type.startsWith('audio/')) type = 'audio';
+  let type = "image";
+  if (file.type.startsWith("video/")) type = "video";
+  else if (file.type.startsWith("audio/")) type = "audio";
 
   // Upload file
   const uploadData = new FormData();
-  uploadData.append('file', file);
-  uploadData.append('type', type);
+  uploadData.append("file", file);
+  uploadData.append("type", type);
 
   try {
-    const uploadRes = await fetch(UPLOAD_API, { method: 'POST', body: uploadData });
+    const uploadRes = await fetch(UPLOAD_API, {
+      method: "POST",
+      body: uploadData,
+    });
     const uploadResult = await uploadRes.json();
 
     if (!uploadResult.success) {
-      alert(uploadResult.error || 'Upload failed');
+      alert(uploadResult.error || "Upload failed");
       return;
     }
 
     // Send message with file
     const msgData = new FormData();
-    msgData.append('action', 'send_message');
-    msgData.append('conversation_id', activeConversationId);
-    msgData.append('message_type', type);
-    msgData.append('content', '');
-    msgData.append('file_path', uploadResult.file_path);
+    msgData.append("action", "send_message");
+    msgData.append("conversation_id", activeConversationId);
+    msgData.append("message_type", type);
+    msgData.append("content", "");
+    msgData.append("file_path", uploadResult.file_path);
 
-    const msgRes = await fetch(CHAT_API, { method: 'POST', body: msgData });
+    const msgRes = await fetch(CHAT_API, { method: "POST", body: msgData });
     const msgResult = await msgRes.json();
 
     if (msgResult.success) {
-      const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-      renderMessages([{
-        id: msgResult.message_id,
-        sender_id: currentUser.id,
-        sender_name: currentUser.name,
-        message_type: type,
-        content: '',
-        file_path: uploadResult.file_path,
-        created_at: now
-      }], true);
+      const now = new Date().toISOString().slice(0, 19).replace("T", " ");
+      renderMessages(
+        [
+          {
+            id: msgResult.message_id,
+            sender_id: currentUser.id,
+            sender_name: currentUser.name,
+            message_type: type,
+            content: "",
+            file_path: uploadResult.file_path,
+            created_at: now,
+          },
+        ],
+        true,
+      );
       loadConversations();
     }
   } catch (e) {
-    alert('Upload failed. Please try again.');
+    alert("Upload failed. Please try again.");
   }
 
-  e.target.value = '';
+  e.target.value = "";
 });
 
 // ===== CREATE GROUP =====
-document.getElementById('createGroupBtn').addEventListener('click', async () => {
-  document.getElementById('groupModal').classList.add('active');
-  document.getElementById('groupNameInput').value = '';
-  document.getElementById('selectedMembers').innerHTML = '';
+document
+  .getElementById("createGroupBtn")
+  .addEventListener("click", async () => {
+    document.getElementById("groupModal").classList.add("active");
+    document.getElementById("groupNameInput").value = "";
+    document.getElementById("selectedMembers").innerHTML = "";
 
-  // Load connected users (from accepted direct conversations)
-  const list = document.getElementById('groupMemberList');
-  list.innerHTML = '<div class="sidebar-empty">Loading...</div>';
+    // Load connected users (from accepted direct conversations)
+    const list = document.getElementById("groupMemberList");
+    list.innerHTML = '<div class="sidebar-empty">Loading...</div>';
 
-  try {
-    const res = await fetch(CHAT_API + '?action=get_conversations');
-    const data = await res.json();
-    if (!data.success) return;
+    try {
+      const res = await fetch(CHAT_API + "?action=get_conversations");
+      const data = await res.json();
+      if (!data.success) return;
 
-    const directUsers = data.conversations
-      .filter(c => c.type === 'direct' && c.other_user)
-      .map(c => c.other_user);
+      const directUsers = data.conversations
+        .filter((c) => c.type === "direct" && c.other_user)
+        .map((c) => c.other_user);
 
-    if (!directUsers.length) {
-      list.innerHTML = '<div class="sidebar-empty">No connected users yet. Accept invites first.</div>';
-      return;
-    }
+      if (!directUsers.length) {
+        list.innerHTML =
+          '<div class="sidebar-empty">No connected users yet. Accept invites first.</div>';
+        return;
+      }
 
-    list.innerHTML = directUsers.map(u => `
+      list.innerHTML = directUsers
+        .map(
+          (u) => `
       <label class="member-select-item">
         <input type="checkbox" value="${u.id}" data-name="${escHtml(u.name)}" />
         <span>${escHtml(u.name)} (@${escHtml(u.username)})</span>
       </label>
-    `).join('');
-  } catch (e) {
-    list.innerHTML = '<div class="sidebar-empty">Error loading users</div>';
-  }
-});
-
-document.getElementById('cancelGroupBtn').addEventListener('click', () => {
-  document.getElementById('groupModal').classList.remove('active');
-});
-
-document.getElementById('confirmGroupBtn').addEventListener('click', async () => {
-  const name = document.getElementById('groupNameInput').value.trim();
-  if (!name) { alert('Please enter a group name'); return; }
-
-  const checkboxes = document.querySelectorAll('#groupMemberList input[type="checkbox"]:checked');
-  const memberIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
-
-  if (memberIds.length === 0) { alert('Please select at least one member'); return; }
-
-  const formData = new FormData();
-  formData.append('action', 'create_group');
-  formData.append('name', name);
-  formData.append('members', JSON.stringify(memberIds));
-
-  try {
-    const res = await fetch(CHAT_API, { method: 'POST', body: formData });
-    const data = await res.json();
-
-    if (data.success) {
-      document.getElementById('groupModal').classList.remove('active');
-      await loadConversations();
-      openConversation(data.conversation_id);
-    } else {
-      alert(data.error || 'Failed to create group');
+    `,
+        )
+        .join("");
+    } catch (e) {
+      list.innerHTML = '<div class="sidebar-empty">Error loading users</div>';
     }
-  } catch (e) {
-    alert('Network error');
-  }
+  });
+
+document.getElementById("cancelGroupBtn").addEventListener("click", () => {
+  document.getElementById("groupModal").classList.remove("active");
 });
+
+document
+  .getElementById("confirmGroupBtn")
+  .addEventListener("click", async () => {
+    const name = document.getElementById("groupNameInput").value.trim();
+    if (!name) {
+      alert("Please enter a group name");
+      return;
+    }
+
+    const checkboxes = document.querySelectorAll(
+      '#groupMemberList input[type="checkbox"]:checked',
+    );
+    const memberIds = Array.from(checkboxes).map((cb) => parseInt(cb.value));
+
+    if (memberIds.length === 0) {
+      alert("Please select at least one member");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("action", "create_group");
+    formData.append("name", name);
+    formData.append("members", JSON.stringify(memberIds));
+
+    try {
+      const res = await fetch(CHAT_API, { method: "POST", body: formData });
+      const data = await res.json();
+
+      if (data.success) {
+        document.getElementById("groupModal").classList.remove("active");
+        await loadConversations();
+        openConversation(data.conversation_id);
+      } else {
+        alert(data.error || "Failed to create group");
+      }
+    } catch (e) {
+      alert("Network error");
+    }
+  });
 
 // ===== VIEW GROUP MEMBERS =====
-document.getElementById('viewMembersBtn').addEventListener('click', async () => {
-  if (!activeConversationId) return;
-  document.getElementById('membersModal').classList.add('active');
+document
+  .getElementById("viewMembersBtn")
+  .addEventListener("click", async () => {
+    if (!activeConversationId) return;
+    document.getElementById("membersModal").classList.add("active");
 
-  const list = document.getElementById('membersList');
-  list.innerHTML = '<div class="sidebar-empty">Loading...</div>';
+    const list = document.getElementById("membersList");
+    list.innerHTML = '<div class="sidebar-empty">Loading...</div>';
 
-  try {
-    const res = await fetch(CHAT_API + '?action=get_members&conversation_id=' + activeConversationId);
-    const data = await res.json();
+    try {
+      const res = await fetch(
+        CHAT_API +
+          "?action=get_members&conversation_id=" +
+          activeConversationId,
+      );
+      const data = await res.json();
 
-    if (data.success) {
-      list.innerHTML = data.members.map(m => `
+      if (data.success) {
+        list.innerHTML = data.members
+          .map(
+            (m) => `
         <div class="sidebar-item">
           <div class="sidebar-avatar">${m.name.charAt(0).toUpperCase()}</div>
           <div class="sidebar-item-info">
@@ -555,15 +671,17 @@ document.getElementById('viewMembersBtn').addEventListener('click', async () => 
             <div class="sidebar-item-preview">@${escHtml(m.username)} · ${escHtml(m.regno)}</div>
           </div>
         </div>
-      `).join('');
+      `,
+          )
+          .join("");
+      }
+    } catch (e) {
+      list.innerHTML = '<div class="sidebar-empty">Error loading members</div>';
     }
-  } catch (e) {
-    list.innerHTML = '<div class="sidebar-empty">Error loading members</div>';
-  }
-});
+  });
 
-document.getElementById('closeMembersBtn').addEventListener('click', () => {
-  document.getElementById('membersModal').classList.remove('active');
+document.getElementById("closeMembersBtn").addEventListener("click", () => {
+  document.getElementById("membersModal").classList.remove("active");
 });
 
 // ===== WEBSOCKET =====
@@ -571,23 +689,29 @@ function connectWebSocket() {
   if (!currentUser) return;
   try {
     ws = new WebSocket(WS_URL);
-  } catch { return; }
+  } catch {
+    return;
+  }
 
   ws.onopen = () => {
-    ws.send(JSON.stringify({ type: 'auth', userId: currentUser.id }));
+    ws.send(JSON.stringify({ type: "auth", userId: currentUser.id }));
   };
 
   ws.onmessage = (event) => {
     let msg;
-    try { msg = JSON.parse(event.data); } catch { return; }
+    try {
+      msg = JSON.parse(event.data);
+    } catch {
+      return;
+    }
 
     switch (msg.type) {
-      case 'auth_ok':
+      case "auth_ok":
         wsConnected = true;
-        console.log('[WS] Connected');
+        console.log("[WS] Connected");
         break;
 
-      case 'new_message':
+      case "new_message":
         // If we're viewing this conversation, append the message
         // (renderMessages handles deduplication via renderedMsgIds)
         if (String(msg.conversationId) === String(activeConversationId)) {
@@ -597,11 +721,11 @@ function connectWebSocket() {
         loadConversations();
         break;
 
-      case 'new_invite':
+      case "new_invite":
         loadInvites();
         break;
 
-      case 'typing':
+      case "typing":
         if (String(msg.conversationId) === String(activeConversationId)) {
           showTyping(msg.userName);
         }
@@ -611,7 +735,9 @@ function connectWebSocket() {
 
   ws.onclose = () => {
     wsConnected = false;
-    console.log('[WS] Disconnected, falling back to polling. Reconnecting in 5s...');
+    console.log(
+      "[WS] Disconnected, falling back to polling. Reconnecting in 5s...",
+    );
     setTimeout(connectWebSocket, 5000);
   };
 
@@ -622,57 +748,59 @@ function connectWebSocket() {
 
 // Typing indicator
 function showTyping(name) {
-  const sub = document.getElementById('chatSub');
+  const sub = document.getElementById("chatSub");
   if (!sub) return;
   const original = sub.dataset.original || sub.textContent;
   sub.dataset.original = original;
   sub.textContent = `${name} is typing...`;
-  sub.style.color = '#818cf8';
+  sub.style.color = "#818cf8";
   clearTimeout(typingTimeout);
   typingTimeout = setTimeout(() => {
     sub.textContent = original;
-    sub.style.color = '';
+    sub.style.color = "";
   }, 2000);
 }
 
 // Emit typing event on input
-document.getElementById('messageInput').addEventListener('input', () => {
+document.getElementById("messageInput").addEventListener("input", () => {
   if (ws && wsConnected && activeConversationId) {
-    ws.send(JSON.stringify({
-      type: 'typing',
-      conversationId: activeConversationId,
-      userName: currentUser.name,
-    }));
+    ws.send(
+      JSON.stringify({
+        type: "typing",
+        conversationId: activeConversationId,
+        userName: currentUser.name,
+      }),
+    );
   }
 });
 
 // ===== UTILITIES =====
 function escHtml(str) {
-  if (!str) return '';
-  const div = document.createElement('div');
+  if (!str) return "";
+  const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
 }
 
 function truncate(str, len) {
-  return str.length > len ? str.substring(0, len) + '…' : str;
+  return str.length > len ? str.substring(0, len) + "…" : str;
 }
 
 function formatTime(dateStr) {
-  if (!dateStr) return '';
+  if (!dateStr) return "";
   const d = new Date(dateStr);
   const now = new Date();
   const isToday = d.toDateString() === now.toDateString();
 
   if (isToday) {
-    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   }
 
   const yesterday = new Date(now);
   yesterday.setDate(yesterday.getDate() - 1);
   if (d.toDateString() === yesterday.toDateString()) {
-    return 'Yesterday';
+    return "Yesterday";
   }
 
-  return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+  return d.toLocaleDateString([], { month: "short", day: "numeric" });
 }

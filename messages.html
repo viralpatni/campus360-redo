@@ -76,6 +76,21 @@
         font-family: inherit;
       }
 
+      .theme-toggle-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .theme-toggle-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
       .topbar-btn:hover {
         background: rgba(99, 102, 241, 0.2);
         border-color: rgba(129, 140, 248, 0.3);
@@ -711,6 +726,74 @@
       .mobile-toggle-sidebar {
         display: none;
       }
+
+      /* Light mode for messages page */
+      body.forum-page.light-mode {
+        background: #eef3f8;
+        color: #0f172a;
+      }
+
+      body.forum-page.light-mode .forum-topbar,
+      body.forum-page.light-mode .forum-sidebar,
+      body.forum-page.light-mode .chat-header,
+      body.forum-page.light-mode .chat-input-bar,
+      body.forum-page.light-mode .modal {
+        background: rgba(255, 255, 255, 0.95);
+        border-color: #dbe4f0;
+      }
+
+      body.forum-page.light-mode .forum-chat {
+        background: #f5f8fc;
+      }
+
+      body.forum-page.light-mode .forum-topbar-user,
+      body.forum-page.light-mode .sidebar-item-preview,
+      body.forum-page.light-mode .sidebar-item-meta,
+      body.forum-page.light-mode .chat-header-sub,
+      body.forum-page.light-mode .message-time,
+      body.forum-page.light-mode .sidebar-empty {
+        color: #64748b;
+      }
+
+      body.forum-page.light-mode .topbar-btn,
+      body.forum-page.light-mode .sidebar-tab,
+      body.forum-page.light-mode .chat-attach-btn,
+      body.forum-page.light-mode .invite-btn.reject,
+      body.forum-page.light-mode .modal-btn.secondary {
+        color: #334155;
+        background: #f8fafc;
+        border-color: #dbe4f0;
+      }
+
+      body.forum-page.light-mode .sidebar-item-name,
+      body.forum-page.light-mode .chat-header-name,
+      body.forum-page.light-mode .member-select-item,
+      body.forum-page.light-mode .form-group label {
+        color: #0f172a;
+      }
+
+      body.forum-page.light-mode .sidebar-search input,
+      body.forum-page.light-mode .chat-input-bar input[type="text"],
+      body.forum-page.light-mode .form-group input,
+      body.forum-page.light-mode .member-select-list {
+        background: #ffffff;
+        border-color: #dbe4f0;
+        color: #0f172a;
+      }
+
+      body.forum-page.light-mode .sidebar-search input::placeholder,
+      body.forum-page.light-mode
+        .chat-input-bar
+        input[type="text"]::placeholder,
+      body.forum-page.light-mode .form-group input::placeholder {
+        color: #94a3b8;
+      }
+
+      body.forum-page.light-mode .message.received .message-bubble {
+        background: #ffffff;
+        color: #0f172a;
+        border-color: #e2e8f0;
+      }
     </style>
   </head>
   <body class="forum-page">
@@ -743,8 +826,16 @@
         >
           Home
         </button>
-          <a href="study_resources.html" class="topbar-btn">Study Resources</a>
-          <button class="topbar-btn danger" id="logoutBtn">Logout</button>
+        <a href="study_resources.html" class="topbar-btn">Study Resources</a>
+        <button
+          type="button"
+          class="topbar-btn theme-toggle-btn"
+          id="messagesThemeToggle"
+          aria-label="Toggle theme"
+        >
+          <span id="messagesThemeIcon" aria-hidden="true"></span>
+        </button>
+        <button class="topbar-btn danger" id="logoutBtn">Logout</button>
       </div>
     </div>
 

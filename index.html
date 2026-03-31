@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -33,8 +33,20 @@
         </p>
         <a href="#features" class="cta-btn">Explore Features</a>
       </div>
-      <nav>
-        <ul>
+      <nav id="primaryNav" class="hero-nav" aria-label="Primary">
+        <button
+          id="navToggle"
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primaryNavList"
+          aria-label="Toggle navigation"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul id="primaryNavList">
           <li><a href="#home">Home</a></li>
           <li><a href="forum.html">Forum</a></li>
           <li><a href="#about">About Us</a></li>
@@ -149,7 +161,11 @@
             </p>
           </div>
         </div>
-        <div class="feature-item" onclick="window.location.href='internships.html'" style="cursor:pointer;">
+        <div
+          class="feature-item"
+          onclick="window.location.href = 'internships.html'"
+          style="cursor: pointer"
+        >
           <span class="feature-icon">🌐</span>
           <div>
             <strong>Internship Tracker</strong>

@@ -43,7 +43,8 @@
   --duration: 0.3s;
 
   /* Typography */
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --section-width: 980px;
 }
 
 /* --- 1. Base Styles & Reset --- */
@@ -66,7 +67,9 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
-  transition: background var(--duration) var(--ease), color var(--duration) var(--ease);
+  transition:
+    background var(--duration) var(--ease),
+    color var(--duration) var(--ease);
   overflow-x: hidden;
 }
 
@@ -89,7 +92,9 @@ img {
 .scroll-reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
 }
 
 .scroll-reveal.revealed {
@@ -106,7 +111,9 @@ img {
 .scroll-reveal .service-card {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease);
 }
 
 .scroll-reveal.revealed .feature-item,
@@ -120,22 +127,40 @@ img {
 }
 
 /* Stagger delays */
-.scroll-reveal.revealed :nth-child(1) { transition-delay: 0.05s; }
-.scroll-reveal.revealed :nth-child(2) { transition-delay: 0.1s; }
-.scroll-reveal.revealed :nth-child(3) { transition-delay: 0.15s; }
-.scroll-reveal.revealed :nth-child(4) { transition-delay: 0.2s; }
-.scroll-reveal.revealed :nth-child(5) { transition-delay: 0.25s; }
-.scroll-reveal.revealed :nth-child(6) { transition-delay: 0.3s; }
-.scroll-reveal.revealed :nth-child(7) { transition-delay: 0.35s; }
-.scroll-reveal.revealed :nth-child(8) { transition-delay: 0.4s; }
-.scroll-reveal.revealed :nth-child(9) { transition-delay: 0.45s; }
+.scroll-reveal.revealed :nth-child(1) {
+  transition-delay: 0.05s;
+}
+.scroll-reveal.revealed :nth-child(2) {
+  transition-delay: 0.1s;
+}
+.scroll-reveal.revealed :nth-child(3) {
+  transition-delay: 0.15s;
+}
+.scroll-reveal.revealed :nth-child(4) {
+  transition-delay: 0.2s;
+}
+.scroll-reveal.revealed :nth-child(5) {
+  transition-delay: 0.25s;
+}
+.scroll-reveal.revealed :nth-child(6) {
+  transition-delay: 0.3s;
+}
+.scroll-reveal.revealed :nth-child(7) {
+  transition-delay: 0.35s;
+}
+.scroll-reveal.revealed :nth-child(8) {
+  transition-delay: 0.4s;
+}
+.scroll-reveal.revealed :nth-child(9) {
+  transition-delay: 0.45s;
+}
 
 /* --- 3. Hero Section --- */
 .hero {
   color: #fff;
+  position: relative;
   padding: 0;
   text-align: center;
-  position: relative;
   min-height: 520px;
   overflow: hidden;
   display: flex;
@@ -159,7 +184,7 @@ img {
 /* Floating particle effect (CSS-only) */
 .hero-overlay::before,
 .hero-overlay::after {
-  content: '';
+  content: "";
   position: absolute;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.06);
@@ -183,8 +208,12 @@ img {
 }
 
 @keyframes float {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(30px, -30px) scale(1.15); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(30px, -30px) scale(1.15);
+  }
 }
 
 .hero-content {
@@ -214,15 +243,52 @@ img {
 }
 
 .hero nav {
-  position: relative;
+  position: sticky;
+  top: 0.8rem;
   z-index: 2;
-  padding: 1.2rem 0 2rem;
+  padding: 0.6rem 0 1.4rem;
+  width: min(96%, 1060px);
+  margin: 0 auto;
 }
 
 .hero nav ul {
   display: flex;
   justify-content: center;
-  gap: 2.5rem;
+  gap: 2rem;
+  background: rgba(22, 26, 47, 0.26);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-xl);
+  padding: 0.78rem 1.4rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(11, 15, 35, 0.15);
+}
+
+body.nav-scrolled .hero nav ul {
+  background: rgba(17, 24, 39, 0.52);
+  box-shadow: 0 12px 36px rgba(11, 15, 35, 0.28);
+}
+
+.nav-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(17, 24, 39, 0.35);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.nav-toggle-bar {
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 99px;
 }
 
 .hero nav a {
@@ -236,7 +302,7 @@ img {
 }
 
 .hero nav a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -255,10 +321,22 @@ img {
   width: 100%;
 }
 
+.hero nav a.active {
+  color: #fff;
+}
+
+.hero nav a.active::after {
+  width: 100%;
+}
+
 /* CTA Button */
 .cta-btn {
   display: inline-block;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--accent-light) 100%
+  );
   color: #fff;
   padding: 0.85em 2.4em;
   border-radius: var(--radius-xl);
@@ -266,19 +344,26 @@ img {
   font-size: 1.05rem;
   letter-spacing: 0.3px;
   box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35);
-  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+  transition:
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
   position: relative;
   overflow: hidden;
 }
 
 .cta-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
   transition: left 0.5s var(--ease);
 }
 
@@ -297,12 +382,23 @@ section {
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
-  margin: 2.5rem auto;
-  padding: 2.5rem 2.2rem;
+  margin: 2.2rem auto;
+  padding: 2.7rem 2.3rem;
   border-radius: var(--radius-lg);
-  max-width: 960px;
+  max-width: var(--section-width);
   box-shadow: var(--shadow-md);
-  transition: background var(--duration) var(--ease), box-shadow var(--duration) var(--ease), border var(--duration) var(--ease);
+  transition:
+    background var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease),
+    border var(--duration) var(--ease);
+}
+
+section p {
+  line-height: 1.75;
+}
+
+section h2 + * {
+  margin-top: 0.9rem;
 }
 
 section h2 {
@@ -316,7 +412,7 @@ section h2 {
 }
 
 section h2::after {
-  content: '';
+  content: "";
   display: block;
   width: 50px;
   height: 3px;
@@ -328,7 +424,11 @@ section h2::after {
 
 /* --- 6. Home Card & Stats --- */
 .home-card {
-  background: linear-gradient(135deg, var(--glass-bg) 60%, rgba(99, 102, 241, 0.08) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--glass-bg) 60%,
+    rgba(99, 102, 241, 0.08) 100%
+  );
   border-radius: var(--radius-lg);
   padding: 3rem 2.5rem;
 }
@@ -403,7 +503,9 @@ section h2::after {
   text-align: center;
   min-width: 150px;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+  transition:
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
 }
 
 .stat:hover {
@@ -451,7 +553,10 @@ section h2::after {
   border-radius: var(--radius-md);
   padding: 2rem 1.2rem 1.5rem;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+  transition:
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
 }
 
 .feature-item:hover {
@@ -462,7 +567,11 @@ section h2::after {
 
 .feature-icon {
   font-size: 1.6em;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(244, 63, 94, 0.08));
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.1),
+    rgba(244, 63, 94, 0.08)
+  );
   border-radius: 50%;
   width: 3em;
   height: 3em;
@@ -492,7 +601,11 @@ section h2::after {
 
 /* --- 8. Testimonials --- */
 #testimonials {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.04), rgba(244, 63, 94, 0.04));
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.04),
+    rgba(244, 63, 94, 0.04)
+  );
 }
 
 #testimonials h2::after {
@@ -516,7 +629,9 @@ section h2::after {
   font-size: 0.95rem;
   line-height: 1.65;
   box-shadow: var(--shadow-sm);
-  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+  transition:
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
 }
 
 .testimonial-list blockquote:hover {
@@ -544,7 +659,9 @@ section h2::after {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   overflow: hidden;
-  transition: border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+  transition:
+    border-color var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
 }
 
 .faq-item:hover {
@@ -570,7 +687,7 @@ section h2::after {
 }
 
 .faq-item summary::after {
-  content: '▸';
+  content: "▸";
   font-size: 1.1em;
   color: var(--primary);
   transition: transform var(--duration) var(--ease);
@@ -596,7 +713,11 @@ section h2::after {
 
 /* --- 10. About Section --- */
 #about {
-  background: linear-gradient(135deg, var(--glass-bg) 70%, rgba(99, 102, 241, 0.06) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--glass-bg) 70%,
+    rgba(99, 102, 241, 0.06) 100%
+  );
 }
 
 #about p {
@@ -608,7 +729,11 @@ section h2::after {
 
 /* --- 11. Services Section --- */
 #services {
-  background: linear-gradient(135deg, var(--glass-bg) 70%, rgba(244, 63, 94, 0.04) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--glass-bg) 70%,
+    rgba(244, 63, 94, 0.04) 100%
+  );
 }
 
 .services-grid {
@@ -630,7 +755,10 @@ section h2::after {
   font-size: 0.95rem;
   color: var(--text);
   box-shadow: var(--shadow-sm);
-  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+  transition:
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
 }
 
 .service-card:hover {
@@ -678,12 +806,12 @@ footer#contact {
 
 /* Subtle grid pattern overlay */
 footer#contact::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
 }
@@ -701,7 +829,11 @@ footer#contact::before {
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 0.5px;
-  background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+  background: linear-gradient(
+    135deg,
+    var(--primary-light),
+    var(--accent-light)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -777,8 +909,6 @@ footer#contact::before {
   box-shadow: var(--shadow-lg);
 }
 
-
-
 #darkModeIcon svg {
   display: block;
   width: 22px;
@@ -817,7 +947,11 @@ body.dark-mode {
 }
 
 .dark-mode .stat-num {
-  background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+  background: linear-gradient(
+    135deg,
+    var(--primary-light),
+    var(--accent-light)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -828,7 +962,11 @@ body.dark-mode {
 }
 
 .dark-mode .feature-icon {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(244, 63, 94, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.15),
+    rgba(244, 63, 94, 0.1)
+  );
   border-color: rgba(129, 140, 248, 0.2);
 }
 
@@ -891,8 +1029,38 @@ body.dark-mode {
   }
 
   .hero nav ul {
-    gap: 1.2rem;
-    flex-wrap: wrap;
+    display: none;
+    gap: 0.35rem;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.45rem;
+    border-radius: var(--radius-md);
+    margin-top: 0.6rem;
+  }
+
+  .hero nav ul.open {
+    display: flex;
+  }
+
+  .hero nav {
+    width: min(95%, 520px);
+    top: 0.4rem;
+    padding: 0.5rem 0 1rem;
+  }
+
+  .hero nav a {
+    display: block;
+    padding: 0.52rem 0.72rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .hero nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-toggle {
+    display: inline-flex;
   }
 
   section {

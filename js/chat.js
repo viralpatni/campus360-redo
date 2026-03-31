@@ -2,24 +2,63 @@
 // Campus360 — Chat JS (chat.html)
 // ============================================
 
-const CHAT_API = 'php/chat.php';
-const AUTH_API = 'php/auth.php';
+const CHAT_API = "php/chat.php";
+const AUTH_API = "php/auth.php";
 
-let currentUser = null;    // { id, name, username, regno }
-let activeConvId = null;   // currently open conversation ID
-let conversations = [];    // cached conversation list
-let msgPollTimer = null;   // message polling interval
+let currentUser = null; // { id, name, username, regno }
+let activeConvId = null; // currently open conversation ID
+let conversations = []; // cached conversation list
+let msgPollTimer = null; // message polling interval
 let notifPollTimer = null; // notification polling interval
-let lastMsgTime = null;    // for incremental message fetching
+let lastMsgTime = null; // for incremental message fetching
 let renderedMsgIds = new Set(); // track rendered message IDs to prevent duplicates
+
+const CHAT_THEME_KEY = "chatTheme";
+
+function setChatTheme(mode) {
+  const isDark = mode === "dark";
+  document.body.classList.toggle("dark-mode", isDark);
+
+  const toggle = document.getElementById("chatThemeToggle");
+  const icon = document.getElementById("chatThemeIcon");
+  if (!toggle || !icon) return;
+
+  if (isDark) {
+    icon.innerHTML =
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+    toggle.setAttribute("aria-label", "Switch to light mode");
+  } else {
+    icon.innerHTML =
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path></svg>';
+    toggle.setAttribute("aria-label", "Switch to dark mode");
+  }
+}
+
+function initChatTheme() {
+  const toggle = document.getElementById("chatThemeToggle");
+  const savedTheme = localStorage.getItem(CHAT_THEME_KEY) || "light";
+  setChatTheme(savedTheme);
+
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const next = document.body.classList.contains("dark-mode")
+        ? "light"
+        : "dark";
+      setChatTheme(next);
+      localStorage.setItem(CHAT_THEME_KEY, next);
+    });
+  }
+}
+
+initChatTheme();
 
 // ===== INIT =====
 (async function init() {
   try {
-    const res = await fetch(AUTH_API + '?action=check');
+    const res = await fetch(AUTH_API + "?action=check");
     const data = await res.json();
     if (!data.loggedIn) {
-      window.location.href = 'login.html';
+      window.location.href = "login.html";
       return;
     }
     currentUser = data.user;
@@ -28,50 +67,60 @@ let renderedMsgIds = new Set(); // track rendered message IDs to prevent duplica
     // Poll for new notifications every 10s
     notifPollTimer = setInterval(loadNotifications, 10000);
   } catch (e) {
-    window.location.href = 'login.html';
+    window.location.href = "login.html";
   }
 })();
 
 // ===== HELPER: initials from name =====
 function getInitials(name) {
-  if (!name) return '?';
+  if (!name) return "?";
   const parts = name.trim().split(/\s+/);
-  return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+  return (parts[0][0] + (parts[1] ? parts[1][0] : "")).toUpperCase();
 }
 
 // ===== HELPER: format timestamp =====
 function formatTime(ts) {
-  if (!ts) return '';
+  if (!ts) return "";
   const d = new Date(ts);
   const now = new Date();
   const diff = now - d;
   if (diff < 86400000 && d.getDate() === now.getDate()) {
-    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   }
-  if (diff < 172800000) return 'Yesterday';
-  return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+  if (diff < 172800000) return "Yesterday";
+  return d.toLocaleDateString([], { month: "short", day: "numeric" });
 }
 
 // ===== HELPER: toast =====
 function showToast(msg) {
-  const t = document.getElementById('toast');
+  const t = document.getElementById("toast");
   t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
 }
 
 // ===== LOGOUT =====
 async function logout() {
-  try { await fetch(AUTH_API + '?action=logout'); } catch (e) {}
-  window.location.href = 'login.html';
+  try {
+    await fetch(AUTH_API + "?action=logout");
+  } catch (e) {}
+  window.location.href = "login.html";
 }
 
 // ===== SIDEBAR TAB SWITCHING =====
 function switchTab(tab) {
-  document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector(`.sidebar-tab[data-tab="${tab}"]`).classList.add('active');
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById(tab === 'chats' ? 'tabChats' : 'tabNotifications').classList.add('active');
+  document
+    .querySelectorAll(".sidebar-tab")
+    .forEach((t) => t.classList.remove("active"));
+  document
+    .querySelector(`.sidebar-tab[data-tab="${tab}"]`)
+    .classList.add("active");
+  document
+    .querySelectorAll(".tab-content")
+    .forEach((c) => c.classList.remove("active"));
+  document
+    .getElementById(tab === "chats" ? "tabChats" : "tabNotifications")
+    .classList.add("active");
 }
 
 // ============================================================
@@ -80,23 +129,23 @@ function switchTab(tab) {
 
 async function loadConversations() {
   try {
-    const res = await fetch(CHAT_API + '?action=get_conversations');
+    const res = await fetch(CHAT_API + "?action=get_conversations");
     const data = await res.json();
     if (data.success) {
       conversations = data.conversations;
       renderConversations();
     }
   } catch (e) {
-    console.error('Failed to load conversations:', e);
+    console.error("Failed to load conversations:", e);
   }
 }
 
-function renderConversations(filter = '') {
-  const list = document.getElementById('convList');
+function renderConversations(filter = "") {
+  const list = document.getElementById("convList");
   let filtered = conversations;
   if (filter) {
     const q = filter.toLowerCase();
-    filtered = conversations.filter(c => {
+    filtered = conversations.filter((c) => {
       const name = getConvName(c).toLowerCase();
       return name.includes(q);
     });
@@ -104,18 +153,19 @@ function renderConversations(filter = '') {
 
   if (filtered.length === 0) {
     list.innerHTML = `<div class="empty-list">
-      ${filter ? 'No matching conversations' : 'No conversations yet.<br>Click <b>+ New Chat</b> to start!'}
+      ${filter ? "No matching conversations" : "No conversations yet.<br>Click <b>+ New Chat</b> to start!"}
     </div>`;
     return;
   }
 
-  list.innerHTML = filtered.map(c => {
-    const name = getConvName(c);
-    const initials = getInitials(name);
-    const active = activeConvId === c.id ? ' active' : '';
-    const preview = c.last_message || 'No messages yet';
-    const time = formatTime(c.last_message_time);
-    return `<div class="conv-item${active}" onclick="openChat(${c.id})">
+  list.innerHTML = filtered
+    .map((c) => {
+      const name = getConvName(c);
+      const initials = getInitials(name);
+      const active = activeConvId === c.id ? " active" : "";
+      const preview = c.last_message || "No messages yet";
+      const time = formatTime(c.last_message_time);
+      return `<div class="conv-item${active}" onclick="openChat(${c.id})">
       <div class="conv-avatar">${initials}</div>
       <div class="conv-info">
         <div class="conv-name">${escHtml(name)}</div>
@@ -125,18 +175,19 @@ function renderConversations(filter = '') {
         <span class="conv-time">${time}</span>
       </div>
     </div>`;
-  }).join('');
+    })
+    .join("");
 }
 
 function getConvName(conv) {
-  if (conv.type === 'group') return conv.group_name || 'Group';
+  if (conv.type === "group") return conv.group_name || "Group";
   if (conv.other_user) return conv.other_user.name || conv.other_user.username;
-  return 'Chat';
+  return "Chat";
 }
 
 function getConvUsername(conv) {
-  if (conv.other_user) return '@' + conv.other_user.username;
-  return '';
+  if (conv.other_user) return "@" + conv.other_user.username;
+  return "";
 }
 
 // ============================================================
@@ -151,30 +202,32 @@ async function openChat(convId) {
   if (msgPollTimer) clearInterval(msgPollTimer);
 
   // Show chat view
-  document.getElementById('emptyState').style.display = 'none';
-  document.getElementById('chatView').style.display = 'flex';
+  document.getElementById("emptyState").style.display = "none";
+  document.getElementById("chatView").style.display = "flex";
 
   // Find conversation data
-  const conv = conversations.find(c => String(c.id) === String(convId));
-  const name = conv ? getConvName(conv) : 'Chat';
-  const username = conv ? getConvUsername(conv) : '';
+  const conv = conversations.find((c) => String(c.id) === String(convId));
+  const name = conv ? getConvName(conv) : "Chat";
+  const username = conv ? getConvUsername(conv) : "";
 
   // Update header
-  document.getElementById('chatAvatar').textContent = getInitials(name);
-  document.getElementById('chatName').textContent = name;
-  document.getElementById('chatStatus').textContent = conv.type === 'group' ? 'Group chat' : (username || 'Direct message');
+  document.getElementById("chatAvatar").textContent = getInitials(name);
+  document.getElementById("chatName").textContent = name;
+  document.getElementById("chatStatus").textContent =
+    conv.type === "group" ? "Group chat" : username || "Direct message";
 
   // Update info panel
-  document.getElementById('infoAvatar').textContent = getInitials(name);
-  document.getElementById('infoName').textContent = name;
-  document.getElementById('infoStatus').textContent = username;
-  document.getElementById('infoBio').textContent = conv.type === 'group' ? 'Group conversation' : 'Direct conversation';
+  document.getElementById("infoAvatar").textContent = getInitials(name);
+  document.getElementById("infoName").textContent = name;
+  document.getElementById("infoStatus").textContent = username;
+  document.getElementById("infoBio").textContent =
+    conv.type === "group" ? "Group conversation" : "Direct conversation";
 
   // Re-render conversation list to highlight active
-  renderConversations(document.getElementById('searchInput').value);
+  renderConversations(document.getElementById("searchInput").value);
 
   // Hide sidebar on mobile
-  document.getElementById('sidebar').classList.add('hidden-mobile');
+  document.getElementById("sidebar").classList.add("hidden-mobile");
 
   // Load messages
   await loadMessages(convId);
@@ -185,7 +238,9 @@ async function openChat(convId) {
 
 async function loadMessages(convId) {
   try {
-    const res = await fetch(CHAT_API + '?action=get_messages&conversation_id=' + convId);
+    const res = await fetch(
+      CHAT_API + "?action=get_messages&conversation_id=" + convId,
+    );
     const data = await res.json();
     if (data.success) {
       renderedMsgIds.clear();
@@ -195,15 +250,15 @@ async function loadMessages(convId) {
       }
     }
   } catch (e) {
-    console.error('Failed to load messages:', e);
+    console.error("Failed to load messages:", e);
   }
 }
 
 async function pollMessages(convId) {
   if (convId !== activeConvId) return;
   try {
-    let url = CHAT_API + '?action=get_messages&conversation_id=' + convId;
-    if (lastMsgTime) url += '&after=' + encodeURIComponent(lastMsgTime);
+    let url = CHAT_API + "?action=get_messages&conversation_id=" + convId;
+    if (lastMsgTime) url += "&after=" + encodeURIComponent(lastMsgTime);
     const res = await fetch(url);
     const data = await res.json();
     if (data.success && data.messages.length > 0) {
@@ -216,25 +271,29 @@ async function pollMessages(convId) {
 }
 
 function renderAllMessages(msgs) {
-  const container = document.getElementById('messages');
-  container.innerHTML = '';
+  const container = document.getElementById("messages");
+  container.innerHTML = "";
   renderedMsgIds.clear();
   if (msgs.length === 0) {
-    container.innerHTML = '<div class="empty-list" style="padding:40px">No messages yet. Say hello! 👋</div>';
+    container.innerHTML =
+      '<div class="empty-list" style="padding:40px">No messages yet. Say hello! 👋</div>';
     return;
   }
-  container.innerHTML = '<div class="date-divider"><span>Conversation Start</span></div>';
-  msgs.forEach(m => appendSingleMessage(container, m));
-  requestAnimationFrame(() => container.scrollTop = container.scrollHeight);
+  container.innerHTML =
+    '<div class="date-divider"><span>Conversation Start</span></div>';
+  msgs.forEach((m) => appendSingleMessage(container, m));
+  requestAnimationFrame(() => (container.scrollTop = container.scrollHeight));
 }
 
 function appendMessages(msgs) {
-  const container = document.getElementById('messages');
+  const container = document.getElementById("messages");
   // Remove "no messages" placeholder if present
-  const placeholder = container.querySelector('.empty-list');
-  if (placeholder) { container.innerHTML = ''; }
-  msgs.forEach(m => appendSingleMessage(container, m));
-  requestAnimationFrame(() => container.scrollTop = container.scrollHeight);
+  const placeholder = container.querySelector(".empty-list");
+  if (placeholder) {
+    container.innerHTML = "";
+  }
+  msgs.forEach((m) => appendSingleMessage(container, m));
+  requestAnimationFrame(() => (container.scrollTop = container.scrollHeight));
 }
 
 function appendSingleMessage(container, m) {
@@ -245,67 +304,71 @@ function appendSingleMessage(container, m) {
   }
 
   const isSent = String(m.sender_id) === String(currentUser.id);
-  const bubble = document.createElement('div');
-  bubble.className = 'msg ' + (isSent ? 'sent' : 'received');
+  const bubble = document.createElement("div");
+  bubble.className = "msg " + (isSent ? "sent" : "received");
 
-  let content = '';
+  let content = "";
   if (!isSent) {
     content += `<div class="msg-sender">${escHtml(m.sender_name)}</div>`;
   }
-  if (m.message_type === 'image' && m.file_path) {
+  if (m.message_type === "image" && m.file_path) {
     content += `<img class="msg-img" src="${escHtml(m.file_path)}" alt="image">`;
   }
-  content += escHtml(m.content || '');
+  content += escHtml(m.content || "");
   bubble.innerHTML = content;
   container.appendChild(bubble);
 
-  const timeEl = document.createElement('div');
-  timeEl.className = 'msg-time ' + (isSent ? 'sent-time' : 'received-time');
+  const timeEl = document.createElement("div");
+  timeEl.className = "msg-time " + (isSent ? "sent-time" : "received-time");
   timeEl.textContent = formatTime(m.created_at);
   container.appendChild(timeEl);
 }
 
 // ===== SEND MESSAGE =====
 async function sendMessage() {
-  const input = document.getElementById('msgInput');
+  const input = document.getElementById("msgInput");
   const text = input.value.trim();
   if (!text || !activeConvId) return;
 
-  input.value = '';
+  input.value = "";
 
   try {
     const formData = new FormData();
-    formData.append('action', 'send_message');
-    formData.append('conversation_id', activeConvId);
-    formData.append('content', text);
-    formData.append('message_type', 'text');
+    formData.append("action", "send_message");
+    formData.append("conversation_id", activeConvId);
+    formData.append("content", text);
+    formData.append("message_type", "text");
 
-    const res = await fetch(CHAT_API, { method: 'POST', body: formData });
+    const res = await fetch(CHAT_API, { method: "POST", body: formData });
     const data = await res.json();
 
     if (data.success) {
       // Track this message ID so polling won't duplicate it
       if (data.message_id) renderedMsgIds.add(String(data.message_id));
       // Immediately show the sent message
-      const container = document.getElementById('messages');
-      const placeholder = container.querySelector('.empty-list');
-      if (placeholder) { container.innerHTML = ''; }
+      const container = document.getElementById("messages");
+      const placeholder = container.querySelector(".empty-list");
+      if (placeholder) {
+        container.innerHTML = "";
+      }
       const now = new Date().toISOString();
       appendSingleMessage(container, {
         id: data.message_id,
         sender_id: String(currentUser.id),
         sender_name: currentUser.name,
         content: text,
-        message_type: 'text',
+        message_type: "text",
         created_at: now,
       });
-      requestAnimationFrame(() => container.scrollTop = container.scrollHeight);
+      requestAnimationFrame(
+        () => (container.scrollTop = container.scrollHeight),
+      );
       loadConversations();
     } else {
-      showToast(data.error || 'Failed to send message');
+      showToast(data.error || "Failed to send message");
     }
   } catch (e) {
-    showToast('Network error. Make sure WAMP is running.');
+    showToast("Network error. Make sure WAMP is running.");
   }
 }
 
@@ -315,28 +378,30 @@ async function sendMessage() {
 
 async function loadNotifications() {
   try {
-    const res = await fetch(CHAT_API + '?action=get_invites&type=received');
+    const res = await fetch(CHAT_API + "?action=get_invites&type=received");
     const data = await res.json();
     if (data.success) {
       renderNotifications(data.invites);
-      const badge = document.getElementById('notifBadge');
+      const badge = document.getElementById("notifBadge");
       if (data.invites.length > 0) {
         badge.textContent = data.invites.length;
-        badge.classList.add('show');
+        badge.classList.add("show");
       } else {
-        badge.classList.remove('show');
+        badge.classList.remove("show");
       }
     }
   } catch (e) {}
 }
 
 function renderNotifications(invites) {
-  const list = document.getElementById('notifList');
+  const list = document.getElementById("notifList");
   if (invites.length === 0) {
     list.innerHTML = '<div class="empty-list">No pending invites</div>';
     return;
   }
-  list.innerHTML = invites.map(inv => `
+  list.innerHTML = invites
+    .map(
+      (inv) => `
     <div class="notif-item" id="notif-${inv.id}">
       <div class="notif-top">
         <div class="conv-avatar">${getInitials(inv.name)}</div>
@@ -351,35 +416,39 @@ function renderNotifications(invites) {
         <button class="reject-btn" onclick="respondInvite(${inv.id}, 'rejected')">Reject</button>
       </div>
     </div>
-  `).join('');
+  `,
+    )
+    .join("");
 }
 
 async function respondInvite(inviteId, response) {
   try {
     const formData = new FormData();
-    formData.append('action', 'respond_invite');
-    formData.append('invite_id', inviteId);
-    formData.append('response', response);
+    formData.append("action", "respond_invite");
+    formData.append("invite_id", inviteId);
+    formData.append("response", response);
 
-    const res = await fetch(CHAT_API, { method: 'POST', body: formData });
+    const res = await fetch(CHAT_API, { method: "POST", body: formData });
     const data = await res.json();
 
     if (data.success) {
-      showToast(response === 'accepted' ? 'Invite accepted!' : 'Invite rejected');
+      showToast(
+        response === "accepted" ? "Invite accepted!" : "Invite rejected",
+      );
       // Remove the invite from DOM
-      const el = document.getElementById('notif-' + inviteId);
+      const el = document.getElementById("notif-" + inviteId);
       if (el) el.remove();
       // Refresh
       loadNotifications();
-      if (response === 'accepted') {
+      if (response === "accepted") {
         loadConversations();
-        switchTab('chats');
+        switchTab("chats");
       }
     } else {
-      showToast(data.error || 'Failed to respond');
+      showToast(data.error || "Failed to respond");
     }
   } catch (e) {
-    showToast('Network error');
+    showToast("Network error");
   }
 }
 
@@ -390,21 +459,23 @@ async function respondInvite(inviteId, response) {
 let searchTimeout = null;
 
 function openSearchModal() {
-  document.getElementById('searchModal').classList.add('show');
-  document.getElementById('userSearchInput').value = '';
-  document.getElementById('searchResults').innerHTML = '<div class="search-empty">Type at least 2 characters to search</div>';
-  setTimeout(() => document.getElementById('userSearchInput').focus(), 100);
+  document.getElementById("searchModal").classList.add("show");
+  document.getElementById("userSearchInput").value = "";
+  document.getElementById("searchResults").innerHTML =
+    '<div class="search-empty">Type at least 2 characters to search</div>';
+  setTimeout(() => document.getElementById("userSearchInput").focus(), 100);
 }
 
 function closeSearchModal() {
-  document.getElementById('searchModal').classList.remove('show');
+  document.getElementById("searchModal").classList.remove("show");
 }
 
-document.getElementById('userSearchInput').addEventListener('input', e => {
+document.getElementById("userSearchInput").addEventListener("input", (e) => {
   clearTimeout(searchTimeout);
   const q = e.target.value.trim();
   if (q.length < 2) {
-    document.getElementById('searchResults').innerHTML = '<div class="search-empty">Type at least 2 characters to search</div>';
+    document.getElementById("searchResults").innerHTML =
+      '<div class="search-empty">Type at least 2 characters to search</div>';
     return;
   }
   searchTimeout = setTimeout(() => searchUsers(q), 300);
@@ -412,23 +483,28 @@ document.getElementById('userSearchInput').addEventListener('input', e => {
 
 async function searchUsers(query) {
   try {
-    const res = await fetch(CHAT_API + '?action=search_users&q=' + encodeURIComponent(query));
+    const res = await fetch(
+      CHAT_API + "?action=search_users&q=" + encodeURIComponent(query),
+    );
     const data = await res.json();
     if (data.success) {
       renderSearchResults(data.users);
     }
   } catch (e) {
-    document.getElementById('searchResults').innerHTML = '<div class="search-empty">Search failed</div>';
+    document.getElementById("searchResults").innerHTML =
+      '<div class="search-empty">Search failed</div>';
   }
 }
 
 function renderSearchResults(users) {
-  const container = document.getElementById('searchResults');
+  const container = document.getElementById("searchResults");
   if (users.length === 0) {
     container.innerHTML = '<div class="search-empty">No users found</div>';
     return;
   }
-  container.innerHTML = users.map(u => `
+  container.innerHTML = users
+    .map(
+      (u) => `
     <div class="search-result">
       <div class="conv-avatar">${getInitials(u.name)}</div>
       <div class="search-result-info">
@@ -437,32 +513,40 @@ function renderSearchResults(users) {
       </div>
       <button class="invite-btn" id="invBtn-${u.id}" onclick="sendInvite(${u.id}, this)">Invite</button>
     </div>
-  `).join('');
+  `,
+    )
+    .join("");
 }
 
 async function sendInvite(userId, btn) {
   btn.disabled = true;
-  btn.textContent = 'Sending...';
+  btn.textContent = "Sending...";
   try {
     const formData = new FormData();
-    formData.append('action', 'send_invite');
-    formData.append('to_user', userId);
+    formData.append("action", "send_invite");
+    formData.append("to_user", userId);
 
-    const res = await fetch(CHAT_API, { method: 'POST', body: formData });
+    const res = await fetch(CHAT_API, { method: "POST", body: formData });
     const data = await res.json();
 
     if (data.success) {
-      btn.textContent = 'Sent ✓';
-      showToast(data.message || 'Invite sent!');
+      btn.textContent = "Sent ✓";
+      showToast(data.message || "Invite sent!");
     } else {
-      btn.textContent = data.error || 'Error';
-      showToast(data.error || 'Could not send invite');
-      setTimeout(() => { btn.textContent = 'Invite'; btn.disabled = false; }, 2000);
+      btn.textContent = data.error || "Error";
+      showToast(data.error || "Could not send invite");
+      setTimeout(() => {
+        btn.textContent = "Invite";
+        btn.disabled = false;
+      }, 2000);
     }
   } catch (e) {
-    btn.textContent = 'Error';
-    showToast('Network error');
-    setTimeout(() => { btn.textContent = 'Invite'; btn.disabled = false; }, 2000);
+    btn.textContent = "Error";
+    showToast("Network error");
+    setTimeout(() => {
+      btn.textContent = "Invite";
+      btn.disabled = false;
+    }, 2000);
   }
 }
 
@@ -471,38 +555,51 @@ async function sendInvite(userId, btn) {
 // ============================================================
 
 function escHtml(str) {
-  if (!str) return '';
-  const div = document.createElement('div');
+  if (!str) return "";
+  const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
 }
 
 function insertEmoji() {
-  const emojis = ['😊','😂','❤️','🔥','👍','🎉','😎','🤔','💯','✨','🙌','😅'];
-  const input = document.getElementById('msgInput');
+  const emojis = [
+    "😊",
+    "😂",
+    "❤️",
+    "🔥",
+    "👍",
+    "🎉",
+    "😎",
+    "🤔",
+    "💯",
+    "✨",
+    "🙌",
+    "😅",
+  ];
+  const input = document.getElementById("msgInput");
   input.value += emojis[Math.floor(Math.random() * emojis.length)];
   input.focus();
 }
 
 function toggleInfoPanel() {
-  document.getElementById('infoPanel').classList.toggle('hidden');
+  document.getElementById("infoPanel").classList.toggle("hidden");
 }
 
 function showSidebar() {
-  document.getElementById('sidebar').classList.remove('hidden-mobile');
+  document.getElementById("sidebar").classList.remove("hidden-mobile");
 }
 
 // Search conversations in sidebar
-document.getElementById('searchInput').addEventListener('input', e => {
+document.getElementById("searchInput").addEventListener("input", (e) => {
   renderConversations(e.target.value);
 });
 
 // Enter to send
-document.getElementById('msgInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') sendMessage();
+document.getElementById("msgInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") sendMessage();
 });
 
 // Close modal on overlay click
-document.getElementById('searchModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('searchModal')) closeSearchModal();
+document.getElementById("searchModal").addEventListener("click", (e) => {
+  if (e.target === document.getElementById("searchModal")) closeSearchModal();
 });
