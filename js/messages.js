@@ -24,7 +24,19 @@ function initMessagesTheme() {
 }
 
 // WebSocket
-const WS_URL = "ws://localhost:8082";
+const WS_URL = (() => {
+  if (window.CAMPUS_WS_URL) return window.CAMPUS_WS_URL;
+
+  const scheme = window.location.protocol === "https:" ? "wss" : "ws";
+  const isLocalHost =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
+
+  // Local dev: ws://localhost:8082, Production: same-origin /ws via reverse proxy.
+  return isLocalHost
+    ? `${scheme}://${window.location.hostname}:8082`
+    : `${scheme}://${window.location.host}/ws`;
+})();
 let ws = null;
 let wsConnected = false;
 let typingTimeout = null;

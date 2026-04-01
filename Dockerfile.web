@@ -1,0 +1,19 @@
+FROM php:8.2-apache
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends nodejs npm \
+    && docker-php-ext-install pdo pdo_mysql \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /var/www/html
+
+COPY . /var/www/html
+
+RUN cd /var/www/html/scraper \
+    && npm install --omit=dev \
+    && mkdir -p /var/www/html/uploads/image /var/www/html/uploads/video /var/www/html/uploads/audio /var/www/html/uploads/pyqs /var/www/html/uploads/resources \
+    && chown -R www-data:www-data /var/www/html/uploads
+
+EXPOSE 80
+
+CMD ["apache2-foreground"]

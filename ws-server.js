@@ -6,7 +6,7 @@
 const WebSocket = require("ws");
 const mysql = require("mysql2/promise");
 
-const WS_PORT = 8082;
+const WS_PORT = Number(process.env.WS_PORT || 8082);
 
 // MySQL config (must match php/config.php)
 const DB_CONFIG = {
@@ -31,7 +31,7 @@ async function start() {
   await initDB();
 
   const wss = new WebSocket.Server({ port: WS_PORT });
-  console.log(`[WS] WebSocket server running on ws://localhost:${WS_PORT}`);
+  console.log(`[WS] WebSocket server running on 0.0.0.0:${WS_PORT}`);
 
   wss.on("connection", (ws) => {
     let userId = null;
