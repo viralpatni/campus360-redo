@@ -1,0 +1,62 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-campus360_root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-campus360}
+      MYSQL_USER: ${MYSQL_USER:-campus360}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-campus360_pass}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/schemas:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: ${MYSQL_DATABASE:-campus360}
+      DB_USER: ${MYSQL_USER:-campus360}
+      DB_PASS: ${MYSQL_PASSWORD:-campus360_pass}
+    ports:
+      - "8080:80"
+    volumes:
+      - uploads_data:/var/www/html/uploads
+    command: >
+      sh -c "mkdir -p /var/www/html/uploads/image /var/www/html/uploads/video /var/www/html/uploads/audio /var/www/html/uploads/pyqs /var/www/html/uploads/resources
+      && chown -R www-data:www-data /var/www/html/uploads
+      && apache2-foreground"
+
+  ws:
+    build:
+      context: .
+      dockerfile: Dockerfile.ws
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: ${MYSQL_DATABASE:-campus360}
+      DB_USER: ${MYSQL_USER:-campus360}
+      DB_PASS: ${MYSQL_PASSWORD:-campus360_pass}
+      WS_PORT: 8082
+    ports:
+      - "8082:8082"
+
+volumes:
+  db_data:
+  uploads_data:

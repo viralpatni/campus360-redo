@@ -1,0 +1,8 @@
+.git
+.gitignore
+node_modules
+scraper/node_modules
+uploads
+scraper/scraper.lock
+npm-debug.log
+yarn-error.log

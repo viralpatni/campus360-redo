@@ -24,7 +24,9 @@ function initMessagesTheme() {
 }
 
 // WebSocket
-const WS_URL = "ws://localhost:8082";
+const WS_URL =
+  window.CAMPUS_WS_URL ||
+  `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.hostname}:8082`;
 let ws = null;
 let wsConnected = false;
 let typingTimeout = null;
