@@ -771,9 +771,22 @@ function truncate(str, len) {
   return str.length > len ? str.substring(0, len) + "…" : str;
 }
 
+function parseServerTimestamp(dateStr) {
+  if (!dateStr) return null;
+  const raw = String(dateStr).trim();
+
+  // If timezone exists, trust it; otherwise treat DB timestamp as UTC.
+  if (/Z$|[+-]\d{2}:?\d{2}$/.test(raw)) {
+    return new Date(raw);
+  }
+
+  return new Date(raw.replace(" ", "T") + "Z");
+}
+
 function formatTime(dateStr) {
   if (!dateStr) return "";
-  const d = new Date(dateStr);
+  const d = parseServerTimestamp(dateStr);
+  if (!d || Number.isNaN(d.getTime())) return "";
   const now = new Date();
   const isToday = d.toDateString() === now.toDateString();
 
