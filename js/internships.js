@@ -167,6 +167,21 @@
         fetchInternships(true);
       }
     });
+
+    // Logout button
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          await fetch("php/auth.php?action=logout");
+          window.location.href = "login.html";
+        } catch (err) {
+          console.error("Logout error:", err);
+          window.location.href = "login.html";
+        }
+      });
+    }
   }
 
   // --- Fetch from API ---
@@ -178,10 +193,14 @@
     try {
       if (forceRefresh) {
         try {
-          const refreshRes = await fetch(`${API_BASE}?action=refresh&source=all`);
+          const refreshRes = await fetch(
+            `${API_BASE}?action=refresh&source=all`,
+          );
           const refreshData = await refreshRes.json();
           if (refreshData.message) console.log("Refresh:", refreshData.message);
-        } catch(e) { console.error("Refresh trigger failed:", e); }
+        } catch (e) {
+          console.error("Refresh trigger failed:", e);
+        }
       }
 
       const url = `${API_BASE}?action=fetch&limit=200&source=all`;

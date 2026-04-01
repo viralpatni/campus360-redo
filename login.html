@@ -236,6 +236,9 @@
     </style>
   </head>
   <body class="login-page neo-theme">
+    <button id="darkModeToggle" aria-label="Toggle dark mode">
+      <span id="darkModeIcon"> </span>
+    </button>
     <div class="login-bg-orb orb-1"></div>
     <div class="login-bg-orb orb-2"></div>
 
@@ -403,5 +406,16 @@
     </div>
 
     <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+      if (window.CampusTheme) {
+        window.CampusTheme.initToggle({
+          toggleId: "darkModeToggle",
+          iconId: "darkModeIcon",
+          darkClass: "dark-mode",
+          defaultMode: "light",
+        });
+      }
+    </script>
   </body>
 </html>

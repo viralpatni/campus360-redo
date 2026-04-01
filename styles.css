@@ -875,6 +875,11 @@ footer#contact::before {
   transition: all var(--duration) var(--ease);
 }
 
+.footer-social-icon i {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .footer-social-icon:hover {
   background: var(--primary);
   border-color: var(--primary);
@@ -918,26 +923,88 @@ footer#contact::before {
    14. DARK MODE OVERRIDES
    ====================================== */
 body.dark-mode {
-  --bg: #0f0f1a;
-  --bg-card: rgba(22, 22, 38, 0.7);
-  --bg-card-solid: #16162a;
-  --text: #e8e8f0;
-  --text-muted: #9ca3c0;
-  --text-light: #6b7294;
-  --border: rgba(129, 140, 248, 0.15);
-  --glass-bg: rgba(22, 22, 38, 0.6);
-  --glass-border: rgba(129, 140, 248, 0.12);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.4);
+  --primary: #7eaefe;
+  --primary-light: #a4beff;
+  --primary-dark: #5d8df6;
+  --accent: #7eaefe;
+  --accent-light: #a4beff;
+  --accent-soft: rgba(126, 174, 254, 0.16);
+  --bg: #0a1228;
+  --bg-card: #11172b;
+  --bg-card-solid: #11172b;
+  --text: #dbe8ff;
+  --text-muted: #9fb0d8;
+  --text-light: #8ea2cf;
+  --border: rgba(164, 190, 255, 0.32);
+  --glass-bg: #11172b;
+  --glass-border: rgba(164, 190, 255, 0.32);
+  --shadow-sm: 3px 3px 0 #050914;
+  --shadow-md: 6px 6px 0 #050914;
+  --shadow-lg: 8px 8px 0 #050914;
+  --shadow-glow: 0 0 0 transparent;
+}
+
+body.dark-mode {
+  background-image:
+    radial-gradient(circle, rgba(164, 190, 255, 0.22) 1.1px, transparent 1.1px),
+    radial-gradient(circle, rgba(126, 174, 254, 0.12) 1.1px, transparent 1.1px),
+    linear-gradient(180deg, #0a1228 0%, #0b1020 100%);
+  background-size:
+    24px 24px,
+    24px 24px,
+    100% 100%;
+  background-position:
+    0 0,
+    12px 12px,
+    0 0;
 }
 
 .dark-mode .hero-overlay {
-  background: linear-gradient(
-    135deg,
-    rgba(15, 15, 26, 0.85) 0%,
-    rgba(30, 27, 75, 0.78) 40%,
-    rgba(79, 70, 229, 0.5) 100%
-  );
+  background: linear-gradient(135deg, #0f152a 0%, #16203a 58%, #1d2b4f 100%);
+}
+
+.dark-mode .hero nav ul {
+  background: #11172b;
+  border-color: #a4beff;
+  box-shadow: 5px 5px 0 #050914;
+}
+
+body.dark-mode.nav-scrolled .hero nav ul {
+  box-shadow: 6px 6px 0 #050914;
+}
+
+.dark-mode .hero nav a {
+  color: #c6d7ff;
+}
+
+.dark-mode .hero nav a::after {
+  background: #a4beff;
+}
+
+.dark-mode .hero nav a:hover,
+.dark-mode .hero nav a.active {
+  color: #dbe8ff;
+}
+
+.dark-mode .cta-btn {
+  background: #16203a;
+  color: #dbe8ff;
+  border-color: #a4beff;
+  box-shadow: 4px 4px 0 #050914;
+}
+
+.dark-mode .cta-btn:hover {
+  box-shadow: 6px 6px 0 #050914;
+}
+
+.dark-mode section,
+.dark-mode .feature-item,
+.dark-mode .quicklink,
+.dark-mode .stat,
+.dark-mode .faq-item,
+.dark-mode .service-card,
+.dark-mode .testimonial-list blockquote {
+  border-color: #90b0ff;
 }
 
 .dark-mode section h2 {
@@ -972,6 +1039,10 @@ body.dark-mode {
   border-left-color: var(--primary-light);
 }
 
+.dark-mode #testimonials {
+  background: #11172b;
+}
+
 .dark-mode .faq-item summary {
   color: var(--text);
 }
@@ -981,19 +1052,19 @@ body.dark-mode {
 }
 
 .dark-mode #darkModeToggle {
-  background: #1e1e35;
-  border-color: rgba(129, 140, 248, 0.2);
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+  background: #16203a;
+  border-color: #a4beff;
+  box-shadow: 3px 3px 0 #050914;
 }
 
 .dark-mode #darkModeToggle:hover {
-  background: #2a2a4a;
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.35);
+  background: #7eaefe;
+  box-shadow: 4px 4px 0 #050914;
 }
 
 .dark-mode footer#contact {
-  background: linear-gradient(135deg, #0a0a18 0%, #0f0f1a 100%);
-  border-top: 1px solid rgba(129, 140, 248, 0.1);
+  background: linear-gradient(135deg, #0f152a 0%, #11172b 100%);
+  border-top: 2px solid #90b0ff;
 }
 
 .dark-mode .quicklink:hover {

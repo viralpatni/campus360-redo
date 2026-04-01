@@ -184,7 +184,7 @@ const externalLinks = {
 // Highlight active in-page nav link while scrolling
 document.addEventListener("DOMContentLoaded", () => {
   const navLinks = Array.from(
-    document.querySelectorAll('.hero nav a[href^="#"]'),
+    document.querySelectorAll('#primaryNav a[href^="#"]'),
   );
   const sections = navLinks
     .map((link) => document.querySelector(link.getAttribute("href")))

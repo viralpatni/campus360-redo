@@ -400,9 +400,60 @@
       body.neo-theme .empty-state {
         color: #4b5563;
       }
+
+      /* ===== DARK MODE OVERRIDES ===== */
+      body.neo-theme[data-theme="dark"] {
+        background: #0b1020;
+        color: #dbe8ff;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar,
+      body.neo-theme[data-theme="dark"] .card {
+        background: #11172b;
+        border-color: #a4beff;
+        box-shadow: 6px 6px 0 #050914;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar-brand {
+        color: #dbe8ff;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar-btn,
+      body.neo-theme[data-theme="dark"] .filter-btn,
+      body.neo-theme[data-theme="dark"] .create-event-btn {
+        background: #16203a;
+        color: #dbe8ff;
+        border-color: #a4beff;
+        box-shadow: 3px 3px 0 #050914;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar-btn:hover,
+      body.neo-theme[data-theme="dark"] .filter-btn:hover,
+      body.neo-theme[data-theme="dark"] .create-event-btn:hover {
+        background: #7eaefe;
+        color: #091226;
+        transform: translate(-1px, -1px);
+      }
+
+      body.neo-theme[data-theme="dark"] .composer-input {
+        background: #0f152a;
+        color: #dbe8ff;
+        border-color: #90b0ff;
+      }
+
+      body.neo-theme[data-theme="dark"] .topbar-user,
+      body.neo-theme[data-theme="dark"] .filter-label,
+      body.neo-theme[data-theme="dark"] .event-meta-item,
+      body.neo-theme[data-theme="dark"] .event-description,
+      body.neo-theme[data-theme="dark"] .empty-state {
+        color: #9fb0d8;
+      }
     </style>
   </head>
   <body class="neo-theme">
+    <button id="darkModeToggle" aria-label="Toggle dark mode">
+      <span id="darkModeIcon"> </span>
+    </button>
     <!-- TOP BAR -->
     <div class="topbar">
       <a href="index.html" class="topbar-brand">Campus360</a>
@@ -604,5 +655,16 @@
     <div class="toast" id="toast"></div>
 
     <script src="js/lost_found.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+      if (window.CampusTheme) {
+        window.CampusTheme.initToggle({
+          toggleId: "darkModeToggle",
+          iconId: "darkModeIcon",
+          darkClass: "dark-mode",
+          defaultMode: "light",
+        });
+      }
+    </script>
   </body>
 </html>
